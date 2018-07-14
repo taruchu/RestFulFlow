@@ -21,3 +21,16 @@ $RECYCLE.BIN/
 # =========================
 # Operating System Files
 # =========================
+.vs/
+TestResults/
+SharedServices.UnitTests/bin
+SharedServices.UnitTests/obj
+packages/
+ChatClient/bin
+ChatClient/obj
+ClientAsyncService/obj 
+ClientAsyncService/bin
+SharedServices/bin
+SharedServices/obj
+ListenerService/bin
+ListenerService/obj

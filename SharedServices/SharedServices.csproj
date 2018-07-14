@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2E4EFF03-D66A-41F1-BCCA-326CACF5C517}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SharedServices</RootNamespace>
+    <AssemblyName>SharedInterfaces</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net46\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Schema, Version=3.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Schema.3.0.10\lib\net45\Newtonsoft.Json.Schema.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.6.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Dataflow.4.8.0\lib\netstandard2.0\System.Threading.Tasks.Dataflow.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Unity.Abstractions, Version=3.3.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net46\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Configuration, Version=5.2.1.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net46\Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.7.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net46\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Interception, Version=5.5.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net46\Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Interception.Configuration, Version=5.1.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net46\Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RegistrationByConvention, Version=2.1.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net46\Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ServiceLocation, Version=2.1.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net46\Unity.ServiceLocation.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interfaces\ChatMessage\IChatMessageService.cs" />
+    <Compile Include="Interfaces\Envelope\IEnvelopeFactory.cs" />
+    <Compile Include="Interfaces\Routing\IMessageBusBank.cs" />
+    <Compile Include="Interfaces\Routing\IMessageBusReaderBank.cs" />
+    <Compile Include="Interfaces\Routing\IMessageBusWriter.cs" />
+    <Compile Include="Interfaces\Routing\IRoute.cs" />
+    <Compile Include="Interfaces\Routing\IRouteFactory.cs" />
+    <Compile Include="Interfaces\Routing\IRoutingService.cs" />
+    <Compile Include="Interfaces\Routing\IMessageBus.cs" />
+    <Compile Include="Interfaces\Routing\IRoutingTable.cs" />
+    <Compile Include="Interfaces\TCP\ITCPAvailablePortsService.cs" />
+    <Compile Include="Interfaces\Transactions\ITransactionResultFactory.cs" />
+    <Compile Include="Interfaces\Transactions\ITransactionResult.cs" />
+    <Compile Include="Interfaces\Transactions\TransactionOutcome.cs" />
+    <Compile Include="Interfaces\Transactions\SeverityLevel.cs" />
+    <Compile Include="Models\Constants\ConfigurationConstants.cs" />
+    <Compile Include="Models\Constants\JSONSchemas.cs" />
+    <Compile Include="Models\Constants\ChatServiceNames.cs" />
+    <Compile Include="Interfaces\Envelope\IEnvelope.cs" />
+    <Compile Include="Interfaces\IOC\IIOCFactory.cs" />
+    <Compile Include="Interfaces\IOC\IIOCEstablishment.cs" />
+    <Compile Include="Interfaces\IOC\IIOCContainer.cs" />
+    <Compile Include="Interfaces\Marshall\IImplementationTypeResolver.cs" />
+    <Compile Include="Interfaces\Marshall\IMarshaller.cs" />
+    <Compile Include="Models\Envelope\Envelope.cs" />
+    <Compile Include="Models\Envelope\EnvelopeFactory.cs" />
+    <Compile Include="Models\Routing\Route.cs" />
+    <Compile Include="Services\IOC\ErectDIContainer.cs" />
+    <Compile Include="Services\IOC\EstablishIOC.cs" />
+    <Compile Include="Models\Transactions\TransactionResult.cs" />
+    <Compile Include="Services\ChatMessage\ChatMessageService.cs" />
+    <Compile Include="Services\Marshall\ImplementationTypeResolver.cs" />
+    <Compile Include="Services\Marshall\Marshaller.cs" />
+    <Compile Include="Services\Routing\MessageBus.cs" />
+    <Compile Include="Services\Routing\MessageBusBank.cs" />
+    <Compile Include="Services\Routing\MessageBusReaderBank.cs" />
+    <Compile Include="Services\Routing\MessageBusWriter.cs" />
+    <Compile Include="Services\Routing\RouteFactory.cs" />
+    <Compile Include="Services\Routing\RoutingService.cs" />
+    <Compile Include="Services\Routing\RoutingTable.cs" />
+    <Compile Include="Services\TCP\TCPAvailablePortsService.cs" />
+    <Compile Include="Services\Transactions\TransactionResultFactory.cs" />
+    <Compile Include="Services\IOC\UnityDIFactory.cs" />
+    <Compile Include="Services\IOC\UnityIOCContainer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="log-file.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="log4NetConfiguration.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ServiceProviderConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\ChatMessage\" />
+    <Folder Include="Models\Configuration\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

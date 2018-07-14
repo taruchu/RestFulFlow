@@ -1,0 +1,7 @@
+﻿ 
+TODO's 
+------
+
+
+* Refactor Exception Messages into public properties.
+* Add notes for new refactor. :=)

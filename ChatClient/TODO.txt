@@ -1,0 +1,9 @@
+﻿/*
+        * 
+        * NEEDS:
+        * 
+        * Router - to route requests to the envelope queue service. Forwarder will abstract TCP.
+        * UI Services - to handle UI redering and UI event handling, will use router.
+        * Background Services - to handle any polling or other continuous updates, will use router.
+        * 
+        */
