@@ -86,6 +86,8 @@
     <Compile Include="Interfaces\Routing\IRoutingService.cs" />
     <Compile Include="Interfaces\Routing\IMessageBus.cs" />
     <Compile Include="Interfaces\Routing\IRoutingTable.cs" />
+    <Compile Include="Interfaces\ServiceFarm\IServiceFarm.cs" />
+    <Compile Include="Interfaces\ServiceFarm\IServiceFarmServiceBase.cs" />
     <Compile Include="Interfaces\TCP\ITCPAvailablePortsService.cs" />
     <Compile Include="Interfaces\Transactions\ITransactionResultFactory.cs" />
     <Compile Include="Interfaces\Transactions\ITransactionResult.cs" />
