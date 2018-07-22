@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedServices.UnitTests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedServices", "SharedServices\SharedServices.csproj", "{2E4EFF03-D66A-41F1-BCCA-326CACF5C517}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoMeRestFulWebService", "EchoMeRestFulWebService\EchoMeRestFulWebService.csproj", "{B9407964-8B6F-4C42-AB08-4C4CC32E2AED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoMeRestFulWebService.UnitTests", "EchoMeRestFulWebService.UnitTests\EchoMeRestFulWebService.UnitTests.csproj", "{1D86C4D2-CF03-4EC9-839A-2D74983B7B2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{2E4EFF03-D66A-41F1-BCCA-326CACF5C517}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E4EFF03-D66A-41F1-BCCA-326CACF5C517}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E4EFF03-D66A-41F1-BCCA-326CACF5C517}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9407964-8B6F-4C42-AB08-4C4CC32E2AED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9407964-8B6F-4C42-AB08-4C4CC32E2AED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9407964-8B6F-4C42-AB08-4C4CC32E2AED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9407964-8B6F-4C42-AB08-4C4CC32E2AED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D86C4D2-CF03-4EC9-839A-2D74983B7B2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D86C4D2-CF03-4EC9-839A-2D74983B7B2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D86C4D2-CF03-4EC9-839A-2D74983B7B2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D86C4D2-CF03-4EC9-839A-2D74983B7B2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
