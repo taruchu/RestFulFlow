@@ -1,7 +1,20 @@
 ﻿ 
 TODO's 
 ------
+  
+ 
+* Add a Web Service Shell  - DONE
+* Update the Routing Service's Route Format to <RouteGUID>.<ServiceName> and re-test
+* Implement the Client Proxy and Test
+* Implement the Chat Service and Test
+* Implement the Persistence Service and Test
+* Implement the Service Farm and Test
+* Implement the Composition Route for the Service Farm
+* Add the Service Farm Composition Route hooks into the Web Service Shell so that it can new it up and start the composition route. Unit Test
+* Add a UI Client using RestFul Web Service calls, and Unit Test
 
 
-* Refactor Exception Messages into public properties.
-* Add notes for new refactor. :=)
+***** Integration Testing ******
+* Test the app using multiple UI Clients Chating with each other.
+
+

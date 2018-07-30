@@ -26,7 +26,7 @@ namespace SharedServices.Models.Constants
         public static string RoutingServiceCommandRegister = "RoutingServiceCommandRegister";
         public static string RoutingServiceCommandRelease = "RoutingServiceCommandRelease";
         public static string Route = "Route";
-
+         
         public static string RoutingServiceSchema = @"{
             '$schema': 'http://json-schema.org/draft-07/schema#',
             'description': 'Routing Service Envelope Schema',

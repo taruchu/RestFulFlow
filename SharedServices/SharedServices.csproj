@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Interfaces\ChatMessage\IChatMessageService.cs" />
     <Compile Include="Interfaces\Envelope\IEnvelopeFactory.cs" />
+    <Compile Include="Interfaces\Proxy\IClientProxy.cs" />
     <Compile Include="Interfaces\Routing\IMessageBusBank.cs" />
     <Compile Include="Interfaces\Routing\IMessageBusReaderBank.cs" />
     <Compile Include="Interfaces\Routing\IMessageBusWriter.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Services\ChatMessage\ChatMessageService.cs" />
     <Compile Include="Services\Marshall\ImplementationTypeResolver.cs" />
     <Compile Include="Services\Marshall\Marshaller.cs" />
+    <Compile Include="Services\Proxy\ClientProxy.cs" />
     <Compile Include="Services\Routing\MessageBus.cs" />
     <Compile Include="Services\Routing\MessageBusBank.cs" />
     <Compile Include="Services\Routing\MessageBusReaderBank.cs" />
@@ -130,10 +132,6 @@
     </Content>
     <Content Include="log4NetConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ServiceProviderConfig.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="TODO.txt" />
   </ItemGroup>
