@@ -21,7 +21,7 @@ namespace SharedServices.Services.Routing
         {
             get
             {
-                return "RoutingTable<T> - Route format is incorrect, it should be: <RouterBusKeyCode>.<ServiceCode>.<ServiceMethodCode> example 1: yourstring.yourstring.yourstring  example 2: 102.362.BE60675D-DB24-45A2-925C-00C5DC753C92";
+                return "RoutingTable<T> - Route format is incorrect, it should be: <RouterBusKeyCode>.<ServiceMethodCode> example 1: yourstring.yourstring.yourstring  example 2: 102.362.BE60675D-DB24-45A2-925C-00C5DC753C92";
             }
         }
         public string ExceptionMessage_RouteActionCannotBeNull
@@ -75,7 +75,7 @@ namespace SharedServices.Services.Routing
                     throw new InvalidOperationException(ExceptionMessage_RouteCannotBeNullOrEmpty);
                 else if (routeAction == null)
                     throw new InvalidOperationException(ExceptionMessage_RouteActionCannotBeNull);
-                else if (route.Split('.').Count() != 3)
+                else if (route.Split('.').Count() != 2)
                     throw new InvalidOperationException(ExceptionMessage_RouteFormatIsIncorrect);
                 else
                 {
@@ -100,7 +100,7 @@ namespace SharedServices.Services.Routing
                 Action<T> resolvedRoute = null;
                 if (String.IsNullOrEmpty(route))
                     throw new InvalidOperationException(ExceptionMessage_RouteCannotBeNullOrEmpty);
-                else if (route.Split('.').Count() != 3)
+                else if (route.Split('.').Count() != 2)
                     throw new InvalidOperationException(ExceptionMessage_RouteFormatIsIncorrect);
                 else if (MessageBusBank == null)
                     throw new InvalidOperationException(ExceptionMessage_MessageBusBankCannotBeNull);
@@ -137,7 +137,7 @@ namespace SharedServices.Services.Routing
             {
                 if (String.IsNullOrEmpty(route))
                     throw new InvalidOperationException(ExceptionMessage_RouteCannotBeNullOrEmpty);
-                else if (route.Split('.').Count() != 3)
+                else if (route.Split('.').Count() != 2)
                     throw new InvalidOperationException(ExceptionMessage_RouteFormatIsIncorrect);
                 else
                 {

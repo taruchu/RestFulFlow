@@ -41,7 +41,7 @@ namespace SharedServices.UnitTests.Routing
             mockedMessageBusBank
                 .Setup(messageBusBank => messageBusBank.ReleaseMessageBus(It.IsAny<string>()))
                 .Returns(() => true);
-            string route = String.Format("{0}.1235.4B39F260-A40A-4673-A67B-6CECCE74DBB4", routingTable.RoutingTableGUID);
+            string route = String.Format("{0}.4B39F260-A40A-4673-A67B-6CECCE74DBB4", routingTable.RoutingTableGUID);
             Action<string> testAction = (message) => { };
             bool registerRoute = false;
             Action<string> resolveRoute = null;
