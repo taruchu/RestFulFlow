@@ -9,9 +9,9 @@ namespace SharedServices.Interfaces.ServiceFarm
 {
     public interface IServiceFarmServiceBase : IDisposable
     {
-        MessageBus<string> MessageBus { get; set; }
+        MessageBusWriter<string> MessageBusWiter { get; set; }  
         MessageBusReaderBank<string> MessageBusReaderBank { get; set; }
         Action<string> HandleMessageFromRouter { get; set; }
-        bool Put(string serviceUrl, string response);
+        bool Put(string serviceUrl, string responseBody);
     }
 }
