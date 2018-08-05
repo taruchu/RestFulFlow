@@ -19,6 +19,6 @@ namespace SharedServices.Interfaces.ServiceFarm
 
         bool CompositionRoute(); //NOTE: Call this from the constructor to New up all service farm objects, associate them to a router, and establish their composition route.
         IReadOnlyCollection<IServiceFarmServiceBase> ServiceList { get; }  
-        string SendServiceRequest(string requestEnvelope, Action<string> responseCallback = null);
+        string SendServiceRequest(string requestMethod, string requestEnvelope, Action<string> responseCallback = null);
     }
 }

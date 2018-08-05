@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace RestFulFlowService.Services
@@ -31,9 +32,9 @@ namespace RestFulFlowService.Services
             {
                 requestPayload = reader.ReadToEnd();
             }
-
+            
             switch (context.Request.Method)
-            {
+            { 
                 case "GET":
                     responsePayload = Get(requestPayload, context);
                     break;
@@ -48,19 +49,29 @@ namespace RestFulFlowService.Services
                     break;
                 case "HEAD":
                     responsePayload = Head(requestPayload, context);
-                    break;
+                    context.Response.ContentType = _contentTypeJSON;
+                    context.Response.ContentLength = System.Text.Encoding.UTF8.GetBytes(responsePayload).LongLength;
+                    return;
                 default:
                     break;
             }
 
+            context.Response.ContentType = _contentTypeJSON;
             await context.Response.WriteAsync(responsePayload);
         }
 
         public string Delete(string json, HttpContext context)
-        {
-            //NOTE:
-            // Salt the request header key values with DELETE and client origin source 
-
+        {  
+            
+            //TODO:
+            // (1) Get transient ClientProxy and singleton IServiceFarmLoadBalancer from the 
+            // IOC container using the HttpContext.
+            // (2) Pass request method, json requestBody, and ClientProxy responseCallback into IServiceFarmLoadBalancer request method
+            // (3) Poll the ClientProxy message bus using one of the ClientProxies method calls
+            // (4) When the ClientProxy message bus receives a response, the method will return it as a string
+            // (5) Save the response from the ClientProxy
+            // (6) Send a Release command to the IServiceFarmLoadBalancer so that the ClientProxies requestCallback is removed from the router
+            // (7) Return the saved response from the ClientProxy
             return json;
         }
 
@@ -69,46 +80,58 @@ namespace RestFulFlowService.Services
         }
 
         public string Get(string json, HttpContext context)
-        {
-            //NOTE:
-            // Salt the request header key values with GET and client origin source 
-
-
+        { 
             //TODO:
             // (1) Get transient ClientProxy and singleton IServiceFarmLoadBalancer from the 
             // IOC container using the HttpContext.
-
-            // (2) Pass json requestBody and ClientProxy responseCallback into IServiceFarmLoadBalancer request method
+            // (2) Pass request method, json requestBody, and ClientProxy responseCallback into IServiceFarmLoadBalancer request method
             // (3) Poll the ClientProxy message bus using one of the ClientProxies method calls
             // (4) When the ClientProxy message bus receives a response, the method will return it as a string
             // (5) Save the response from the ClientProxy
             // (6) Send a Release command to the IServiceFarmLoadBalancer so that the ClientProxies requestCallback is removed from the router
-            // (7) Return the saved response from the ClientProxy
-
+            // (7) Return the saved response from the ClientProxy 
             return json;
         }
 
         public string Head(string json, HttpContext context)
         {
-            //NOTE:
-            // Salt the request header key values with HEAD and client origin source 
-
+            //TODO:
+            // (1) Get transient ClientProxy and singleton IServiceFarmLoadBalancer from the 
+            // IOC container using the HttpContext.
+            // (2) Pass request method, json requestBody, and ClientProxy responseCallback into IServiceFarmLoadBalancer request method
+            // (3) Poll the ClientProxy message bus using one of the ClientProxies method calls
+            // (4) When the ClientProxy message bus receives a response, the method will return it as a string
+            // (5) Save the response from the ClientProxy
+            // (6) Send a Release command to the IServiceFarmLoadBalancer so that the ClientProxies requestCallback is removed from the router
+            // (7) Return the saved response from the ClientProxy   
             return json;
         }
 
         public string Post(string json, HttpContext context)
         {
-            //NOTE:
-            // Salt the request header key values with POST and client origin source 
-
+            //TODO:
+            // (1) Get transient ClientProxy and singleton IServiceFarmLoadBalancer from the 
+            // IOC container using the HttpContext.
+            // (2) Pass request method, json requestBody, and ClientProxy responseCallback into IServiceFarmLoadBalancer request method
+            // (3) Poll the ClientProxy message bus using one of the ClientProxies method calls
+            // (4) When the ClientProxy message bus receives a response, the method will return it as a string
+            // (5) Save the response from the ClientProxy
+            // (6) Send a Release command to the IServiceFarmLoadBalancer so that the ClientProxies requestCallback is removed from the router
+            // (7) Return the saved response from the ClientProxy
             return json;
         }
 
         public string Put(string json, HttpContext context)
         {
-            //NOTE:
-            // Salt the request header key values with PUT and client origin source 
-
+            //TODO:
+            // (1) Get transient ClientProxy and singleton IServiceFarmLoadBalancer from the 
+            // IOC container using the HttpContext.
+            // (2) Pass request method, json requestBody, and ClientProxy responseCallback into IServiceFarmLoadBalancer request method
+            // (3) Poll the ClientProxy message bus using one of the ClientProxies method calls
+            // (4) When the ClientProxy message bus receives a response, the method will return it as a string
+            // (5) Save the response from the ClientProxy
+            // (6) Send a Release command to the IServiceFarmLoadBalancer so that the ClientProxies requestCallback is removed from the router
+            // (7) Return the saved response from the ClientProxy
             return json;
         }
     }
