@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SharedServices</RootNamespace>
-    <AssemblyName>SharedInterfaces</AssemblyName>
+    <AssemblyName>SharedServices</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -87,7 +87,7 @@
     <Compile Include="Interfaces\Routing\IRoutingService.cs" />
     <Compile Include="Interfaces\Routing\IMessageBus.cs" />
     <Compile Include="Interfaces\Routing\IRoutingTable.cs" />
-    <Compile Include="Interfaces\ServiceFarm\IServiceFarm.cs" />
+    <Compile Include="Interfaces\ServiceFarm\IServiceFarmLoadBalancer.cs" />
     <Compile Include="Interfaces\ServiceFarm\IServiceFarmServiceBase.cs" />
     <Compile Include="Interfaces\TCP\ITCPAvailablePortsService.cs" />
     <Compile Include="Interfaces\Transactions\ITransactionResultFactory.cs" />

@@ -16,6 +16,9 @@ namespace RestFulFlowService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //TODO: Register IServiceFarmLoadBalancer as a singleton
+            //TODO: Register IClientProxy as a Transient
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

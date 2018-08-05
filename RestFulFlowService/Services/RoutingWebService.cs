@@ -15,7 +15,7 @@ namespace RestFulFlowService.Services
 
         public RoutingWebService(RequestDelegate next)
         {
-            //TODO: Initialize SharedServices Entry Point here using a private member.
+            
         }
 
         public async Task Invoke(HttpContext context)
@@ -35,19 +35,19 @@ namespace RestFulFlowService.Services
             switch (context.Request.Method)
             {
                 case "GET":
-                    responsePayload = Get(requestPayload);
+                    responsePayload = Get(requestPayload, context);
                     break;
                 case "PUT":
-                    responsePayload = Put(requestPayload);
+                    responsePayload = Put(requestPayload, context);
                     break;
                 case "POST":
-                    responsePayload = Post(requestPayload);
+                    responsePayload = Post(requestPayload, context);
                     break;
                 case "DELETE":
-                    responsePayload = Delete(requestPayload);
+                    responsePayload = Delete(requestPayload, context);
                     break;
                 case "HEAD":
-                    responsePayload = Head(requestPayload);
+                    responsePayload = Head(requestPayload, context);
                     break;
                 default:
                     break;
@@ -56,11 +56,11 @@ namespace RestFulFlowService.Services
             await context.Response.WriteAsync(responsePayload);
         }
 
-        public string Delete(string json)
+        public string Delete(string json, HttpContext context)
         {
-            //TODO: Get Client Proxy from SharedServices entry point.
-            //TODO: Pass json parameter into client proxy and wait for json response.
-            //TODO: Return json response from client proxy.
+            //NOTE:
+            // Salt the request header key values with DELETE and client origin source 
+
             return json;
         }
 
@@ -68,35 +68,47 @@ namespace RestFulFlowService.Services
         { 
         }
 
-        public string Get(string json)
+        public string Get(string json, HttpContext context)
         {
-            //TODO: Get Client Proxy from SharedServices entry point.
-            //TODO: Pass json parameter into client proxy and wait for json response.
-            //TODO: Return json response from client proxy.
+            //NOTE:
+            // Salt the request header key values with GET and client origin source 
+
+
+            //TODO:
+            // (1) Get transient ClientProxy and singleton IServiceFarmLoadBalancer from the 
+            // IOC container using the HttpContext.
+
+            // (2) Pass json requestBody and ClientProxy responseCallback into IServiceFarmLoadBalancer request method
+            // (3) Poll the ClientProxy message bus using one of the ClientProxies method calls
+            // (4) When the ClientProxy message bus receives a response, the method will return it as a string
+            // (5) Save the response from the ClientProxy
+            // (6) Send a Release command to the IServiceFarmLoadBalancer so that the ClientProxies requestCallback is removed from the router
+            // (7) Return the saved response from the ClientProxy
+
             return json;
         }
 
-        public string Head(string json)
+        public string Head(string json, HttpContext context)
         {
-            //TODO: Get Client Proxy from SharedServices entry point.
-            //TODO: Pass json parameter into client proxy and wait for json response.
-            //TODO: Return json response from client proxy.
+            //NOTE:
+            // Salt the request header key values with HEAD and client origin source 
+
             return json;
         }
 
-        public string Post(string json)
+        public string Post(string json, HttpContext context)
         {
-            //TODO: Get Client Proxy from SharedServices entry point.
-            //TODO: Pass json parameter into client proxy and wait for json response.
-            //TODO: Return json response from client proxy.
+            //NOTE:
+            // Salt the request header key values with POST and client origin source 
+
             return json;
         }
 
-        public string Put(string json)
+        public string Put(string json, HttpContext context)
         {
-            //TODO: Get Client Proxy from SharedServices entry point.
-            //TODO: Pass json parameter into client proxy and wait for json response.
-            //TODO: Return json response from client proxy.
+            //NOTE:
+            // Salt the request header key values with PUT and client origin source 
+
             return json;
         }
     }

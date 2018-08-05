@@ -78,16 +78,16 @@
     <Compile Include="WebServices\RoutingWebServiceUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharedServices\SharedServices.csproj">
-      <Project>{2e4eff03-d66a-41f1-bcca-326cacf5c517}</Project>
-      <Name>SharedServices</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Proxy\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharedServices\SharedServices.csproj">
+      <Project>{2e4eff03-d66a-41f1-bcca-326cacf5c517}</Project>
+      <Name>SharedServices</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
