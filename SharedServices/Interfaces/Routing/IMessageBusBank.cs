@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SharedServices.Interfaces.Routing
 {
@@ -9,6 +10,7 @@ namespace SharedServices.Interfaces.Routing
         bool RegisterMessageBus(string busKeyCode, IMessageBus<T> messageBus);        
         IMessageBus<T> ResolveMessageBus(string busKeyCode); //NOTE: If cannot resolve log error for debugging and then drop the request.
         bool ReleaseMessageBus(string busKeyCode);
+        List<string> GetBusKeyCodes();
         string ExceptionMessage_BusKeyCodeCannotBeNullOrEmpty { get; }
         string ExceptionMessage_MessgeBusCannotBeNull { get; }
     }

@@ -5,11 +5,7 @@ namespace SharedServices.Models.Constants
     public class JSONSchemas
     {
         public static string DestinationRoute = "DestinationRoute";
-        public static string SenderRoute = "SenderRoute";
-        public static string ListenersIpAddress = "ListenersIpAddress";
-        public static string ListenersPort = "ListenersPort";
-        public static string RequestedServiceName = "RequestedServiceName";
-        public static string ServiceFarmCommand = "ServiceFarmCommand";
+        public static string SenderRoute = "SenderRoute"; 
         public static string PersistenceServiceCommand = "PersistenceServiceCommand";
         public static string StorageMechanism = "StorageMechanism";
         public static string StorageID = "StorageID";
@@ -26,7 +22,12 @@ namespace SharedServices.Models.Constants
         public static string RoutingServiceCommandRegister = "RoutingServiceCommandRegister";
         public static string RoutingServiceCommandRelease = "RoutingServiceCommandRelease";
         public static string Route = "Route";
-         
+        public static string ClientProxyOrigin = "ClientProxyOrigin";
+        public static string RequestMethod = "RequestMethod";
+        public static string WebServiceOriginUrl = "WebServiceOriginUrl";
+        public static string ServiceNameRequested = "ServiceNameRequested";
+
+
         public static string RoutingServiceSchema = @"{
             '$schema': 'http://json-schema.org/draft-07/schema#',
             'description': 'Routing Service Envelope Schema',
@@ -41,13 +42,21 @@ namespace SharedServices.Models.Constants
                     'required': 
                     [
                         'SenderRoute' ,
-                        'DestinationRoute' 
+                        'DestinationRoute' ,
+                        'ClientProxyOrigin' ,
+                        'RequestMethod' ,
+                        'WebServiceOriginUrl',
+                        'ServiceNameRequested'
                     ],
                     'maxProperties': 2,
                     'properties':
                     {
                         'SenderRoute': {'type': 'string'},
-                        'DestinationRoute': {'type': 'string'}
+                        'DestinationRoute': {'type': 'string'},
+                        'ClientProxyOrigin': {'type': 'string'},
+                        'RequestMethod': {'type': 'string'},
+                        'WebServiceOriginUrl': {'type': 'string'},
+                        'ServiceNameRequested': {'type': 'string'}
                     }
                 },
                 'Payload_KeyValues': 
@@ -72,50 +81,11 @@ namespace SharedServices.Models.Constants
         //to the same service. One request may not require the same key/value pairs as another. May end up using If/Else/Then 
         //within the schema for this, but that may get over-complex as the service methods grow.
 
-        public static string ServiceFarmSchema = @"{
-            '$schema': 'http://json-schema.org/draft-07/schema#',
-            'description': 'Service Farm Envelope Schema',
-            'type': 'object',
-            'required': ['Header_KeyValues', 'Payload_KeyValues'],
-            'minProperties': 2,
-            'properties':
-            {
-                'Header_KeyValues': 
-                {
-                    'type': 'object',
-                    'required': 
-                    [
-                        'SenderRoute' ,
-                        'DestinationRoute' 
-                    ],
-                    'maxProperties': 2,
-                    'properties':
-                    {
-                        'SenderRoute': {'type': 'string'},
-                        'DestinationRoute': {'type': 'string'}
-                    }
-                },
-                'Payload_KeyValues': 
-                {
-                    'type': 'object',
-                    'required':
-                    [
-                        'ListenersIpAddress',
-                        'ListenersPort',
-                        'RequestedServiceName',
-                        'ServiceFarmCommand'
-                    ],
-                    'maxProperties': 4,
-                    'properties':
-                    {
-                        'ListenersIpAddress': {'type': 'string'},
-                        'ListenersPort': {'type': 'string'},
-                        'RequestedServiceName': {'type': 'string'},
-                        'ServiceFarmCommand': {'type': 'string'}
-                    }
-                }
-            }
-        }";
+        //NOTE: The command values used within the following service schemas are compositional JSON objects that encapsulate a command request. This way
+        //the command is shaped like an object and can be free to contain whatever it needs. I'll store it as a string so that it's shape is flexible.
+
+        //TODO: Need to document which Header properites can be left empty by the client verses which ones must contain valid values. Some properties will
+        //receive values later in the pipeline. Perhaps create a client version of the schema that has less required properties ???
 
         public static string PersistenceServiceSchema = @"{
             '$schema': 'http://json-schema.org/draft-07/schema#',            
@@ -125,19 +95,27 @@ namespace SharedServices.Models.Constants
             'minProperties': 2,
             'properties':
             {
-                'Header_KeyValues': 
+                 'Header_KeyValues': 
                 {
                     'type': 'object',
                     'required': 
                     [
                         'SenderRoute' ,
-                        'DestinationRoute' 
+                        'DestinationRoute' ,
+                        'ClientProxyOrigin' ,
+                        'RequestMethod' ,
+                        'WebServiceOriginUrl',
+                        'ServiceNameRequested'
                     ],
                     'maxProperties': 2,
                     'properties':
                     {
                         'SenderRoute': {'type': 'string'},
-                        'DestinationRoute': {'type': 'string'}
+                        'DestinationRoute': {'type': 'string'},
+                        'ClientProxyOrigin': {'type': 'string'},
+                        'RequestMethod': {'type': 'string'},
+                        'WebServiceOriginUrl': {'type': 'string'},
+                        'ServiceNameRequested': {'type': 'string'}
                     }
                 },
                 'Payload_KeyValues': 
@@ -176,13 +154,21 @@ namespace SharedServices.Models.Constants
                     'required': 
                     [
                         'SenderRoute' ,
-                        'DestinationRoute' 
+                        'DestinationRoute' ,
+                        'ClientProxyOrigin' ,
+                        'RequestMethod' ,
+                        'WebServiceOriginUrl',
+                        'ServiceNameRequested'
                     ],
                     'maxProperties': 2,
                     'properties':
                     {
                         'SenderRoute': {'type': 'string'},
-                        'DestinationRoute': {'type': 'string'}
+                        'DestinationRoute': {'type': 'string'},
+                        'ClientProxyOrigin': {'type': 'string'},
+                        'RequestMethod': {'type': 'string'},
+                        'WebServiceOriginUrl': {'type': 'string'},
+                        'ServiceNameRequested': {'type': 'string'}
                     }
                 },
                 'Payload_KeyValues': 

@@ -120,6 +120,7 @@
     <Compile Include="Services\Routing\RouteFactory.cs" />
     <Compile Include="Services\Routing\RoutingService.cs" />
     <Compile Include="Services\Routing\RoutingTable.cs" />
+    <Compile Include="Services\ServiceFarm\ServiceFarmLoadBalancer.cs" />
     <Compile Include="Services\TCP\TCPAvailablePortsService.cs" />
     <Compile Include="Services\Transactions\TransactionResultFactory.cs" />
     <Compile Include="Services\IOC\UnityDIFactory.cs" />

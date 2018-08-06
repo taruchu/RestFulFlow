@@ -116,7 +116,7 @@ namespace SharedServices.UnitTests.Routing
             IRoutingService<string> routingService = _erector.Container.Resolve<IRoutingService<string>>();
             IEnvelope envelope = _erector.Container.Resolve<IEnvelope>(); 
             envelope.InitializeThisEnvelopeFor_RoutingService();
-            string destinationRoute = "123.456.789";
+            string destinationRoute = "123.789";
             envelope.Header_KeyValues[JSONSchemas.DestinationRoute] = destinationRoute;
             IMarshaller marshaller = _erector.Container.Resolve<IMarshaller>();
             string jsonMessage = marshaller.MarshallPayloadJSON(envelope);
@@ -148,7 +148,7 @@ namespace SharedServices.UnitTests.Routing
         public void TestRegisterResolveReleaseRoute()
         {
             IRoutingService<string> routingService = _erector.Container.Resolve<IRoutingService<string>>();
-            string destinationRoute = "123.456.789";
+            string destinationRoute = "123.789";
             IRoute<string> iRoute = _erector.Container.Resolve<IRoute<string>>();
             iRoute.Route = destinationRoute;
             iRoute.RegisterRouteHandler = (message) => { };            

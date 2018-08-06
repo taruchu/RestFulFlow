@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharedServices.Interfaces.ServiceFarm;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SharedServices.Interfaces.Proxy
 {
-    public interface IClientProxy
+    public interface IClientProxy : IServiceFarmServiceBase
     {
         /*
          * NOTE: Represent the client within the Service Farm. 
@@ -17,5 +18,6 @@ namespace SharedServices.Interfaces.Proxy
          * 
          * 
          */
+        Task<string> PollMessageBus();
     }
 }

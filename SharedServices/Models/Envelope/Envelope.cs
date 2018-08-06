@@ -24,28 +24,22 @@ namespace SharedServices.Models.EnvelopeModel
             this.Header_KeyValues.Clear();
             this.Header_KeyValues.Add(JSONSchemas.SenderRoute, string.Empty);
             this.Header_KeyValues.Add(JSONSchemas.DestinationRoute, string.Empty);
+            this.Header_KeyValues.Add(JSONSchemas.ClientProxyOrigin, string.Empty);
+            this.Header_KeyValues.Add(JSONSchemas.RequestMethod, string.Empty);
+            this.Header_KeyValues.Add(JSONSchemas.ServiceNameRequested, string.Empty);
             this.Payload_KeyValues.Clear();
             this.Payload_KeyValues.Add(JSONSchemas.RoutingServiceCommand, string.Empty);
             this.Payload_KeyValues.Add(JSONSchemas.Route, string.Empty);
         }
-
-        public void InitializeThisEnvelopeFor_ServiceFarm()
-        {
-            this.Header_KeyValues.Clear();
-            this.Header_KeyValues.Add(JSONSchemas.SenderRoute, string.Empty);
-            this.Header_KeyValues.Add(JSONSchemas.DestinationRoute, string.Empty);
-            this.Payload_KeyValues.Clear();
-            this.Payload_KeyValues.Add(JSONSchemas.ListenersIpAddress, string.Empty);
-            this.Payload_KeyValues.Add(JSONSchemas.ListenersPort, string.Empty);
-            this.Payload_KeyValues.Add(JSONSchemas.RequestedServiceName, string.Empty);
-            this.Payload_KeyValues.Add(JSONSchemas.ServiceFarmCommand, string.Empty); 
-        }
-
+        
         public void InitializeThisEnvelopeFor_PersistenceService()
         {
             this.Header_KeyValues.Clear();
             this.Header_KeyValues.Add(JSONSchemas.SenderRoute, string.Empty);
             this.Header_KeyValues.Add(JSONSchemas.DestinationRoute, string.Empty);
+            this.Header_KeyValues.Add(JSONSchemas.ClientProxyOrigin, string.Empty);
+            this.Header_KeyValues.Add(JSONSchemas.RequestMethod, string.Empty);
+            this.Header_KeyValues.Add(JSONSchemas.ServiceNameRequested, string.Empty);
             this.Payload_KeyValues.Clear();
             this.Payload_KeyValues.Add(JSONSchemas.PersistenceServiceCommand, string.Empty);
             this.Payload_KeyValues.Add(JSONSchemas.StorageMechanism, string.Empty);
@@ -58,6 +52,9 @@ namespace SharedServices.Models.EnvelopeModel
             this.Header_KeyValues.Clear();
             this.Header_KeyValues.Add(JSONSchemas.SenderRoute, string.Empty);
             this.Header_KeyValues.Add(JSONSchemas.DestinationRoute, string.Empty);
+            this.Header_KeyValues.Add(JSONSchemas.ClientProxyOrigin, string.Empty);
+            this.Header_KeyValues.Add(JSONSchemas.RequestMethod, string.Empty);
+            this.Header_KeyValues.Add(JSONSchemas.ServiceNameRequested, string.Empty);
             this.Payload_KeyValues.Clear();
             this.Payload_KeyValues.Add(JSONSchemas.ChatMessageChannelName, string.Empty);
             this.Payload_KeyValues.Add(JSONSchemas.ChatMessageServiceCommand, string.Empty);

@@ -22,7 +22,6 @@ namespace SharedServices.Interfaces.Envelope
         Dictionary<string, string> Filter_KeyValues { get; set; }
         Dictionary<string, string> Payload_KeyValues { get; set; }
         void InitializeThisEnvelopeFor_RoutingService();
-        void InitializeThisEnvelopeFor_ServiceFarm();
         void InitializeThisEnvelopeFor_PersistenceService();
         void InitializeThisEnvelopeFor_ChatMessageService();
     }

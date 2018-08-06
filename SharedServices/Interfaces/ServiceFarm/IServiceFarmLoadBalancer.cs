@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,8 @@ namespace SharedServices.Interfaces.ServiceFarm
          */
 
         bool CompositionRoute(); //NOTE: Call this from the constructor to New up all service farm objects, associate them to a router, and establish their composition route.
-        IReadOnlyCollection<IServiceFarmServiceBase> ServiceList { get; }  
-        string SendServiceRequest(string requestMethod, string requestEnvelope, Action<string> responseCallback = null);
+        bool SendServiceRequest(string clientProxyOrigin, string requestEnvelope);
+        bool SendRegistrationToRouterRequest(string clientProxyOrigin, Action<string> responseCallback);
+        bool SendReleaseRegistrationToRouterRequest(string clientProxyOrigin);
     }
 }

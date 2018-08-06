@@ -269,8 +269,7 @@ namespace SharedServices.Services.Routing
                     else
                     {
                         for(int readerIndex = 0; readerIndex < numberOfReaders; readerIndex++)
-                        {
-                            //NOTE: Must test this within the MessageBusReaderBank Unit Test.
+                        {                            
                             MessageBusReaderBank.AddAnotherReader(MessageBusReaderCallback);
                         }
                         return true;

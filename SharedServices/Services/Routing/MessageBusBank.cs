@@ -145,5 +145,20 @@ namespace SharedServices.Services.Routing
                 } 
             }
         }
+
+        public List<string> GetBusKeyCodes()
+        {
+            lock(_thisLock)
+            {
+                try
+                {
+                    return _bank.Keys.ToList<string>();
+                }
+                catch(Exception ex)
+                {
+                    throw new ApplicationException(ex.Message, ex);
+                }
+            }
+        }
     }
 }
