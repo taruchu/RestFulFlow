@@ -31,7 +31,38 @@ namespace SharedServices.Services.ChatMessage
         }
         private string _serviceGUID { get; set; }
         private bool _isDisposed { get; set; }
-        
+
+        public string ExceptionMessage_MessageBusWriterCannotBeNull
+        {
+            get
+            {
+                return "ChatMessageService - MessageBusWriter cannot be null.";
+            }
+        }
+        public string ExceptionMessage_MessageBusReaderBankCannotBeNull
+        {
+            get
+            {
+                return "ChatMessageService - MessageBusReaderBank cannot be null.";
+            }
+        }
+
+        public string ExceptionMessage_MessageBusBankCannotBeNull
+        {
+            get
+            {
+                return "ChatMessageService - MessageBusBank cannot be null.";
+            }
+        }
+
+        public string ExceptionMessage_MarshallerCannotBeNull
+        {
+            get
+            {
+                return "ChatMessageService - Marshaller cannot be null.";
+            }
+        }
+
         public ChatMessageService()
         {
             _isDisposed = false;
@@ -41,24 +72,40 @@ namespace SharedServices.Services.ChatMessage
 
         public void ProcessMessage(string message)
         {
-            //TODO: For now just echo it back to the sender. Later add all the proper mechanics.
-            IEnvelope envelope = Marshaller.UnMarshall(message);
-            string clientProxyOrigin = envelope.Header_KeyValues[JSONSchemas.ClientProxyOrigin]; 
-            string destinationRoute = envelope.Header_KeyValues[JSONSchemas.DestinationRoute];
-            string destinationRouter = destinationRoute.Split('.')[0];
-            envelope.Header_KeyValues[JSONSchemas.DestinationRoute] = String.Format("{0}.{1}", destinationRouter, clientProxyOrigin);
-            envelope.Header_KeyValues[JSONSchemas.SenderRoute] = destinationRoute;
-            string postRequest = Marshaller.MarshallPayloadJSON(envelope);
-            PostResponse(clientProxyOrigin, postRequest);
+            try
+            {
+                //TODO: For now just echo it back to the sender. Later add all the proper mechanics like database persistence.
+                //TODO: May want to move this chat message service into a WebSocket entry point instead of a RestFul entry point.
+
+                IEnvelope envelope = Marshaller.UnMarshall(message);
+                string clientProxyOrigin = envelope.Header_KeyValues[JSONSchemas.ClientProxyOrigin];
+                string destinationRoute = envelope.Header_KeyValues[JSONSchemas.DestinationRoute];
+                string destinationRouter = destinationRoute.Split('.')[0];
+                envelope.Header_KeyValues[JSONSchemas.DestinationRoute] = String.Format("{0}.{1}", destinationRouter, clientProxyOrigin);
+                envelope.Header_KeyValues[JSONSchemas.SenderRoute] = destinationRoute;
+                string postRequest = Marshaller.MarshallPayloadJSON(envelope);
+                PostResponse(clientProxyOrigin, postRequest);
+            }
+            catch (Exception ex)
+            {
+                new ApplicationException(ex.Message, ex);
+            }
         }
 
         public void Dispose()
         {
-            if(_isDisposed == false)
+            try
             {
-                MessageBusWiter.Dispose();
-                MessageBusReaderBank.Dispose();
-                _isDisposed = true;
+                if (_isDisposed == false)
+                {
+                    MessageBusWiter.Dispose();
+                    MessageBusReaderBank.Dispose();
+                    _isDisposed = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                new ApplicationException(ex.Message, ex);
             }
         }
 

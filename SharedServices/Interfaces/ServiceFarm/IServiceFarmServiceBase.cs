@@ -18,5 +18,10 @@ namespace SharedServices.Interfaces.ServiceFarm
         IMarshaller Marshaller { get; set; }
         Action<string> HandleMessageFromRouter { get; set; }
         bool PostResponse(string clientProxyOrigin, string responseBody);
+
+        string ExceptionMessage_MessageBusWriterCannotBeNull { get; }
+        string ExceptionMessage_MessageBusReaderBankCannotBeNull { get; }
+        string ExceptionMessage_MessageBusBankCannotBeNull { get; }
+        string ExceptionMessage_MarshallerCannotBeNull { get; }
     }
 }
