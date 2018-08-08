@@ -85,6 +85,7 @@ namespace SharedServices.Services.ServiceFarm
                         chatMessageServiceA.MessageBusReaderBank = messageBusReaderBankChangeMessageServiceA;
                         chatMessageServiceA.MessageBusWiter = messageBusWriterChatMessageServiceA;
                         chatMessageServiceA.Marshaller = _erector.Container.Resolve<IMarshaller>();
+                        chatMessageServiceA.MessageBusBank = _messageBusBankServices;
 
                         IRoute<string> routeChatMessageServiceA = _erector.Container.Resolve<IRoute<string>>();
                         routeChatMessageServiceA.Route = ChatServiceNames.ChatMessageService;

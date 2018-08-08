@@ -24,7 +24,6 @@ namespace SharedServices.Models.Constants
         public static string Route = "Route";
         public static string ClientProxyOrigin = "ClientProxyOrigin";
         public static string RequestMethod = "RequestMethod";
-        public static string WebServiceOriginUrl = "WebServiceOriginUrl";
         public static string ServiceNameRequested = "ServiceNameRequested";
 
 
@@ -45,7 +44,6 @@ namespace SharedServices.Models.Constants
                         'DestinationRoute' ,
                         'ClientProxyOrigin' ,
                         'RequestMethod' ,
-                        'WebServiceOriginUrl',
                         'ServiceNameRequested'
                     ],
                     'maxProperties': 2,
@@ -55,7 +53,6 @@ namespace SharedServices.Models.Constants
                         'DestinationRoute': {'type': 'string'},
                         'ClientProxyOrigin': {'type': 'string'},
                         'RequestMethod': {'type': 'string'},
-                        'WebServiceOriginUrl': {'type': 'string'},
                         'ServiceNameRequested': {'type': 'string'}
                     }
                 },
@@ -104,7 +101,6 @@ namespace SharedServices.Models.Constants
                         'DestinationRoute' ,
                         'ClientProxyOrigin' ,
                         'RequestMethod' ,
-                        'WebServiceOriginUrl',
                         'ServiceNameRequested'
                     ],
                     'maxProperties': 2,
@@ -114,7 +110,6 @@ namespace SharedServices.Models.Constants
                         'DestinationRoute': {'type': 'string'},
                         'ClientProxyOrigin': {'type': 'string'},
                         'RequestMethod': {'type': 'string'},
-                        'WebServiceOriginUrl': {'type': 'string'},
                         'ServiceNameRequested': {'type': 'string'}
                     }
                 },
@@ -157,7 +152,6 @@ namespace SharedServices.Models.Constants
                         'DestinationRoute' ,
                         'ClientProxyOrigin' ,
                         'RequestMethod' ,
-                        'WebServiceOriginUrl',
                         'ServiceNameRequested'
                     ],
                     'maxProperties': 2,
@@ -167,7 +161,6 @@ namespace SharedServices.Models.Constants
                         'DestinationRoute': {'type': 'string'},
                         'ClientProxyOrigin': {'type': 'string'},
                         'RequestMethod': {'type': 'string'},
-                        'WebServiceOriginUrl': {'type': 'string'},
                         'ServiceNameRequested': {'type': 'string'}
                     }
                 },

@@ -14,8 +14,9 @@ namespace SharedServices.Interfaces.ServiceFarm
         string ServiceGUID { get; }
         IMessageBusWriter<string> MessageBusWiter { get; set; }  
         IMessageBusReaderBank<string> MessageBusReaderBank { get; set; }
+        IMessageBusBank<string> MessageBusBank { get; set; }
         IMarshaller Marshaller { get; set; }
         Action<string> HandleMessageFromRouter { get; set; }
-        bool Post(string serviceUrl, string responseBody);
+        bool PostResponse(string clientProxyOrigin, string responseBody);
     }
 }
