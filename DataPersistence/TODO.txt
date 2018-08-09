@@ -1,0 +1,9 @@
+﻿
+
+************** TODO *****************
+For now maybe just use JSON to a file. Just until I figure out the below :=)
+
+Research NoSQL vs SQL vs blob stores (scales better for files)
+Research Entity Framework vs NHibernate vs Mongo vs Node/Express vs libuv (roll my own)
+Research File storage options (blobs with SQL, or just Blobs, off-loading files after a number of days to blob from SQL)
+Research service request paging techniques for huge data transfers (chat message searches, chat messages for a dataTime range)

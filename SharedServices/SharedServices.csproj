@@ -78,6 +78,9 @@
   <ItemGroup>
     <Compile Include="Interfaces\ChatMessage\IChatMessageService.cs" />
     <Compile Include="Interfaces\Envelope\IEnvelopeFactory.cs" />
+    <Compile Include="Interfaces\Envelope\IGetChatMessagesEnvelope.cs" />
+    <Compile Include="Interfaces\Envelope\IGetNewChatMessageEnvelope.cs" />
+    <Compile Include="Interfaces\Envelope\IPostChatMessageEnvelope.cs" />
     <Compile Include="Interfaces\Proxy\IClientProxy.cs" />
     <Compile Include="Interfaces\Routing\IMessageBusBank.cs" />
     <Compile Include="Interfaces\Routing\IMessageBusReaderBank.cs" />
