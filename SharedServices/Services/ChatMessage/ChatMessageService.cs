@@ -74,17 +74,12 @@ namespace SharedServices.Services.ChatMessage
         {
             try
             {
-                //TODO: For now just echo it back to the sender. Later add all the proper mechanics like database persistence.
-                //TODO: May want to move this chat message service into a WebSocket entry point instead of a RestFul entry point.
+                //TODO: For now just echo it back to the sender. Later add hooks to the GET, POST, PUT, DELETE methods.
+                //TODO: I want to move this chat message service into a WebSocket entry point instead of a RestFul entry point.
 
-                IEnvelope envelope = Marshaller.UnMarshall(message);
-                string clientProxyOrigin = envelope.Header_KeyValues[JSONSchemas.ClientProxyOrigin];
-                string destinationRoute = envelope.Header_KeyValues[JSONSchemas.DestinationRoute];
-                string destinationRouter = destinationRoute.Split('.')[0];
-                envelope.Header_KeyValues[JSONSchemas.DestinationRoute] = String.Format("{0}.{1}", destinationRouter, clientProxyOrigin);
-                envelope.Header_KeyValues[JSONSchemas.SenderRoute] = destinationRoute;
-                string postRequest = Marshaller.MarshallPayloadJSON(envelope);
-                PostResponse(clientProxyOrigin, postRequest);
+                IChatMessageEnvelope envelope = Marshaller.UnMarshall<IChatMessageEnvelope>(message);
+                string ClientProxyGUID = envelope.ClientProxyGUID;   
+                SendResponse(ClientProxyGUID, message);
             }
             catch (Exception ex)
             {
@@ -109,16 +104,36 @@ namespace SharedServices.Services.ChatMessage
             }
         }
 
-        public bool PostResponse(string clientProxyOrigin, string responseBody)
+        public bool SendResponse(string ClientProxyGUID, string responseBody)
         {
             try
             {
-               return MessageBusBank.ResolveMessageBus(clientProxyOrigin).SendMessage(responseBody);                
+               return MessageBusBank.ResolveMessageBus(ClientProxyGUID).SendMessage(responseBody);                
             }
             catch (Exception ex)
             {
                 throw new ApplicationException(ex.Message, ex);
             }
+        }
+
+        public string GetNewest(IChatMessageEnvelope request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Put(IChatMessageEnvelope request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Post(IChatMessageEnvelope request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Delete(IChatMessageEnvelope request)
+        {
+            throw new NotImplementedException();
         }
     }
 }

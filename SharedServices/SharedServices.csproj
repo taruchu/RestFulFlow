@@ -43,6 +43,10 @@
       <HintPath>..\packages\Newtonsoft.Json.Schema.3.0.10\lib\net45\Newtonsoft.Json.Schema.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.0.0\ref\netcoreapp2.0\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Threading.Tasks.Dataflow, Version=4.6.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Dataflow.4.8.0\lib\netstandard2.0\System.Threading.Tasks.Dataflow.dll</HintPath>
@@ -77,10 +81,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\ChatMessage\IChatMessageService.cs" />
+    <Compile Include="Interfaces\Envelope\IChatMessageEnvelopeFactory.cs" />
     <Compile Include="Interfaces\Envelope\IEnvelopeFactory.cs" />
-    <Compile Include="Interfaces\Envelope\IGetChatMessagesEnvelope.cs" />
-    <Compile Include="Interfaces\Envelope\IGetNewChatMessageEnvelope.cs" />
-    <Compile Include="Interfaces\Envelope\IPostChatMessageEnvelope.cs" />
+    <Compile Include="Interfaces\Envelope\IChatMessageEnvelope.cs" />
     <Compile Include="Interfaces\Proxy\IClientProxy.cs" />
     <Compile Include="Interfaces\Routing\IMessageBusBank.cs" />
     <Compile Include="Interfaces\Routing\IMessageBusReaderBank.cs" />
@@ -98,7 +101,6 @@
     <Compile Include="Interfaces\Transactions\TransactionOutcome.cs" />
     <Compile Include="Interfaces\Transactions\SeverityLevel.cs" />
     <Compile Include="Models\Constants\ConfigurationConstants.cs" />
-    <Compile Include="Models\Constants\JSONSchemas.cs" />
     <Compile Include="Models\Constants\ChatServiceNames.cs" />
     <Compile Include="Interfaces\Envelope\IEnvelope.cs" />
     <Compile Include="Interfaces\IOC\IIOCFactory.cs" />
@@ -106,6 +108,8 @@
     <Compile Include="Interfaces\IOC\IIOCContainer.cs" />
     <Compile Include="Interfaces\Marshall\IImplementationTypeResolver.cs" />
     <Compile Include="Interfaces\Marshall\IMarshaller.cs" />
+    <Compile Include="Models\Envelope\ChatMessageEnvelope.cs" />
+    <Compile Include="Models\Envelope\ChatMessageEnvelopeFactory.cs" />
     <Compile Include="Models\Envelope\Envelope.cs" />
     <Compile Include="Models\Envelope\EnvelopeFactory.cs" />
     <Compile Include="Models\Routing\Route.cs" />

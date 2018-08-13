@@ -17,7 +17,7 @@ namespace SharedServices.Interfaces.ServiceFarm
         IMessageBusBank<string> MessageBusBank { get; set; }
         IMarshaller Marshaller { get; set; }
         Action<string> HandleMessageFromRouter { get; set; }
-        bool PostResponse(string clientProxyOrigin, string responseBody);
+        bool SendResponse(string clientProxyGUID, string responseBody);
 
         string ExceptionMessage_MessageBusWriterCannotBeNull { get; }
         string ExceptionMessage_MessageBusReaderBankCannotBeNull { get; }

@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace SharedServices.Interfaces.Envelope
 {
-    interface IGetNewChatMessageEnvelope
+    public interface IChatMessageEnvelopeFactory
     {
-        /*
-         * NOTE: This is used to get the newest chat message for a channel. 
-         * 
-         */
+        IChatMessageEnvelope InstantiateIEnvelope();
+        Type ResolveImplementationType();
     }
 }

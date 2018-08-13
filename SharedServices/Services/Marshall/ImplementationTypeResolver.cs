@@ -10,15 +10,17 @@ namespace SharedServices.Services.Marshall
     { 
         private ITransactionResultFactory _transactionResultFactory { get; set; }
         private IEnvelopeFactory _envelopeFactory { get; set; }
+        private IChatMessageEnvelopeFactory _chatMessageEnvelopeFactory { get; set; }
 
 
         public ImplementationTypeResolver( 
             ITransactionResultFactory transactionResultFactory,
-            IEnvelopeFactory envelope
+            IEnvelopeFactory envelopeFactory , IChatMessageEnvelopeFactory chatMessageEnvelopeFactory
             )
         { 
             _transactionResultFactory = transactionResultFactory;
-            _envelopeFactory = envelope;
+            _envelopeFactory = envelopeFactory;
+            _chatMessageEnvelopeFactory = chatMessageEnvelopeFactory;
         }
 
         public Type ResolveImplementationType<T>()
@@ -27,11 +29,13 @@ namespace SharedServices.Services.Marshall
             {
                 Type incomingType = typeof(T);
 
-                 
+
                 if (incomingType == typeof(ITransactionResult))
-                    return _transactionResultFactory.ResolveImplementationType();  
+                    return _transactionResultFactory.ResolveImplementationType();
                 else if (incomingType == typeof(IEnvelope))
                     return _envelopeFactory.ResolveImplementationType();
+                else if (incomingType == typeof(IChatMessageEnvelope))
+                    return _chatMessageEnvelopeFactory.ResolveImplementationType();
                 else
                     throw new ApplicationException("ImplementationTypeResolver.ResolveImplementationType: The type " + incomingType.ToString() + " is not supported");
 

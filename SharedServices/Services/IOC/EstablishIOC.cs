@@ -13,6 +13,7 @@ using SharedServices.Models.EnvelopeModel;
 using SharedServices.Interfaces.Transactions;
 using SharedServices.Models.Transactions;
 using SharedServices.Services.Transaction;
+using SharedServices.Models.Envelope;
 
 namespace SharedServices.Services.IOC
 {
@@ -31,6 +32,8 @@ namespace SharedServices.Services.IOC
                 .Register<ITCPAvailablePortsService, TCPAvailablePortsService>() 
                 .Register<IEnvelope, EnvelopeModel>()
                 .Register<IEnvelopeFactory, EnvelopeFactory>()
+                .Register<IChatMessageEnvelope, ChatMessageEnvelope>()
+                .Register<IChatMessageEnvelopeFactory, ChatMessageEnvelopeFactory>()
                 .Register<IMarshaller, Marshaller>()
                 .Register<ITransactionResult, TransactionResult>()
                 .Register<ITransactionResultFactory, TransactionResultFactory>()

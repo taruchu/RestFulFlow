@@ -1,28 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SharedServices.Interfaces.Envelope
 {
     public interface IEnvelope
     {
-        //Refactor NOTE: This interface will represent a un-Marshalled JSON message passed around using message buses.
-        //Need to refactor this so that it contains key,value pair tables. One for
-        //the filter and the other for the payload. Also there should be a Header key, value 
-        //pair table for defining such things as sender route and destination route. This is important so 
-        //that after a service processes a request, they can send the response back to the sender route using
-        //the routing service's message bus. Each service will have a reference to the message bus bank and they will also
-        //have the <RouterBusKeyCode> for their local routing service. This will allow them to send messages to through their router.
-        //all other coupling between services will be removed.
-
-        //Each service's message bus
-        //will define a JSON schema to validate this envelope before it consumes it. If it doesn't pass validation
-        //the message bus should log the error for debugging and then drop the envelope.
-        //
+        /*
+         * TODO: Remove key value pairs.
+         * This interface will represent the base interface for all service envelopes.
+         * It will contain a function for returning the JSON schema of the envelope.
+         * It will contain a function for returning the envelope type.
+         * It will contain properties that all services have in common like headers.
+         * 
+         */
          
-        Dictionary<string, string> Header_KeyValues { get; set; }
-        Dictionary<string, string> Filter_KeyValues { get; set; }
-        Dictionary<string, string> Payload_KeyValues { get; set; }
-        void InitializeThisEnvelopeFor_RoutingService();
-        void InitializeThisEnvelopeFor_PersistenceService();
-        void InitializeThisEnvelopeFor_ChatMessageService();
+        [Required]        
+        string ServiceRoute { get; set; } 
+        [Required]
+        string ClientProxyGUID { get; set; } 
+        [Required]
+        string RequestMethod { get; set; }
+
+        string GetMyJSONSchema();
+        Type GetMyEnvelopeType(); 
     }
 }

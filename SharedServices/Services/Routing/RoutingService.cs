@@ -134,8 +134,7 @@ namespace SharedServices.Services.Routing
                     else
                     {                        
                         IEnvelope envelope = Marshaller.UnMarshall(jsonMessage);
-                        string destinationRoute = envelope.Header_KeyValues[JSONSchemas.DestinationRoute];
-                        return destinationRoute;
+                        return envelope.ServiceRoute; 
                     }
                 }
                 catch(InvalidOperationException ex)
@@ -231,30 +230,9 @@ namespace SharedServices.Services.Routing
         {
             lock (_thisLock)
             {
-                string destinationRoute = ParseMessageForRoute(message);
-                if (destinationRoute == RoutingServiceGUID)//NOTE: This message is for the router.
-                {
-                    if (Marshaller == null)
-                        throw new InvalidOperationException(ExceptionMessage_MarshallerCannotBeNull);
-                    else
-                    {
-                        //TODO: Support for marshalling another object type into IEnvelope ? Overloads ??
-                        string jsonMessage = (string)Convert.ChangeType(message, typeof(string));
-                        IEnvelope envelope = Marshaller.UnMarshall(jsonMessage);
-                        string routingServiceCommand = envelope.Payload_KeyValues[JSONSchemas.RoutingServiceCommand];
-                        string routingServiceRoute = envelope.Payload_KeyValues[JSONSchemas.Route];
-                        IRoute<T> route = Marshaller.UnMarshall<IRoute<T>>(routingServiceRoute);
-                        if (routingServiceCommand == JSONSchemas.RoutingServiceCommandRegister)
-                            RegisterRoute(route);
-                        else if (routingServiceCommand == JSONSchemas.RoutingServiceCommandRelease)
-                            ReleaseRoute(route);
-                    }
-                }
-                else
-                {
-                    Action<T> reslovedRoute = ResolveRoute(destinationRoute);
-                    ForwardMessageToResolvedRoute(reslovedRoute, message);
-                }
+                string destinationRoute = ParseMessageForRoute(message); 
+                Action<T> reslovedRoute = ResolveRoute(destinationRoute);
+                ForwardMessageToResolvedRoute(reslovedRoute, message); 
             }
         }
 

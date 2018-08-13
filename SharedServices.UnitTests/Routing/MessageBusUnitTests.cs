@@ -31,14 +31,15 @@ namespace SharedServices.UnitTests.Routing
         {
             IMarshaller marshaller = _erector.Container.Resolve<IMarshaller>();
             IEnvelope envelope = _erector.Container.Resolve<IEnvelope>();
+            IChatMessageEnvelope chatMessagesEnvelope = _erector.Container.Resolve<IChatMessageEnvelope>();
             IMessageBus<string> messageBus = _erector.Container.Resolve<IMessageBus<string>>(); 
 
-            envelope.InitializeThisEnvelopeFor_RoutingService();
+             
             string message = marshaller.MarshallPayloadJSON(envelope);
-            bool isValid = messageBus.ValidateMessage(message, JSONSchemas.RoutingServiceSchema);
+            bool isValid = messageBus.ValidateMessage(message, envelope.GetMyJSONSchema());
             Assert.IsTrue(isValid);
 
-            isValid = messageBus.ValidateMessage(message, JSONSchemas.ChatMessageServiceSchema);
+            isValid = messageBus.ValidateMessage(message, chatMessagesEnvelope.GetMyJSONSchema());
             Assert.IsFalse(isValid);
         }
          
@@ -49,11 +50,18 @@ namespace SharedServices.UnitTests.Routing
             IEnvelope envelope = _erector.Container.Resolve<IEnvelope>();
             IMessageBus<string> messageBus = _erector.Container.Resolve<IMessageBus<string>>();
 
-            envelope.InitializeThisEnvelopeFor_RoutingService();
+             
             string message = marshaller.MarshallPayloadJSON(envelope);
 
             Assert.IsTrue(messageBus.IsEmpty());
-
+            try
+            {
+                messageBus.SendMessage(null);
+            }
+            catch (InvalidOperationException ex)
+            {
+                Assert.AreEqual(ex.Message, messageBus.ExceptionMessage_MessageCannotBeNull);
+            }
             try
             {
                 messageBus.SendMessage(message);
@@ -62,7 +70,7 @@ namespace SharedServices.UnitTests.Routing
             {
                 Assert.AreEqual(ex.Message, messageBus.ExceptionMessage_JSONSchemaCannotBeNullOrEmpty);
             }
-            messageBus.JsonSchema = JSONSchemas.RoutingServiceSchema;
+            messageBus.JsonSchema = (messagebusmessage) => envelope.GetMyJSONSchema();
             messageBus.SendMessage(message);
             
             Assert.IsFalse(messageBus.IsEmpty());

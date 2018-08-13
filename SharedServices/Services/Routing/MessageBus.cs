@@ -29,12 +29,20 @@ namespace SharedServices.Services.Routing
         }
         private string _messageBusGUID { get; set; }
         private ConcurrentQueue<T> _bus { get; set; }
-        public string JsonSchema { get; set; }
+        public Func<T, string> JsonSchema { get; set; }
         public string ExceptionMessage_JSONSchemaCannotBeNullOrEmpty
         {
             get
             {
                 return "MessageBus<T> - JsonSchema is null or empty.";
+            }
+        }
+
+        public string ExceptionMessage_MessageCannotBeNull
+        {
+            get
+            {
+                return "MessageBus<T> - Message cannot be null.";
             }
         }
 
@@ -74,7 +82,11 @@ namespace SharedServices.Services.Routing
             {
                 try
                 {
-                    if (ValidateMessage(message, JsonSchema)) 
+                    if(message == null)
+                        throw new InvalidOperationException(ExceptionMessage_MessageCannotBeNull);
+                    if (JsonSchema == null)
+                        throw new InvalidOperationException(ExceptionMessage_JSONSchemaCannotBeNullOrEmpty);
+                    else if (ValidateMessage(message, JsonSchema(message))) 
                         _bus.Enqueue(message);  
                     return true;  
                 }

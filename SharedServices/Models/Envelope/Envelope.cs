@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json.Schema.Generation;
 using SharedServices.Interfaces.Envelope;
 using SharedServices.Models.Constants;
 
@@ -6,64 +8,24 @@ namespace SharedServices.Models.EnvelopeModel
 {
     public class EnvelopeModel : IEnvelope
     { 
-       
-        public Dictionary<string, string> Header_KeyValues { get; set; }
-        public Dictionary<string, string> Filter_KeyValues { get; set; }
-        public Dictionary<string, string> Payload_KeyValues { get; set; }
-        public string JsonSchemas { get; private set; }
-
         public EnvelopeModel()
         { 
-            Header_KeyValues = new Dictionary<string, string>();
-            Filter_KeyValues = new Dictionary<string, string>();
-            Payload_KeyValues = new Dictionary<string, string>();
+             
         }
 
-        public void InitializeThisEnvelopeFor_RoutingService()
+        public string ServiceRoute { get; set; }
+        public string ClientProxyGUID { get; set; }
+        public string RequestMethod { get; set; }
+
+        public Type GetMyEnvelopeType()
         {
-            this.Header_KeyValues.Clear();
-            this.Header_KeyValues.Add(JSONSchemas.SenderRoute, string.Empty);
-            this.Header_KeyValues.Add(JSONSchemas.DestinationRoute, string.Empty);
-            this.Header_KeyValues.Add(JSONSchemas.ClientProxyOrigin, string.Empty);
-            this.Header_KeyValues.Add(JSONSchemas.RequestMethod, string.Empty);
-            this.Header_KeyValues.Add(JSONSchemas.ServiceNameRequested, string.Empty);
-            this.Payload_KeyValues.Clear();
-            this.Payload_KeyValues.Add(JSONSchemas.RoutingServiceCommand, string.Empty);
-            this.Payload_KeyValues.Add(JSONSchemas.Route, string.Empty);
-        }
-        
-        public void InitializeThisEnvelopeFor_PersistenceService()
-        {
-            this.Header_KeyValues.Clear();
-            this.Header_KeyValues.Add(JSONSchemas.SenderRoute, string.Empty);
-            this.Header_KeyValues.Add(JSONSchemas.DestinationRoute, string.Empty);
-            this.Header_KeyValues.Add(JSONSchemas.ClientProxyOrigin, string.Empty);
-            this.Header_KeyValues.Add(JSONSchemas.RequestMethod, string.Empty);
-            this.Header_KeyValues.Add(JSONSchemas.ServiceNameRequested, string.Empty);
-            this.Payload_KeyValues.Clear();
-            this.Payload_KeyValues.Add(JSONSchemas.PersistenceServiceCommand, string.Empty);
-            this.Payload_KeyValues.Add(JSONSchemas.StorageMechanism, string.Empty);
-            this.Payload_KeyValues.Add(JSONSchemas.StorageID, string.Empty);
-            this.Payload_KeyValues.Add(JSONSchemas.StoragePayload, string.Empty); 
+            return typeof(IEnvelope);
         }
 
-        public void InitializeThisEnvelopeFor_ChatMessageService()
+        public string GetMyJSONSchema()
         {
-            this.Header_KeyValues.Clear();
-            this.Header_KeyValues.Add(JSONSchemas.SenderRoute, string.Empty);
-            this.Header_KeyValues.Add(JSONSchemas.DestinationRoute, string.Empty);
-            this.Header_KeyValues.Add(JSONSchemas.ClientProxyOrigin, string.Empty);
-            this.Header_KeyValues.Add(JSONSchemas.RequestMethod, string.Empty);
-            this.Header_KeyValues.Add(JSONSchemas.ServiceNameRequested, string.Empty);
-            this.Payload_KeyValues.Clear();
-            this.Payload_KeyValues.Add(JSONSchemas.ChatMessageChannelName, string.Empty);
-            this.Payload_KeyValues.Add(JSONSchemas.ChatMessageServiceCommand, string.Empty);
-            this.Payload_KeyValues.Add(JSONSchemas.ChatMessageBody, string.Empty);
-            this.Payload_KeyValues.Add(JSONSchemas.ChatMessageGUID, string.Empty);
-            this.Payload_KeyValues.Add(JSONSchemas.ChatMessagePostedDateTimeStamp, string.Empty);
-            this.Payload_KeyValues.Add(JSONSchemas.ChatMessageSender, string.Empty);
-            this.Payload_KeyValues.Add(JSONSchemas.ChatMessage, string.Empty);
-            this.Payload_KeyValues.Add(JSONSchemas.ChatMessageTags, string.Empty); 
+            JSchemaGenerator generator = new JSchemaGenerator();
+            return generator.Generate(typeof(IEnvelope)).ToString();
         }
     }
 }

@@ -115,9 +115,9 @@ namespace SharedServices.UnitTests.Routing
         {
             IRoutingService<string> routingService = _erector.Container.Resolve<IRoutingService<string>>();
             IEnvelope envelope = _erector.Container.Resolve<IEnvelope>(); 
-            envelope.InitializeThisEnvelopeFor_RoutingService();
-            string destinationRoute = "123.789";
-            envelope.Header_KeyValues[JSONSchemas.DestinationRoute] = destinationRoute;
+            
+            string serviceRoute = "123.789";
+            envelope.ServiceRoute = serviceRoute;
             IMarshaller marshaller = _erector.Container.Resolve<IMarshaller>();
             string jsonMessage = marshaller.MarshallPayloadJSON(envelope);
             string parsedRoute;
@@ -141,7 +141,7 @@ namespace SharedServices.UnitTests.Routing
             }
             routingService.Marshaller = _erector.Container.Resolve<IMarshaller>();
             parsedRoute = routingService.ParseMessageForRoute(jsonMessage);
-            Assert.AreEqual(parsedRoute, destinationRoute);
+            Assert.AreEqual(parsedRoute, serviceRoute);
         }
 
         [TestMethod]

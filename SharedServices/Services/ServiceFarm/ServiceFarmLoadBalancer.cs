@@ -1,8 +1,10 @@
 ﻿using log4net;
 using log4net.Config;
+using Newtonsoft.Json.Linq;
 using SharedServices.Interfaces.ChatMessage;
 using SharedServices.Interfaces.Envelope;
 using SharedServices.Interfaces.Marshaller;
+using SharedServices.Interfaces.Proxy;
 using SharedServices.Interfaces.Routing;
 using SharedServices.Interfaces.ServiceFarm;
 using SharedServices.Models.Constants;
@@ -27,8 +29,7 @@ namespace SharedServices.Services.ServiceFarm
         private IMessageBusBank<string> _messageBusBankServices { get; set; } 
         private bool _isDisposed { get; set; }
         private object _thisLock { get; set; }
-        private IMarshaller _marshaller { get; set; }
-        private ConcurrentDictionary<string, string> _clientProxyRouters { get; set; }
+        private IMarshaller _marshaller { get; set; } 
 
         public ServiceFarmLoadBalancer()
         {
@@ -37,8 +38,7 @@ namespace SharedServices.Services.ServiceFarm
             _isDisposed = false;
             _serviceList = new List<IDisposable>();            
             _erector = new ErectDIContainer();
-            _marshaller = _erector.Container.Resolve<IMarshaller>();
-            _clientProxyRouters = new ConcurrentDictionary<string, string>();
+            _marshaller = _erector.Container.Resolve<IMarshaller>(); 
             CompositionRoute();
         }
 
@@ -55,7 +55,15 @@ namespace SharedServices.Services.ServiceFarm
                     //**** Set up Network A ****/
                         //NOTE: Set up router A
                         IMessageBus<string> messageBusRouterA = _erector.Container.Resolve<IMessageBus<string>>();
-                        messageBusRouterA.JsonSchema = JSONSchemas.RoutingServiceSchema;
+                        messageBusRouterA.JsonSchema =
+                        (message) =>
+                        {
+                            string serviceName = _marshaller.UnMarshall<IEnvelope>(message).ServiceRoute.Split('.')[1];
+                            if (serviceName == ChatServiceNames.ChatMessageService)
+                                return _erector.Container.Resolve<IChatMessageEnvelope>().GetMyJSONSchema();
+                            else
+                                return String.Empty;
+                        };
 
                         IMessageBusReaderBank<string> messageBusReaderBankRouterA = _erector.Container.Resolve<IMessageBusReaderBank<string>>();
                         messageBusReaderBankRouterA.SpecifyTheMessageBus(messageBusRouterA);
@@ -73,7 +81,11 @@ namespace SharedServices.Services.ServiceFarm
 
                         //NOTE: Set up the ChatMessageService A
                         IMessageBus<string> messageBusChatMessageServiceA = _erector.Container.Resolve<IMessageBus<string>>();
-                        messageBusChatMessageServiceA.JsonSchema = JSONSchemas.ChatMessageServiceSchema;
+                        messageBusChatMessageServiceA.JsonSchema =
+                        (message) =>
+                        {
+                            return _erector.Container.Resolve<IChatMessageEnvelope>().GetMyJSONSchema();
+                        };
 
                         IMessageBusReaderBank<string> messageBusReaderBankChangeMessageServiceA = _erector.Container.Resolve<IMessageBusReaderBank<string>>();
                         messageBusReaderBankChangeMessageServiceA.SpecifyTheMessageBus(messageBusChatMessageServiceA);
@@ -88,7 +100,7 @@ namespace SharedServices.Services.ServiceFarm
                         chatMessageServiceA.MessageBusBank = _messageBusBankServices;
 
                         IRoute<string> routeChatMessageServiceA = _erector.Container.Resolve<IRoute<string>>();
-                        routeChatMessageServiceA.Route = ChatServiceNames.ChatMessageService;
+                        routeChatMessageServiceA.Route = String.Format("{0}.{1}", routingServiceRouterA.RoutingServiceGUID, ChatServiceNames.ChatMessageService);
                         routeChatMessageServiceA.RegisterRouteHandler = chatMessageServiceA.HandleMessageFromRouter;
                         routingServiceRouterA.RegisterRoute(routeChatMessageServiceA);
 
@@ -119,31 +131,20 @@ namespace SharedServices.Services.ServiceFarm
             }
         }
 
-        public bool SendServiceRequest(string clientProxyOrigin,  string requestEnvelope)
+        public bool SendServiceRequest(string ClientProxyGUID,  string requestEnvelope)
         {
             lock(_thisLock)
             {
                 try
                 {
+                    IEnvelope envelope = _marshaller.UnMarshall(requestEnvelope); 
+                    int routerIndex = LoadBalanceAlgorithm(_messageBusBankRouters.GetBusKeyCodes().Count);
+                    string routerBusKeyCode = _messageBusBankRouters.GetBusKeyCodes()[routerIndex];
+                    string serviceName = envelope.ServiceRoute;
+                    envelope.ServiceRoute = String.Format("{0}.{1}", routerBusKeyCode, serviceName); //NOTE: Salt the route by adding the router.                        
                      
-                    string routerDetermined = String.Empty;
-                    string destinationRouteDetermined = String.Empty;                      
-
-                    IEnvelope envelope = _marshaller.UnMarshall(requestEnvelope);
-                    routerDetermined = envelope.Header_KeyValues[JSONSchemas.DestinationRoute].Split('.')[0];
-                    if(String.IsNullOrEmpty(routerDetermined))
-                    {
-                        int routerIndex = LoadBalanceAlgorithm(_messageBusBankRouters.GetBusKeyCodes().Count);
-                        routerDetermined = _messageBusBankRouters.GetBusKeyCodes()[routerIndex];
-                    }
-                        
-                    string serviceNameRequested = envelope.Header_KeyValues[JSONSchemas.ServiceNameRequested];
-                    destinationRouteDetermined = String.Format("{0}.{1}", routerDetermined, serviceNameRequested);
-                    envelope.Header_KeyValues[JSONSchemas.DestinationRoute] = destinationRouteDetermined; 
-                    envelope.Header_KeyValues[JSONSchemas.ClientProxyOrigin] = clientProxyOrigin;  
-
                     string saltedRequest = _marshaller.MarshallPayloadJSON(envelope);
-                    _messageBusBankRouters.ResolveMessageBus(routerDetermined).SendMessage(saltedRequest);
+                    _messageBusBankRouters.ResolveMessageBus(routerBusKeyCode).SendMessage(saltedRequest);
                     return true;
                 }
                 catch (Exception ex)
@@ -160,53 +161,27 @@ namespace SharedServices.Services.ServiceFarm
             return 0;
         }
 
-        public bool SendRegistrationToRouterRequest(string clientProxyOrigin, Action<string> responseCallback)
+        public bool RegisterClientProxyMessageBus(string clientProxyGUID, IMessageBus<string> messageBus)
         {
-            lock (_thisLock)
+            try
             {
-                int routerIndex = LoadBalanceAlgorithm(_messageBusBankRouters.GetBusKeyCodes().Count);
-                string routerDetermined = _messageBusBankRouters.GetBusKeyCodes()[routerIndex];
-                _clientProxyRouters.TryAdd(clientProxyOrigin, routerDetermined);
-                string destinationRouteDetermined = String.Format("{0}.{1}", routerDetermined, clientProxyOrigin);
-
-                IEnvelope register = _erector.Container.Resolve<IEnvelope>();
-                register.InitializeThisEnvelopeFor_RoutingService();
-
-                IRoute<string> route = _erector.Container.Resolve<IRoute<string>>();
-                route.Route = destinationRouteDetermined;
-                route.RegisterRouteHandler = responseCallback; 
-                 
-                register.Header_KeyValues[JSONSchemas.ClientProxyOrigin] = clientProxyOrigin;
-                register.Header_KeyValues[JSONSchemas.DestinationRoute] = destinationRouteDetermined;
-                register.Payload_KeyValues[JSONSchemas.Route] = _marshaller.MarshallPayloadJSON(route);
-                register.Payload_KeyValues[JSONSchemas.RoutingServiceCommand] = JSONSchemas.RoutingServiceCommandRegister;
-
-                string registrationEnvelope = _marshaller.MarshallPayloadJSON(register);
-                _messageBusBankRouters.ResolveMessageBus(routerDetermined).SendMessage(registrationEnvelope);
-
-                return true; 
-            } 
+               return _messageBusBankServices.RegisterMessageBus(clientProxyGUID, messageBus);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException(ex.Message, ex);
+            }
         }
 
-        public bool SendReleaseRegistrationToRouterRequest(string clientProxyOrigin)
+        public bool ReleaseClientProxyMessageBus(string clientProxyGUID)
         {
-            lock (_thisLock)
+            try
             {
-                string routerDetermined = String.Empty;
-                if (_clientProxyRouters.TryGetValue(clientProxyOrigin, out routerDetermined) == false)
-                    return false;
-
-                string destinationRouteDetermined = String.Format("{0}.{1}", routerDetermined, clientProxyOrigin);
-                IEnvelope register = _erector.Container.Resolve<IEnvelope>();
-                register.InitializeThisEnvelopeFor_RoutingService();  
-                register.Header_KeyValues[JSONSchemas.ClientProxyOrigin] = clientProxyOrigin;
-                register.Header_KeyValues[JSONSchemas.DestinationRoute] = destinationRouteDetermined; 
-                register.Payload_KeyValues[JSONSchemas.RoutingServiceCommand] = JSONSchemas.RoutingServiceCommandRelease;
-
-                string registrationEnvelope = _marshaller.MarshallPayloadJSON(register);
-                _messageBusBankRouters.ResolveMessageBus(routerDetermined).SendMessage(registrationEnvelope);
-
-                return true;
+               return _messageBusBankServices.ReleaseMessageBus(clientProxyGUID);
+            }
+            catch(Exception ex)
+            {
+                throw new ApplicationException(ex.Message, ex);
             }
         }
     }
