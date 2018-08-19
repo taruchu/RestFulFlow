@@ -1,5 +1,5 @@
 ﻿using System;
-using SharedServices.Interfaces.Envelope;
+using SharedInterfaces.Interfaces.Envelope;
 
 namespace SharedServices.Models.EnvelopeModel
 {

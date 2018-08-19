@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using Newtonsoft.Json.Schema.Generation;
-using SharedServices.Interfaces.Envelope;
-using SharedServices.Models.Constants;
+using SharedInterfaces.Interfaces.Envelope;
 
 namespace SharedServices.Models.EnvelopeModel
 {

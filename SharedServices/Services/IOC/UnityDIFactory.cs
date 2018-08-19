@@ -1,4 +1,4 @@
-﻿using SharedServices.Interfaces.IOC;
+﻿using SharedInterfaces.Interfaces.IOC;
 
 namespace SharedServices.Services.IOC
 {

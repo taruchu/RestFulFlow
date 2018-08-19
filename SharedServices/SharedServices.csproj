@@ -80,34 +80,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\ChatMessage\IChatMessageService.cs" />
-    <Compile Include="Interfaces\Envelope\IChatMessageEnvelopeFactory.cs" />
-    <Compile Include="Interfaces\Envelope\IEnvelopeFactory.cs" />
-    <Compile Include="Interfaces\Envelope\IChatMessageEnvelope.cs" />
-    <Compile Include="Interfaces\Proxy\IClientProxy.cs" />
-    <Compile Include="Interfaces\Routing\IMessageBusBank.cs" />
-    <Compile Include="Interfaces\Routing\IMessageBusReaderBank.cs" />
-    <Compile Include="Interfaces\Routing\IMessageBusWriter.cs" />
-    <Compile Include="Interfaces\Routing\IRoute.cs" />
-    <Compile Include="Interfaces\Routing\IRouteFactory.cs" />
-    <Compile Include="Interfaces\Routing\IRoutingService.cs" />
-    <Compile Include="Interfaces\Routing\IMessageBus.cs" />
-    <Compile Include="Interfaces\Routing\IRoutingTable.cs" />
-    <Compile Include="Interfaces\ServiceFarm\IServiceFarmLoadBalancer.cs" />
-    <Compile Include="Interfaces\ServiceFarm\IServiceFarmServiceBase.cs" />
-    <Compile Include="Interfaces\TCP\ITCPAvailablePortsService.cs" />
-    <Compile Include="Interfaces\Transactions\ITransactionResultFactory.cs" />
-    <Compile Include="Interfaces\Transactions\ITransactionResult.cs" />
-    <Compile Include="Interfaces\Transactions\TransactionOutcome.cs" />
-    <Compile Include="Interfaces\Transactions\SeverityLevel.cs" />
     <Compile Include="Models\Constants\ConfigurationConstants.cs" />
     <Compile Include="Models\Constants\ChatServiceNames.cs" />
-    <Compile Include="Interfaces\Envelope\IEnvelope.cs" />
-    <Compile Include="Interfaces\IOC\IIOCFactory.cs" />
-    <Compile Include="Interfaces\IOC\IIOCEstablishment.cs" />
-    <Compile Include="Interfaces\IOC\IIOCContainer.cs" />
-    <Compile Include="Interfaces\Marshall\IImplementationTypeResolver.cs" />
-    <Compile Include="Interfaces\Marshall\IMarshaller.cs" />
     <Compile Include="Models\Envelope\ChatMessageEnvelope.cs" />
     <Compile Include="Models\Envelope\ChatMessageEnvelopeFactory.cs" />
     <Compile Include="Models\Envelope\Envelope.cs" />
@@ -149,6 +123,12 @@
   <ItemGroup>
     <Folder Include="Models\ChatMessage\" />
     <Folder Include="Models\Configuration\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharedInterfaces\SharedInterfaces.csproj">
+      <Project>{76ae1c26-7e66-4d12-b2b5-2de41687050c}</Project>
+      <Name>SharedInterfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

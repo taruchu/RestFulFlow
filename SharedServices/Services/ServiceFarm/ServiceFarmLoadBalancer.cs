@@ -1,22 +1,14 @@
 ﻿using log4net;
 using log4net.Config;
-using Newtonsoft.Json.Linq;
-using SharedServices.Interfaces.ChatMessage;
-using SharedServices.Interfaces.Envelope;
-using SharedServices.Interfaces.Marshaller;
-using SharedServices.Interfaces.Proxy;
-using SharedServices.Interfaces.Routing;
-using SharedServices.Interfaces.ServiceFarm;
+using SharedInterfaces.Interfaces.ChatMessage;
+using SharedInterfaces.Interfaces.Envelope;
+using SharedInterfaces.Interfaces.Marshaller;
+using SharedInterfaces.Interfaces.Routing;
+using SharedInterfaces.Interfaces.ServiceFarm;
 using SharedServices.Models.Constants;
 using SharedServices.Services.IOC;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedServices.Services.ServiceFarm
 {
@@ -163,6 +155,7 @@ namespace SharedServices.Services.ServiceFarm
 
         public bool RegisterClientProxyMessageBus(string clientProxyGUID, IMessageBus<string> messageBus)
         {
+            //TODO: Error messages
             try
             {
                return _messageBusBankServices.RegisterMessageBus(clientProxyGUID, messageBus);
@@ -175,6 +168,7 @@ namespace SharedServices.Services.ServiceFarm
 
         public bool ReleaseClientProxyMessageBus(string clientProxyGUID)
         {
+            //TODO: Error messages
             try
             {
                return _messageBusBankServices.ReleaseMessageBus(clientProxyGUID);

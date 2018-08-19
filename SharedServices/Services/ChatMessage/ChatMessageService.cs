@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using SharedServices.Interfaces.ChatMessage;
-using SharedServices.Interfaces.Envelope;
-using SharedServices.Interfaces.Marshaller;
-using SharedServices.Interfaces.Routing;
-using SharedServices.Models.Constants;
-using SharedServices.Services.Routing;
+using SharedInterfaces.Interfaces.ChatMessage;
+using SharedInterfaces.Interfaces.Envelope;
+using SharedInterfaces.Interfaces.Marshaller;
+using SharedInterfaces.Interfaces.Routing;
 
 namespace SharedServices.Services.ChatMessage
 {

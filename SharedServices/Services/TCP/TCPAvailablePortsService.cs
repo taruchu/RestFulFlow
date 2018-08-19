@@ -1,6 +1,5 @@
-﻿using SharedServices.Interfaces.TCP;
+﻿using SharedInterfaces.Interfaces.TCP;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;

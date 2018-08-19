@@ -1,5 +1,5 @@
 ﻿using Unity; 
-using SharedServices.Interfaces.IOC;
+using SharedInterfaces.Interfaces.IOC;
 using System;
 
 namespace SharedServices.Services

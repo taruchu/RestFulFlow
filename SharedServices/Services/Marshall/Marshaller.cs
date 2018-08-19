@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
-using SharedServices.Interfaces.Marshaller;
-using SharedServices.Interfaces.Envelope;
+using SharedInterfaces.Interfaces.Marshaller;
+using SharedInterfaces.Interfaces.Envelope;
 using System;
 
 namespace SharedServices.Services.Marshall

@@ -1,11 +1,7 @@
-﻿using SharedServices.Interfaces.Marshaller;
-using SharedServices.Interfaces.Proxy;
-using SharedServices.Interfaces.Routing;
-using SharedServices.Interfaces.ServiceFarm;
+﻿using SharedInterfaces.Interfaces.Marshaller;
+using SharedInterfaces.Interfaces.Proxy;
+using SharedInterfaces.Interfaces.Routing;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SharedServices.Services.Proxy

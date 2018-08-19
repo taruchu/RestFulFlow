@@ -1,5 +1,5 @@
 ﻿using System;
-using SharedServices.Interfaces.Transactions;
+using SharedInterfaces.Interfaces.Transactions;
 using SharedServices.Models.Transactions;
 
 namespace SharedServices.Services.Transaction

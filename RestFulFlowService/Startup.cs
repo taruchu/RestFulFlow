@@ -31,6 +31,7 @@ namespace RestFulFlowService
             }
             
             app.MapWhen(
+                    //TODO: Use logical OR to Add multiple service routes that all get served up by the same middleware.
                     context => context.Request.Path.ToString().EndsWith("/love"),
                     appBranch =>
                     {

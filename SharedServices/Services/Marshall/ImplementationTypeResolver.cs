@@ -1,7 +1,7 @@
 ﻿using System;
-using SharedServices.Interfaces.Marshaller;
-using SharedServices.Interfaces.Envelope;
-using SharedServices.Interfaces.Transactions;
+using SharedInterfaces.Interfaces.Marshaller;
+using SharedInterfaces.Interfaces.Envelope;
+using SharedInterfaces.Interfaces.Transactions;
 
 
 namespace SharedServices.Services.Marshall

@@ -1,4 +1,4 @@
-﻿using SharedServices.Interfaces.Transactions;
+﻿using SharedInterfaces.Interfaces.Transactions;
 
 namespace SharedServices.Models.Transactions
 {

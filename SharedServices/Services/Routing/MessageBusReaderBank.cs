@@ -1,13 +1,12 @@
-﻿using SharedServices.Interfaces.Routing;
+﻿using SharedInterfaces.Interfaces.Routing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SharedServices.Services.Routing
-{ 
+{
     public class MessageBusReaderBank<T> : IMessageBusReaderBank<T>
     {
         private class ReaderTask<T>
