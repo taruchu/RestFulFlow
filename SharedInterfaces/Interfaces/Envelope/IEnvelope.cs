@@ -13,7 +13,7 @@ namespace SharedInterfaces.Interfaces.Envelope
         string ClientProxyGUID { get; set; } 
         [Required]
         string RequestMethod { get; set; }
-
+        
         string GetMyJSONSchema();
         Type GetMyEnvelopeType(); 
     }

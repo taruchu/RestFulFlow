@@ -14,6 +14,8 @@ using SharedInterfaces.Interfaces.Transactions;
 using SharedServices.Models.Transactions;
 using SharedServices.Services.Transaction;
 using SharedServices.Models.Envelope;
+using DataPersistence.Services;
+using DataPersistence.Interfaces;
 
 namespace SharedServices.Services.IOC
 {
@@ -26,10 +28,10 @@ namespace SharedServices.Services.IOC
             return fromFactory.InstantiateContainer();
         }
 
-        public void StandUp(IIOCContainer container) => container 
-                .Register<IChatMessageService, ChatMessageService>()  
-                .Register<IImplementationTypeResolver, ImplementationTypeResolver>() 
-                .Register<ITCPAvailablePortsService, TCPAvailablePortsService>() 
+        public void StandUp(IIOCContainer container) => container
+                .Register<IChatMessageService, ChatMessageService>()
+                .Register<IImplementationTypeResolver, ImplementationTypeResolver>()
+                .Register<ITCPAvailablePortsService, TCPAvailablePortsService>()
                 .Register<IEnvelope, EnvelopeModel>()
                 .Register<IEnvelopeFactory, EnvelopeFactory>()
                 .Register<IChatMessageEnvelope, ChatMessageEnvelope>()
@@ -48,6 +50,9 @@ namespace SharedServices.Services.IOC
                 .Register<IMessageBusReaderBank<string>, MessageBusReaderBank<string>>()
                 .Register<IMessageBusWriter<string>, MessageBusWriter<string>>()
 
+                .Register<ITack, Tack>()
+                .Register<IBoard, Board>()
+                .Register<ISkyWatch, SkyWatch>()
 
                 ;
     }

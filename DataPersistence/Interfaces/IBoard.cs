@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharedInterfaces.Interfaces.Envelope;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,6 +15,7 @@ namespace DataPersistence.Interfaces
          * 
          */
 
-        //IDataInMemoryCache<IEnvelope>
+        bool InitializeAllBoards(); 
+        IDataInMemoryCache<IEnvelope> GetHandle_DataInMemoryCache();
     }
 }

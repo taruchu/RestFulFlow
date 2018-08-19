@@ -9,4 +9,8 @@
     <Folder Include="DataAccess\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SharedInterfaces\SharedInterfaces.csproj" />
+  </ItemGroup>
+
 </Project>

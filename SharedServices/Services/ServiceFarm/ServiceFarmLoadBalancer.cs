@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using DataPersistence.Interfaces;
+using log4net;
 using log4net.Config;
 using SharedInterfaces.Interfaces.ChatMessage;
 using SharedInterfaces.Interfaces.Envelope;
@@ -30,7 +31,7 @@ namespace SharedServices.Services.ServiceFarm
             _isDisposed = false;
             _serviceList = new List<IDisposable>();            
             _erector = new ErectDIContainer();
-            _marshaller = _erector.Container.Resolve<IMarshaller>(); 
+            _marshaller = _erector.Container.Resolve<IMarshaller>();
             CompositionRoute();
         }
 
@@ -111,15 +112,25 @@ namespace SharedServices.Services.ServiceFarm
 
         public void Dispose()
         {
-            if(_isDisposed == false)
+            lock (_thisLock)
             {
-                foreach (IDisposable service in _serviceList)
-                    service.Dispose();
+                try
+                {
+                    if (_isDisposed == false)
+                    {
+                        foreach (IDisposable service in _serviceList)
+                            service.Dispose();
 
-                _messageBusBankServices.Dispose();
-                _messageBusBankRouters.Dispose();
+                        _messageBusBankServices.Dispose();
+                        _messageBusBankRouters.Dispose();
 
-                _isDisposed = true;
+                        _isDisposed = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException(ex.Message, ex);
+                }
             }
         }
 
@@ -155,27 +166,33 @@ namespace SharedServices.Services.ServiceFarm
 
         public bool RegisterClientProxyMessageBus(string clientProxyGUID, IMessageBus<string> messageBus)
         {
-            //TODO: Error messages
-            try
+            lock (_thisLock)
             {
-               return _messageBusBankServices.RegisterMessageBus(clientProxyGUID, messageBus);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException(ex.Message, ex);
+                //TODO: Error messages
+                try
+                {
+                    return _messageBusBankServices.RegisterMessageBus(clientProxyGUID, messageBus);
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException(ex.Message, ex);
+                } 
             }
         }
 
         public bool ReleaseClientProxyMessageBus(string clientProxyGUID)
         {
-            //TODO: Error messages
-            try
+            lock (_thisLock)
             {
-               return _messageBusBankServices.ReleaseMessageBus(clientProxyGUID);
-            }
-            catch(Exception ex)
-            {
-                throw new ApplicationException(ex.Message, ex);
+                //TODO: Error messages
+                try
+                {
+                    return _messageBusBankServices.ReleaseMessageBus(clientProxyGUID);
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException(ex.Message, ex);
+                } 
             }
         }
     }

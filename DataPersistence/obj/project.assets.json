@@ -25,6 +25,16 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
+      },
+      "SharedInterfaces/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/SharedInterfaces.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SharedInterfaces.dll": {}
+        }
       }
     }
   },
@@ -169,11 +179,17 @@
         "build/netstandard2.0/ref/netstandard.xml",
         "lib/netstandard1.0/_._"
       ]
+    },
+    "SharedInterfaces/1.0.0": {
+      "type": "project",
+      "path": "../SharedInterfaces/SharedInterfaces.csproj",
+      "msbuildProject": "../SharedInterfaces/SharedInterfaces.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "NETStandard.Library >= 2.0.1"
+      "NETStandard.Library >= 2.0.1",
+      "SharedInterfaces >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -214,7 +230,11 @@
       },
       "frameworks": {
         "netstandard2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Dionn\\OneDrive\\Documents\\Visual Studio 2015\\Projects\\RestFulFlow\\SharedInterfaces\\SharedInterfaces.csproj": {
+              "projectPath": "C:\\Users\\Dionn\\OneDrive\\Documents\\Visual Studio 2015\\Projects\\RestFulFlow\\SharedInterfaces\\SharedInterfaces.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

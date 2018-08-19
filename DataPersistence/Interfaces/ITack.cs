@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharedInterfaces.Interfaces.Envelope;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,5 +19,12 @@ namespace DataPersistence.Interfaces
          * specific storage mechanism. 
          * 
          */
+          
+        IEnvelope GET(IEnvelope envelope);
+        IEnvelope POST(IEnvelope envelope);
+        IEnvelope PUT(IEnvelope envelope);
+        IEnvelope DELETE(IEnvelope envelope);
+        ISkyWatch SkyWatch { get; set; } 
+
     }
 }

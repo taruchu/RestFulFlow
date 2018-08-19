@@ -125,6 +125,10 @@
     <Folder Include="Models\Configuration\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataPersistence\DataPersistence.csproj">
+      <Project>{dcc807bd-bfdf-468e-9a58-a37aa6e4a3b2}</Project>
+      <Name>DataPersistence</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedInterfaces\SharedInterfaces.csproj">
       <Project>{76ae1c26-7e66-4d12-b2b5-2de41687050c}</Project>
       <Name>SharedInterfaces</Name>
