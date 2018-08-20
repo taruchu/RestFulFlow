@@ -1,9 +1,7 @@
 ﻿using SharedInterfaces.Interfaces.ChatMessage;
-using SharedInterfaces.Interfaces.Marshaller;
 using SharedInterfaces.Interfaces.TCP;
 using SharedInterfaces.Interfaces.IOC;
 using SharedServices.Services.ChatMessage;
-using SharedServices.Services.Marshall;
 using SharedServices.Services.TCP;
 using SharedInterfaces.Interfaces.Routing;
 using SharedServices.Models.Routing;
@@ -16,6 +14,8 @@ using SharedServices.Services.Transaction;
 using SharedServices.Models.Envelope;
 using DataPersistence.Services;
 using DataPersistence.Interfaces;
+using SharedUtilities.Interfaces.Marshall;
+using SharedUtilities.Implementation.Marshall;
 
 namespace SharedServices.Services.IOC
 {
@@ -53,6 +53,8 @@ namespace SharedServices.Services.IOC
                 .Register<ITack, Tack>()
                 .Register<IBoard, Board>()
                 .Register<ISkyWatch, SkyWatch>()
+                .Register<IFileStorage, FileStorage>()
+                .Register<IDataInMemoryCache<IEnvelope>, DataInMemoryCache<IEnvelope>>()
 
                 ;
     }

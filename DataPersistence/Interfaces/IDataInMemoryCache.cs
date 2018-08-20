@@ -6,10 +6,10 @@ namespace DataPersistence.Interfaces
 {
     public interface IDataInMemoryCache<T> : IDisposable
     {
-        T GET(int ID);
-        bool PUT(int ID, T data);
-        bool POST(int ID, T data);
-        bool DELETE(int ID);
+        T GET(long ID);
+        bool PUT(long ID, T data);
+        bool POST(long ID, T data);
+        bool DELETE(long ID);
 
         string ExceptionMessage_DataCannotBeNull { get; }
         string ExceptionMessage_IDCannotBeNegative { get; }

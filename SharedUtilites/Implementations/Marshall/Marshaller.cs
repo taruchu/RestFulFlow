@@ -1,11 +1,11 @@
 ﻿using System.Reflection;
 using System.Text;
-using Newtonsoft.Json;
-using SharedInterfaces.Interfaces.Marshaller;
 using SharedInterfaces.Interfaces.Envelope;
 using System;
+using Newtonsoft.Json;
+using SharedUtilities.Interfaces.Marshall;
 
-namespace SharedServices.Services.Marshall
+namespace SharedUtilities.Implementation.Marshall
 {
     public class Marshaller : IMarshaller
     { 

@@ -72,10 +72,8 @@
     <Compile Include="Routing\RoutingServiceUnitTest.cs" />
     <Compile Include="Routing\MessageBusReaderBankUnitTests.cs" />
     <Compile Include="Routing\MessageBusWriterUnitTest.cs" />
-    <Compile Include="Marshall\MarshallerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TCP\TCPAvailablePortsServiceUnitTests.cs" />
-    <Compile Include="WebServices\RoutingWebServiceUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -84,9 +82,17 @@
     <Folder Include="Proxy\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SharedInterfaces\SharedInterfaces.csproj">
+      <Project>{76AE1C26-7E66-4D12-B2B5-2DE41687050C}</Project>
+      <Name>SharedInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedServices\SharedServices.csproj">
       <Project>{2e4eff03-d66a-41f1-bcca-326cacf5c517}</Project>
       <Name>SharedServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedUtilites\SharedUtilities.csproj">
+      <Project>{9db86a39-aaa2-4385-bb85-6fd2496e9f55}</Project>
+      <Name>SharedUtilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

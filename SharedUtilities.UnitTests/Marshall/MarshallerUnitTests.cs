@@ -2,9 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System.Text;
-using SharedServices.Services.IOC;
-using SharedServices.Interfaces.Envelope;
-using SharedServices.Interfaces.Marshaller;
+using SharedServices.Services.IOC; 
+using SharedUtilities.Interfaces.Marshall;
+using SharedInterfaces.Interfaces.Envelope; 
 
 namespace SharedServices.UnitTests.Marhshall
 {

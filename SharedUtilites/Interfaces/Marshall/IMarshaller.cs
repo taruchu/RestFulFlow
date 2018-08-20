@@ -1,7 +1,7 @@
 ﻿
 using SharedInterfaces.Interfaces.Envelope;
 
-namespace SharedInterfaces.Interfaces.Marshaller
+namespace SharedUtilities.Interfaces.Marshall
 {
     public interface IMarshaller
     {

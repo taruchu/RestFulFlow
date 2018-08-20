@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SharedInterfaces.Interfaces.Marshaller
+namespace SharedUtilities.Interfaces.Marshall
 {
     public interface IImplementationTypeResolver
     {

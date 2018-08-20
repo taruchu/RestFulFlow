@@ -1,7 +1,7 @@
 ﻿using System;
 using SharedInterfaces.Interfaces.ChatMessage;
 using SharedInterfaces.Interfaces.Envelope;
-using SharedInterfaces.Interfaces.Marshaller;
+using SharedUtilities.Interfaces.Marshall;
 using SharedInterfaces.Interfaces.Routing;
 
 namespace SharedServices.Services.ChatMessage
@@ -13,7 +13,7 @@ namespace SharedServices.Services.ChatMessage
         public IMessageBusReaderBank<string> MessageBusReaderBank { get; set; }
         public Action<string> HandleMessageFromRouter { get; set; }
         public IMessageBusBank<string> MessageBusBank { get; set; }
-        public IMarshaller Marshaller { get; set; }
+        private IMarshaller _marshaller { get; set; }
         public string ServiceGUID
         {
             get
@@ -57,10 +57,12 @@ namespace SharedServices.Services.ChatMessage
             }
         }
 
-        public ChatMessageService()
+        public ChatMessageService(IMarshaller marshaller)
         {
             _isDisposed = false;
             HandleMessageFromRouter = ProcessMessage;
+            _marshaller = marshaller;
+            
         }
 
 
@@ -71,7 +73,7 @@ namespace SharedServices.Services.ChatMessage
                 //TODO: For now just echo it back to the sender. Later add hooks to the GET, POST, PUT, DELETE methods.
                 //TODO: I want to move this chat message service into a WebSocket entry point instead of a RestFul entry point.
 
-                IChatMessageEnvelope envelope = Marshaller.UnMarshall<IChatMessageEnvelope>(message);
+                IChatMessageEnvelope envelope = _marshaller.UnMarshall<IChatMessageEnvelope>(message);
                 string ClientProxyGUID = envelope.ClientProxyGUID;   
                 SendResponse(ClientProxyGUID, message);
             }

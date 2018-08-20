@@ -1,11 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using SharedServices.Interfaces.Envelope;
-using SharedServices.Interfaces.Marshaller;
-using SharedServices.Interfaces.Routing;
-using SharedServices.Models.Constants;
+using SharedInterfaces.Interfaces.Envelope;
+using SharedInterfaces.Interfaces.Routing;
 using SharedServices.Services.IOC;
+using SharedUtilities.Interfaces.Marshall;
 
 namespace SharedServices.UnitTests.Routing
 {
@@ -129,8 +128,8 @@ namespace SharedServices.UnitTests.Routing
             catch (InvalidOperationException ex)
             {
                 Assert.AreEqual(ex.Message, routingService.ExceptionMessage_MessageCannotBeNullOrEmpty);
-            }
-            routingService.Marshaller = null;
+            } 
+
             try
             {
                 parsedRoute = routingService.ParseMessageForRoute(jsonMessage);
@@ -138,8 +137,7 @@ namespace SharedServices.UnitTests.Routing
             catch (InvalidOperationException ex)
             {
                 Assert.AreEqual(ex.Message, routingService.ExceptionMessage_MarshallerCannotBeNull);
-            }
-            routingService.Marshaller = _erector.Container.Resolve<IMarshaller>();
+            } 
             parsedRoute = routingService.ParseMessageForRoute(jsonMessage);
             Assert.AreEqual(parsedRoute, serviceRoute);
         }

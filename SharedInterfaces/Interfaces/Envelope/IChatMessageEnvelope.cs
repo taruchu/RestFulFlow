@@ -29,5 +29,8 @@ namespace SharedInterfaces.Interfaces.Envelope
         
         [DataType(DataType.DateTime)]
         DateTime CreatedDateTime { get; set; }
+
+        [DataType(DataType.DateTime)]
+        DateTime ModifiedDateTime { get; set; }
     }
 }

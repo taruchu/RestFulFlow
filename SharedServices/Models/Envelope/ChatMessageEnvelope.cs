@@ -18,6 +18,7 @@ namespace SharedServices.Models.Envelope
         public string SenderUserName { get; set; }
         public string ChatMessageBody { get; set; }
         public DateTime CreatedDateTime { get; set; }
+        public DateTime ModifiedDateTime { get; set; }
         
 
         public Type GetMyEnvelopeType()

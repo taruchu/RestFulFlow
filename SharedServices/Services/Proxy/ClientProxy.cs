@@ -1,4 +1,4 @@
-﻿using SharedInterfaces.Interfaces.Marshaller;
+﻿using SharedUtilities.Interfaces.Marshall;
 using SharedInterfaces.Interfaces.Proxy;
 using SharedInterfaces.Interfaces.Routing;
 using System;
@@ -25,6 +25,13 @@ namespace SharedServices.Services.Proxy
         public string ExceptionMessage_MessageBusBankCannotBeNull => throw new NotImplementedException();
 
         public string ExceptionMessage_MarshallerCannotBeNull => throw new NotImplementedException();
+        
+        private IMarshaller _marshaller { get; set; }
+
+        public ClientProxy(IMarshaller marshaller)
+        {
+            _marshaller = marshaller;
+        }
 
         public void Dispose()
         {

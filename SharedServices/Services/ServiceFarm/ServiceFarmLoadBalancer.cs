@@ -3,7 +3,7 @@ using log4net;
 using log4net.Config;
 using SharedInterfaces.Interfaces.ChatMessage;
 using SharedInterfaces.Interfaces.Envelope;
-using SharedInterfaces.Interfaces.Marshaller;
+using SharedUtilities.Interfaces.Marshall;
 using SharedInterfaces.Interfaces.Routing;
 using SharedInterfaces.Interfaces.ServiceFarm;
 using SharedServices.Models.Constants;

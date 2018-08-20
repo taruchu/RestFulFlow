@@ -5,9 +5,9 @@ using System.Text;
 
 namespace DataPersistence.Interfaces
 {
-    public enum StorageMechanisms { JSON_FILE = 0, NOSQL_XYZ = 1, SQL_DBase_ABC = 2, IN_MEMORY_CACHE = 3 };
+    public enum StorageMechanisms { FILE_DB = 0, NOSQL_XYZ = 1, SQL_DBase_ABC = 2, IN_MEMORY_CACHE = 3 };
 
-    public interface IBoard
+    public interface IBoard : IDisposable
     {
         /*
          * This interface will manage the availiable data storage types.
@@ -17,5 +17,6 @@ namespace DataPersistence.Interfaces
 
         bool InitializeAllBoards(); 
         IDataInMemoryCache<IEnvelope> GetHandle_DataInMemoryCache();
+        IFileStorage GetHandle_FileStorage();
     }
 }

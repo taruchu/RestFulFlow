@@ -1,14 +1,11 @@
-﻿
-using SharedInterfaces.Interfaces.Marshaller;
-using System;
+﻿using System;
 
 namespace SharedInterfaces.Interfaces.Routing
 {
     public interface IRoutingService<T> : IDisposable
     { 
         string RoutingServiceGUID { get; } //NOTE: (Pass-though) This should get the Routing Table's GUID
-        IMessageBusReaderBank<T> MessageBusReaderBank { get; set; } 
-        IMarshaller Marshaller { get; set; }
+        IMessageBusReaderBank<T> MessageBusReaderBank { get; set; }  
         IRoutingTable<T> RoutingTable { get; set; } //NOTE: Decouple this form the service for swap outs.
         bool RegisterRoute(IRoute<T> route);
         Action<T> ResolveRoute(string route);

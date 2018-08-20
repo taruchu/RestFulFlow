@@ -1,10 +1,9 @@
 ﻿using System;
-using SharedInterfaces.Interfaces.Marshaller;
 using SharedInterfaces.Interfaces.Envelope;
 using SharedInterfaces.Interfaces.Transactions;
+using SharedUtilities.Interfaces.Marshall; 
 
-
-namespace SharedServices.Services.Marshall
+namespace SharedUtilities.Implementation.Marshall
 {
     public class ImplementationTypeResolver : IImplementationTypeResolver
     { 

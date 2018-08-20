@@ -1,5 +1,5 @@
 ﻿using SharedInterfaces.Interfaces.Envelope;
-using SharedInterfaces.Interfaces.Marshaller;
+using SharedUtilities.Interfaces.Marshall;
 using SharedInterfaces.Interfaces.Routing;
 using System;
 
@@ -16,7 +16,7 @@ namespace SharedServices.Services.Routing
         }
         public IMessageBusReaderBank<T> MessageBusReaderBank { get; set; } 
         public IRoutingTable<T> RoutingTable { get; set; }
-        public IMarshaller Marshaller { get; set; }
+        private IMarshaller _marshaller { get; set; }
         public string ExceptionMessage_RoutingTableCannotBeNull
         {
             get
@@ -69,10 +69,11 @@ namespace SharedServices.Services.Routing
         private bool _isDisposed { get; set; }
         private object _thisLock { get; set; }
 
-        public RoutingService()
+        public RoutingService(IMarshaller marshaller)
         {
             _isDisposed = false;
             _thisLock = new object();
+            _marshaller = marshaller;
         }
 
         public void Dispose()
@@ -124,11 +125,11 @@ namespace SharedServices.Services.Routing
                     string jsonMessage = (string)Convert.ChangeType(message, typeof(string));
                     if (String.IsNullOrEmpty(jsonMessage))
                         throw new InvalidOperationException(ExceptionMessage_MessageCannotBeNullOrEmpty);
-                    else if (Marshaller == null)
+                    else if (_marshaller == null)
                         throw new InvalidOperationException(ExceptionMessage_MarshallerCannotBeNull);
                     else
                     {                        
-                        IEnvelope envelope = Marshaller.UnMarshall(jsonMessage);
+                        IEnvelope envelope = _marshaller.UnMarshall(jsonMessage);
                         return envelope.ServiceRoute; 
                     }
                 }

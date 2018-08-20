@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SharedServices.Interfaces.Envelope;
-using SharedServices.Interfaces.Marshaller;
-using SharedServices.Interfaces.Routing;
-using SharedServices.Models.Constants;
+using SharedInterfaces.Interfaces.Envelope;
+using SharedInterfaces.Interfaces.Routing;
 using SharedServices.Services.IOC;
+using SharedUtilities.Interfaces.Marshall;
 
 namespace SharedServices.UnitTests.Routing
 {

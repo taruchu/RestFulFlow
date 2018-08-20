@@ -8,7 +8,7 @@ namespace DataPersistence.Services
 {
     public class DataInMemoryCache<T> : IDataInMemoryCache<T>
     {
-        private ConcurrentDictionary<int, T> _dataCache { get; set; }
+        private ConcurrentDictionary<long, T> _dataCache { get; set; }
         private bool _isDisposed { get; set; }
         private object _thisLock { get; set; }
 
@@ -32,10 +32,10 @@ namespace DataPersistence.Services
         {
             _thisLock = new object();
             _isDisposed = false;
-            _dataCache = new ConcurrentDictionary<int, T>();
+            _dataCache = new ConcurrentDictionary<long, T>();
         }
 
-        public bool DELETE(int ID)
+        public bool DELETE(long ID)
         {
             lock (_thisLock)
             {
@@ -58,7 +58,7 @@ namespace DataPersistence.Services
             }
         }
 
-        public T GET(int ID)
+        public T GET(long ID)
         {
             lock (_thisLock)
             {
@@ -81,7 +81,7 @@ namespace DataPersistence.Services
             }
         }
 
-        public bool POST(int ID, T data)
+        public bool POST(long ID, T data)
         {
             lock (_thisLock)
             {
@@ -105,7 +105,7 @@ namespace DataPersistence.Services
             }
         }
 
-        public bool PUT(int ID, T data)
+        public bool PUT(long ID, T data)
         {
             lock (_thisLock)
             {

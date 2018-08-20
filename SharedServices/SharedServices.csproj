@@ -91,8 +91,6 @@
     <Compile Include="Services\IOC\EstablishIOC.cs" />
     <Compile Include="Models\Transactions\TransactionResult.cs" />
     <Compile Include="Services\ChatMessage\ChatMessageService.cs" />
-    <Compile Include="Services\Marshall\ImplementationTypeResolver.cs" />
-    <Compile Include="Services\Marshall\Marshaller.cs" />
     <Compile Include="Services\Proxy\ClientProxy.cs" />
     <Compile Include="Services\Routing\MessageBus.cs" />
     <Compile Include="Services\Routing\MessageBusBank.cs" />
@@ -132,6 +130,10 @@
     <ProjectReference Include="..\SharedInterfaces\SharedInterfaces.csproj">
       <Project>{76ae1c26-7e66-4d12-b2b5-2de41687050c}</Project>
       <Name>SharedInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedUtilites\SharedUtilities.csproj">
+      <Project>{9db86a39-aaa2-4385-bb85-6fd2496e9f55}</Project>
+      <Name>SharedUtilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
