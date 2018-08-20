@@ -145,5 +145,28 @@ namespace SharedServices.Services.Routing
             }
             return true;
         }
+
+        public async Task<T> PollMessageBusForSingleMessage(CancellationTokenSource cancellationTokenSource)
+        {
+            try
+            {
+                if (_messageBus == null)
+                    throw new InvalidOperationException(ExceptionMessage_MessageBusCannotBeNull);
+
+                while (_messageBus.IsEmpty() && cancellationTokenSource.IsCancellationRequested == false) { }
+                if (cancellationTokenSource.IsCancellationRequested)
+                    return default(T);
+                else
+                    return _messageBus.ReceiveMessage(); 
+            }
+            catch(InvalidOperationException ex)
+            {
+                throw new InvalidOperationException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException(ex.Message, ex);
+            }
+        }
     }
 }

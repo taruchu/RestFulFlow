@@ -18,7 +18,6 @@ namespace RestFulFlowService
         {
             //TODO: Register IServiceFarmLoadBalancer as a singleton
             //TODO: Register IClientProxy as a Transient
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -41,7 +41,7 @@ namespace SharedServices.Services.ServiceFarm
             {
                 try
                 {
-                    //NOTE: Set up message bus bank
+                    //NOTE: Set up message bus banks
                     _messageBusBankRouters = _erector.Container.Resolve<IMessageBusBank<string>>();
                     _messageBusBankServices = _erector.Container.Resolve<IMessageBusBank<string>>();
 
@@ -64,8 +64,7 @@ namespace SharedServices.Services.ServiceFarm
                         IRoutingTable<string> routingTableRouterA = _erector.Container.Resolve<IRoutingTable<string>>();
                         routingTableRouterA.MessageBusBank = _messageBusBankRouters;
 
-                        IRoutingService<string> routingServiceRouterA = _erector.Container.Resolve<IRoutingService<string>>();
-                        routingServiceRouterA.Marshaller = _erector.Container.Resolve<IMarshaller>();
+                        IRoutingService<string> routingServiceRouterA = _erector.Container.Resolve<IRoutingService<string>>(); 
                         routingServiceRouterA.RoutingTable = routingTableRouterA;
                         routingServiceRouterA.MessageBusReaderBank = messageBusReaderBankRouterA;
 
@@ -88,8 +87,7 @@ namespace SharedServices.Services.ServiceFarm
 
                         IChatMessageService chatMessageServiceA = _erector.Container.Resolve<IChatMessageService>();
                         chatMessageServiceA.MessageBusReaderBank = messageBusReaderBankChangeMessageServiceA;
-                        chatMessageServiceA.MessageBusWiter = messageBusWriterChatMessageServiceA;
-                        chatMessageServiceA.Marshaller = _erector.Container.Resolve<IMarshaller>();
+                        chatMessageServiceA.MessageBusWiter = messageBusWriterChatMessageServiceA; 
                         chatMessageServiceA.MessageBusBank = _messageBusBankServices;
 
                         IRoute<string> routeChatMessageServiceA = _erector.Container.Resolve<IRoute<string>>();

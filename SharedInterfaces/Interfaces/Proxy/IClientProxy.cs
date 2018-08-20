@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SharedInterfaces.Interfaces.Proxy
@@ -18,6 +19,6 @@ namespace SharedInterfaces.Interfaces.Proxy
          * 
          * 
          */
-        Task<string> PollMessageBus();
+        string PollMessageBus(CancellationTokenSource cancellationTokenSource); 
     }
 }

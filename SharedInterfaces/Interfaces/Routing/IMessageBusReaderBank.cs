@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SharedInterfaces.Interfaces.Routing
 {
@@ -9,6 +11,7 @@ namespace SharedInterfaces.Interfaces.Routing
         int DecreaseReaderBank(int byAmount);  //NOTE: Returns the current reader count.
         bool StopReading(); //NOTE: Returns true for success. 
         string ExceptionMessage_MessageBusCannotBeNull { get; }
-        string ExceptionMessage_ActionPerformedOnEachMessageReadCannotBeNull { get; } 
+        string ExceptionMessage_ActionPerformedOnEachMessageReadCannotBeNull { get; }
+        Task<T> PollMessageBusForSingleMessage(CancellationTokenSource cancellationTokenSource);
     }
 }

@@ -3,44 +3,120 @@ using SharedInterfaces.Interfaces.Proxy;
 using SharedInterfaces.Interfaces.Routing;
 using System;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace SharedServices.Services.Proxy
 {
     public class ClientProxy : IClientProxy
     {
-        public string ServiceName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ServiceName { get; set; }
+        public string ServiceGUID { get; set; }
+        public IMessageBusWriter<string> MessageBusWiter { get; set; }
+        public IMessageBusReaderBank<string> MessageBusReaderBank { get; set; }
+        public IMessageBusBank<string> MessageBusBank { get; set; }
+        public IMarshaller Marshaller { get; set; }
+        public Action<string> HandleMessageFromRouter { get; set; }
+        private object _thisLock { get; set; }
 
-        public string ServiceGUID => throw new NotImplementedException();
+        public string ExceptionMessage_MessageBusWriterCannotBeNull
+        {
+            get
+            {
+                return "ClientProxy - MessageBusWritter cannot be null.";
+            }
+        }
 
-        public IMessageBusWriter<string> MessageBusWiter { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IMessageBusReaderBank<string> MessageBusReaderBank { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IMessageBusBank<string> MessageBusBank { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IMarshaller Marshaller { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Action<string> HandleMessageFromRouter { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ExceptionMessage_MessageBusReaderBankCannotBeNull
+        {
+            get
+            {
+                return "ClientProxy - MessageBusReaderBank cannot be null.";
+            }
+        }
 
-        public string ExceptionMessage_MessageBusWriterCannotBeNull => throw new NotImplementedException();
+        public string ExceptionMessage_MessageBusBankCannotBeNull
+        {
+            get
+            {
+                return "ClientProxy - MessageBusBank cannot be null.";
+            }
+        }
 
-        public string ExceptionMessage_MessageBusReaderBankCannotBeNull => throw new NotImplementedException();
-
-        public string ExceptionMessage_MessageBusBankCannotBeNull => throw new NotImplementedException();
-
-        public string ExceptionMessage_MarshallerCannotBeNull => throw new NotImplementedException();
+        public string ExceptionMessage_MarshallerCannotBeNull
+        {
+            get
+            {
+                return "ClientProxy - Marshaller cannot be null.";
+            }
+        }
         
         private IMarshaller _marshaller { get; set; }
+        private bool _isDisposed { get; set; }
 
         public ClientProxy(IMarshaller marshaller)
         {
             _marshaller = marshaller;
+            _thisLock = new object();
+            HandleMessageFromRouter = EnqueueMessage;
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            if(_isDisposed == false)
+            {
+                MessageBusReaderBank.Dispose();
+                MessageBusWiter.Dispose();
+            }
         }
 
-        public Task<string> PollMessageBus()
+        public void EnqueueMessage(string message)
         {
-            throw new NotImplementedException();
+            lock (_thisLock)
+            {
+                try
+                {
+                    if (MessageBusWiter == null)
+                        throw new InvalidOperationException(ExceptionMessage_MessageBusWriterCannotBeNull);
+                    MessageBusWiter.Write(message);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    throw new InvalidOperationException(ex.Message, ex);
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException(ex.Message, ex);
+                }   
+            }
+        }
+        
+        public string PollMessageBus(CancellationTokenSource cancellationTokenSource)
+        {
+            try
+            {
+                if (MessageBusReaderBank == null)
+                    throw new InvalidOperationException(ExceptionMessage_MessageBusReaderBankCannotBeNull); 
+               
+                Task<string> messageTask = MessageBusReaderBank.PollMessageBusForSingleMessage(cancellationTokenSource);
+                messageTask.Wait();
+                switch (messageTask.Status)
+                { 
+                    case TaskStatus.RanToCompletion:
+                        return messageTask.Result;
+                    case TaskStatus.Faulted:
+                        throw new ApplicationException(messageTask.Exception.Flatten().InnerException.Message, messageTask.Exception.Flatten().InnerException);
+                    default:
+                        return String.Empty;
+                }                
+            }
+            catch(InvalidOperationException ex)
+            {
+                throw new InvalidOperationException(ex.Message, ex);
+            }
+            catch(Exception ex)
+            {
+                throw new ApplicationException(ex.Message, ex);
+            }
         }
 
         public bool SendResponse(string clientProxyGUID, string responseBody)
