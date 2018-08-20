@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SharedInterfaces.Interfaces.Envelope;
 using SharedInterfaces.Interfaces.Routing;
+using SharedServices.Models.Constants;
 using SharedServices.Services.IOC;
 using SharedUtilities.Interfaces.Marshall;
 
@@ -31,9 +32,12 @@ namespace SharedServices.UnitTests.Routing
             IMarshaller marshaller = _erector.Container.Resolve<IMarshaller>();
             IEnvelope envelope = _erector.Container.Resolve<IEnvelope>();
             IChatMessageEnvelope chatMessagesEnvelope = _erector.Container.Resolve<IChatMessageEnvelope>();
-            IMessageBus<string> messageBus = _erector.Container.Resolve<IMessageBus<string>>(); 
+            IMessageBus<string> messageBus = _erector.Container.Resolve<IMessageBus<string>>();
 
-             
+            //NOTE: Set up a valid envelope
+            envelope.ClientProxyGUID = Guid.NewGuid().ToString();
+            envelope.ServiceRoute = ChatServiceNames.ChatMessageService;
+            envelope.RequestMethod = "GET";
             string message = marshaller.MarshallPayloadJSON(envelope);
             bool isValid = messageBus.ValidateMessage(message, envelope.GetMyJSONSchema());
             Assert.IsTrue(isValid);
@@ -49,7 +53,10 @@ namespace SharedServices.UnitTests.Routing
             IEnvelope envelope = _erector.Container.Resolve<IEnvelope>();
             IMessageBus<string> messageBus = _erector.Container.Resolve<IMessageBus<string>>();
 
-             
+            //NOTE: Set up a valid envelope
+            envelope.RequestMethod = "GET";
+            envelope.ClientProxyGUID = Guid.NewGuid().ToString();
+            envelope.ServiceRoute = ChatServiceNames.ChatMessageService;
             string message = marshaller.MarshallPayloadJSON(envelope);
 
             Assert.IsTrue(messageBus.IsEmpty());
