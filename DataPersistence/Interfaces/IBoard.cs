@@ -14,7 +14,13 @@ namespace DataPersistence.Interfaces
          * It will instantiate/initialize all storage mechanisms and provide access to them via a table.
          * 
          */
-
+        //TODO: Need a refactor here so that I can initialize the boards I need. Need a flexible architecture.
+        //Maybe split this up into a IBoard and IBoards interface ? Then I can derive children of IBoard that
+        //provide specific connection details for a specific type of data storage, while the base provides the connection algorithm/structure that
+        //all clients use to make a connection and interact with the IBoard /data storage. This may require some 
+        //restful style interface on the IBoard that the ITack can forward envelopes to. So I ITack would take in the 
+        //envelope, derive it's type and route it to the right IBoard, which would expose a restful interface that can except envolopes
+        //of that type.
         bool InitializeAllBoards(); 
         IDataInMemoryCache<IEnvelope> GetHandle_DataInMemoryCache();
         IFileStorage GetHandle_FileStorage();
