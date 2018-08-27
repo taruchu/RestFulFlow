@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Schema.Generation;
 using SharedInterfaces.Interfaces.Envelope;
 
-namespace SharedServices.Models.EnvelopeModel
+namespace SharedInterfaces.Models.EnvelopeModel
 {
     public class EnvelopeModel : IEnvelope
     { 

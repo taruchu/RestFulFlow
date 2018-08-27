@@ -82,10 +82,6 @@
   <ItemGroup>
     <Compile Include="Models\Constants\ConfigurationConstants.cs" />
     <Compile Include="Models\Constants\ChatServiceNames.cs" />
-    <Compile Include="Models\Envelope\ChatMessageEnvelope.cs" />
-    <Compile Include="Models\Envelope\ChatMessageEnvelopeFactory.cs" />
-    <Compile Include="Models\Envelope\Envelope.cs" />
-    <Compile Include="Models\Envelope\EnvelopeFactory.cs" />
     <Compile Include="Models\Routing\Route.cs" />
     <Compile Include="Services\IOC\ErectDIContainer.cs" />
     <Compile Include="Services\IOC\EstablishIOC.cs" />

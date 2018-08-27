@@ -31,9 +31,12 @@ namespace DataPersistence.Services
             {
                 try
                 {
+                    if (envelope == null)
+                        return envelope;
+
                     if(envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
                     {
-                        return _boards.GetHandle_SQLDataBaseBoardChatMessage().DELTE(envelope);
+                        return _boards.GetHandle_SQLDataBaseBoardChatMessage().DELETE(envelope);
                     }
                     return envelope;
                 }
@@ -67,7 +70,9 @@ namespace DataPersistence.Services
             {
                 try
                 {
-                     
+                    if (envelope == null)
+                        return envelope;
+
                     if (envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
                     {
                         return _boards.GetHandle_SQLDataBaseBoardChatMessage().GET(envelope);
@@ -87,6 +92,9 @@ namespace DataPersistence.Services
             {
                 try
                 {
+                    if (envelope == null)
+                        return envelope;
+
                     if (envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
                     {
                         return _boards.GetHandle_SQLDataBaseBoardChatMessage().POST(envelope);
@@ -106,6 +114,9 @@ namespace DataPersistence.Services
             {
                 try
                 {
+                    if (envelope == null)
+                        return envelope;
+
                     if (envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
                     {
                         return _boards.GetHandle_SQLDataBaseBoardChatMessage().PUT(envelope);
@@ -129,8 +140,9 @@ namespace DataPersistence.Services
                     {
                         //TODO:  re-new the in memory data cache for this eventKey using the data stored on disk. Each envelope type will
                         //have a specific storage mechanism (file, SQL, NOSQL, etc..).
-                        //I may want to cache certain envelope types (for example: user profile information )
-
+                        //I may want to cache certain envelope types (for example: user profile information ). 
+                        //Some ORM's like entity framework do this already, but I may want to cache data that is not persisted into a SQL database.
+                         
                         Type envelopeType = GetIEnvelopeType(eventKey);
                         long ID = GetStorageID(eventKey);
 

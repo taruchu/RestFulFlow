@@ -7,11 +7,11 @@ using SharedInterfaces.Interfaces.Routing;
 using SharedServices.Models.Routing;
 using SharedServices.Services.Routing;
 using SharedInterfaces.Interfaces.Envelope;
-using SharedServices.Models.EnvelopeModel;
+using SharedInterfaces.Models.EnvelopeModel;
 using SharedInterfaces.Interfaces.Transactions;
 using SharedServices.Models.Transactions;
 using SharedServices.Services.Transaction;
-using SharedServices.Models.Envelope;
+using SharedInterfaces.Models.Envelope;
 using DataPersistence.Services;
 using DataPersistence.Interfaces;
 using SharedUtilities.Interfaces.Marshall;
@@ -20,8 +20,6 @@ using DataPersistence.Interfaces.Files;
 using DataPersistence.Services.Files;
 using DataPersistence.Services.Configuration;
 using DataPersistence.Interfaces.Configuration;
-using DataPersistence.Interfaces.SQL;
-using DataPersistence.Services.SQL;
 
 namespace SharedServices.Services.IOC
 {

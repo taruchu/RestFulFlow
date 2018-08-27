@@ -25,6 +25,18 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
+      "Newtonsoft.Json.Schema/3.0.10": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.1"
+        },
+        "compile": {
+          "lib/net45/Newtonsoft.Json.Schema.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.Schema.dll": {}
+        }
+      },
       "System.ComponentModel.Annotations/4.4.1": {
         "type": "package",
         "frameworkAssemblies": [
@@ -42,6 +54,8 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "Newtonsoft.Json": "11.0.2",
+          "Newtonsoft.Json.Schema": "3.0.10",
           "System.ComponentModel.Annotations": "4.4.1"
         },
         "compile": {
@@ -122,6 +136,28 @@
         "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
         "newtonsoft.json.11.0.2.nupkg.sha512",
         "newtonsoft.json.nuspec"
+      ]
+    },
+    "Newtonsoft.Json.Schema/3.0.10": {
+      "sha512": "Iv4elFE8W6lko+0UsGGVcvsctXaLJCTg5Bul6MqRaI1t7K2ZB12dP3DWFkJh0a9qkqHFOLNQxW2KPtR30SzB4w==",
+      "type": "package",
+      "path": "newtonsoft.json.schema/3.0.10",
+      "files": [
+        "LICENSE.md",
+        "lib/net35/Newtonsoft.Json.Schema.dll",
+        "lib/net35/Newtonsoft.Json.Schema.xml",
+        "lib/net40/Newtonsoft.Json.Schema.dll",
+        "lib/net40/Newtonsoft.Json.Schema.xml",
+        "lib/net45/Newtonsoft.Json.Schema.dll",
+        "lib/net45/Newtonsoft.Json.Schema.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.Schema.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.Schema.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.Schema.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.Schema.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.Schema.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.Schema.xml",
+        "newtonsoft.json.schema.3.0.10.nupkg.sha512",
+        "newtonsoft.json.schema.nuspec"
       ]
     },
     "System.ComponentModel.Annotations/4.4.1": {

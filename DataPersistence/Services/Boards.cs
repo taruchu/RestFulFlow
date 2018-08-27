@@ -2,8 +2,10 @@
 using DataPersistence.Interfaces.Files;
 using DataPersistence.Interfaces.SQL;
 using DataPersistence.Services.Configuration;
+using DataPersistence.Services.Files;
 using DataPersistence.Services.SQL;
 using SharedInterfaces.Interfaces.Envelope;
+using SharedInterfaces.Models.Envelope;
 using System;
 
 namespace DataPersistence.Services
@@ -27,14 +29,14 @@ namespace DataPersistence.Services
             return _dataInMemoryCache;
         }
 
-        public bool InitializeAllBoards()
-        { 
-            return true;
-        }
-
         public IFileStorage GetHandle_FileStorage()
         {
             return _fileStorage;
+        }
+
+        public ISQLDataBaseBoardChatMessage GetHandle_SQLDataBaseBoardChatMessage()
+        {
+            return _sQLDataBaseBoardChatMessage;
         }
 
         public void Dispose()
@@ -45,6 +47,7 @@ namespace DataPersistence.Services
                 {
                     _dataInMemoryCache.Dispose();
                     _fileStorage.Dispose();
+                    _sQLDataBaseBoardChatMessage.Dispose();
 
                     _isDisposed = true;
                 }
@@ -60,28 +63,13 @@ namespace DataPersistence.Services
             try
             {
                 if (_sQLDataBaseBoardChatMessage == null)
-                    _sQLDataBaseBoardChatMessage = new SQLDataBaseBoardChatMessage(new SQLDBConfigurationProvider());
+                    _sQLDataBaseBoardChatMessage = new SQLDataBaseBoardChatMessage(new SQLDBConfigurationProvider(), new ChatMessageEnvelopeFactory());
                 return true;
             }
             catch (Exception ex)
             {
                 throw new ApplicationException(ex.Message, ex);
             }
-        }
-
-        public bool InitializeBoard_DataInMemoryCache()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool InitializeBoard_FileStorage()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ISQLDataBaseBoardChatMessage GetHandle_SQLDataBaseBoardChatMessage()
-        {
-            throw new NotImplementedException();
-        }
+        } 
     }
 }

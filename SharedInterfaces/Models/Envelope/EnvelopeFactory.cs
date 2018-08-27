@@ -1,7 +1,7 @@
 ﻿using System;
 using SharedInterfaces.Interfaces.Envelope;
 
-namespace SharedServices.Models.EnvelopeModel
+namespace SharedInterfaces.Models.EnvelopeModel
 {
     public class EnvelopeFactory : IEnvelopeFactory
     {

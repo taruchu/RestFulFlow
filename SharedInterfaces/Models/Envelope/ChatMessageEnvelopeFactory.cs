@@ -1,7 +1,7 @@
 ﻿using SharedInterfaces.Interfaces.Envelope;
 using System;
 
-namespace SharedServices.Models.Envelope
+namespace SharedInterfaces.Models.Envelope
 {
     public class ChatMessageEnvelopeFactory : IChatMessageEnvelopeFactory
     {

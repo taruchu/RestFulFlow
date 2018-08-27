@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json.Schema.Generation;
 using SharedInterfaces.Interfaces.Envelope;
 using System;
+using System.Collections.Generic;
 
-namespace SharedServices.Models.Envelope
+namespace SharedInterfaces.Models.Envelope
 {
     public class ChatMessageEnvelope : IChatMessageEnvelope
     {
@@ -19,7 +20,8 @@ namespace SharedServices.Models.Envelope
         public string ChatMessageBody { get; set; }
         public DateTime CreatedDateTime { get; set; }
         public DateTime ModifiedDateTime { get; set; }
-        
+        public Func<IChatMessageQueryRepository, IChatMessageEnvelope, IChatMessageEnvelope> Query { get; set; }
+        public Func<IChatMessageQueryRepository, IChatMessageEnvelope, List<IChatMessageEnvelope>> QueryForList { get; set; }
 
         public Type GetMyEnvelopeType()
         {

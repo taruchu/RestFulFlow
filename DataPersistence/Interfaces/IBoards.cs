@@ -21,9 +21,7 @@ namespace DataPersistence.Interfaces
         //restful style interface on the IBoard that the ITack can forward envelopes to. So I ITack would take in the 
         //envelope, derive it's type and route it to the right IBoard, which would expose a restful interface that can except envolopes
         //of that type.
-        bool InitializeBoard_SQLDataBaseBoardChatMessage();
-        bool InitializeBoard_DataInMemoryCache();
-        bool InitializeBoard_FileStorage();
+        bool InitializeBoard_SQLDataBaseBoardChatMessage(); 
         IDataInMemoryCache<IEnvelope> GetHandle_DataInMemoryCache();
         IFileStorage GetHandle_FileStorage();
         ISQLDataBaseBoardChatMessage GetHandle_SQLDataBaseBoardChatMessage();
