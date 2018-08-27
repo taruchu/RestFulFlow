@@ -85,7 +85,7 @@ namespace SharedServices.Services.ServiceFarm
                         IMessageBusWriter<string> messageBusWriterChatMessageServiceA = _erector.Container.Resolve<IMessageBusWriter<string>>();
                         messageBusWriterChatMessageServiceA.SpecifyTheMessageBus(messageBusChatMessageServiceA);
 
-                        IChatMessageService chatMessageServiceA = _erector.Container.Resolve<IChatMessageService>();
+                        IModifyChatMessageService chatMessageServiceA = _erector.Container.Resolve<IModifyChatMessageService>();
                         chatMessageServiceA.MessageBusReaderBank = messageBusReaderBankChangeMessageServiceA;
                         chatMessageServiceA.MessageBusWiter = messageBusWriterChatMessageServiceA; 
                         chatMessageServiceA.MessageBusBank = _messageBusBankServices;

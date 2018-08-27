@@ -128,3 +128,5 @@ C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\Shared
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\obj\Debug\SharedUtilities.UnitTests.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\obj\Debug\SharedUtilities.UnitTests.pdb
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\bin\Debug\System.ComponentModel.Annotations.dll
+C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\bin\Debug\Interfaces\Configuration\SQLDBConfiguration.json
+C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\bin\Debug\EntityFramework.dll

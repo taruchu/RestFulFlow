@@ -116,6 +116,9 @@ namespace DataPersistence.Services.SQL
                 try
                 {
                     IChatMessageEnvelope chatMessageEnvelope = (IChatMessageEnvelope)envelope;
+                    if (chatMessageEnvelope.Query == null)
+                        return envelope;
+
                     IChatMessageEnvelope recipt = chatMessageEnvelope.Query(this, chatMessageEnvelope);//NOTE: Avoid large list of if/else statements, let client choose the query
                     dbContextTransaction.Commit();
                     return recipt;
@@ -135,6 +138,9 @@ namespace DataPersistence.Services.SQL
                 try
                 {
                     IChatMessageEnvelope chatMessageEnvelope = (IChatMessageEnvelope)envelope;
+                    if (chatMessageEnvelope.QueryForList == null)
+                        return new List<IEnvelope> { envelope };
+
                     List<IChatMessageEnvelope> results = chatMessageEnvelope.QueryForList(this, chatMessageEnvelope);//NOTE: Avoid large list of if/else statements, let client choose the query
                     dbContextTransaction.Commit();
                     return results.ToList<IEnvelope>();

@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestFulFlowService.UnitTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataPersistence.UnitTests", "DataPersistence.UnitTests\DataPersistence.UnitTests.csproj", "{5E5F3E6E-5B0B-45C1-AF96-7BC6DE4C39FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatMessageInterfaces", "ChatMessageInterfaces\ChatMessageInterfaces.csproj", "{A68F883A-D0F6-48F3-978F-2D9D3823D388}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{5E5F3E6E-5B0B-45C1-AF96-7BC6DE4C39FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E5F3E6E-5B0B-45C1-AF96-7BC6DE4C39FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E5F3E6E-5B0B-45C1-AF96-7BC6DE4C39FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A68F883A-D0F6-48F3-978F-2D9D3823D388}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A68F883A-D0F6-48F3-978F-2D9D3823D388}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A68F883A-D0F6-48F3-978F-2D9D3823D388}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A68F883A-D0F6-48F3-978F-2D9D3823D388}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

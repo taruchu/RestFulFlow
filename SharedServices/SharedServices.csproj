@@ -86,7 +86,7 @@
     <Compile Include="Services\IOC\ErectDIContainer.cs" />
     <Compile Include="Services\IOC\EstablishIOC.cs" />
     <Compile Include="Models\Transactions\TransactionResult.cs" />
-    <Compile Include="Services\ChatMessage\ChatMessageService.cs" />
+    <Compile Include="Services\ChatMessage\ModifyChatMessageService.cs" />
     <Compile Include="Services\Proxy\ClientProxy.cs" />
     <Compile Include="Services\Routing\MessageBus.cs" />
     <Compile Include="Services\Routing\MessageBusBank.cs" />
@@ -119,6 +119,10 @@
     <Folder Include="Models\Configuration\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChatMessageInterfaces\ChatMessageInterfaces.csproj">
+      <Project>{a68f883a-d0f6-48f3-978f-2d9d3823d388}</Project>
+      <Name>ChatMessageInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataPersistence\DataPersistence.csproj">
       <Project>{dcc807bd-bfdf-468e-9a58-a37aa6e4a3b2}</Project>
       <Name>DataPersistence</Name>

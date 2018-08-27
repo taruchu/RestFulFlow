@@ -1,4 +1,4 @@
-﻿using SharedInterfaces.Interfaces.ChatMessage;
+﻿using ChatMessageInterfaces.Interfaces.ChatMessage;
 using SharedInterfaces.Interfaces.TCP;
 using SharedInterfaces.Interfaces.IOC;
 using SharedServices.Services.ChatMessage;
@@ -33,7 +33,7 @@ namespace SharedServices.Services.IOC
         }
 
         public void StandUp(IIOCContainer container) => container
-                .Register<IChatMessageService, ChatMessageService>()
+                .Register<IModifyChatMessageService, ModifyChatMessageService>()
                 .Register<IImplementationTypeResolver, ImplementationTypeResolver>()
                 .Register<ITCPAvailablePortsService, TCPAvailablePortsService>()
                 .Register<IEnvelope, EnvelopeModel>()
