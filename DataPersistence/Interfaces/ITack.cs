@@ -24,7 +24,9 @@ namespace DataPersistence.Interfaces
         IEnvelope POST(IEnvelope envelope);
         IEnvelope PUT(IEnvelope envelope);
         IEnvelope DELETE(IEnvelope envelope);
-        ISkyWatch SkyWatch { get; set; } 
+        ISkyWatch SkyWatch { get; set; }
+        IBoards Boards { get; }
 
+        //TODO: Need to Gate on null envelopes here 
     }
 }

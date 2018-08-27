@@ -8,17 +8,17 @@ namespace DataPersistence.Services
 {
     public class Tack : ITack
     {
-        private IBoard _board { get; set; }
+        public IBoards Boards { get { return _boards; } }
+        private IBoards _boards { get; set; }
         public ISkyWatch SkyWatch { get; set; }
         private string _iTackGUID { get; set; }
         private object _thisLock { get; set; }
         private bool _isDisposed { get; set; }
         private const string _FILE_DB_PATH = "fileDB.xml"; //TODO: This path should be in a shared location external to this assembly.
 
-        public Tack(IBoard board)
+        public Tack(IBoards boards)
         {
-            _board = board;
-            _board.InitializeAllBoards();
+            _boards = boards; 
             _iTackGUID = Guid.NewGuid().ToString();
             _thisLock = new object();
             _isDisposed = false;
@@ -33,14 +33,7 @@ namespace DataPersistence.Services
                 {
                     if(envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
                     {
-                        IChatMessageEnvelope chatMessageEnvelope = (IChatMessageEnvelope)envelope; 
-                        _board.GetHandle_DataInMemoryCache().DELETE(chatMessageEnvelope.ChatMessageID);
-
-                        string key = String.Format("{0}.{1}", chatMessageEnvelope.GetType().ToString(), chatMessageEnvelope.ChatMessageID);
-                        _board.GetHandle_FileStorage().DeleteEnvelope<IChatMessageEnvelope>(_FILE_DB_PATH, key);
-
-                        chatMessageEnvelope.ModifiedDateTime = DateTime.Now;
-                        return chatMessageEnvelope;
+                        return _boards.GetHandle_SQLDataBaseBoardChatMessage().DELTE(envelope);
                     }
                     return envelope;
                 }
@@ -58,7 +51,7 @@ namespace DataPersistence.Services
                 if (_isDisposed == false)
                 {
                     SkyWatch.Dispose();
-                    _board.Dispose();
+                    _boards.Dispose();
                 }
             }
             catch (Exception ex)
@@ -74,23 +67,11 @@ namespace DataPersistence.Services
             {
                 try
                 {
+                     
                     if (envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
                     {
-                        IChatMessageEnvelope chatMessageEnvelope = (IChatMessageEnvelope)envelope;
-                        IChatMessageEnvelope cachedChatMessageEnvelope = (IChatMessageEnvelope)_board.GetHandle_DataInMemoryCache().GET(chatMessageEnvelope.ChatMessageID);
-
-                        if (cachedChatMessageEnvelope == null)
-                        {
-                            string key = String.Format("{0}.{1}", chatMessageEnvelope.GetType().ToString(), chatMessageEnvelope.ChatMessageID);
-                            IChatMessageEnvelope onDiskChatMessageEnvelope = _board.GetHandle_FileStorage().ReadEnvelope<IChatMessageEnvelope>(_FILE_DB_PATH, key);
-
-                            _board.GetHandle_DataInMemoryCache().POST(chatMessageEnvelope.ChatMessageID, chatMessageEnvelope);                             
-                            return onDiskChatMessageEnvelope;
-                        }
-                        else
-                            return cachedChatMessageEnvelope;
+                        return _boards.GetHandle_SQLDataBaseBoardChatMessage().GET(envelope);
                     }
-
                     return envelope;
                 }
                 catch (Exception ex)
@@ -108,14 +89,7 @@ namespace DataPersistence.Services
                 {
                     if (envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
                     {
-                        IChatMessageEnvelope chatMessageEnvelope = (IChatMessageEnvelope)envelope;                        
-                        chatMessageEnvelope.ChatMessageID = DateTime.Now.Millisecond;
-                        chatMessageEnvelope.ModifiedDateTime = DateTime.Now;
-                        string key = String.Format("{0}.{1}", chatMessageEnvelope.GetType().ToString(), chatMessageEnvelope.ChatMessageID);
-
-                        _board.GetHandle_FileStorage().WriteEnvelope<IChatMessageEnvelope>(_FILE_DB_PATH, key, chatMessageEnvelope);
-                        _board.GetHandle_DataInMemoryCache().POST(chatMessageEnvelope.ChatMessageID, chatMessageEnvelope);                          
-                        return chatMessageEnvelope;
+                        return _boards.GetHandle_SQLDataBaseBoardChatMessage().POST(envelope);
                     }
                     return envelope;
                 }
@@ -134,13 +108,7 @@ namespace DataPersistence.Services
                 {
                     if (envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
                     {
-                        IChatMessageEnvelope chatMessageEnvelope = (IChatMessageEnvelope)envelope; 
-                        chatMessageEnvelope.ModifiedDateTime = DateTime.Now;
-                        string key = String.Format("{0}.{1}", chatMessageEnvelope.GetType().ToString(), chatMessageEnvelope.ChatMessageID);
-
-                        _board.GetHandle_FileStorage().WriteEnvelope<IChatMessageEnvelope>(_FILE_DB_PATH, key, chatMessageEnvelope);
-                        _board.GetHandle_DataInMemoryCache().PUT(chatMessageEnvelope.ChatMessageID, chatMessageEnvelope);
-                        return chatMessageEnvelope;
+                        return _boards.GetHandle_SQLDataBaseBoardChatMessage().PUT(envelope);
                     }
                     return envelope;
                 }
@@ -161,17 +129,12 @@ namespace DataPersistence.Services
                     {
                         //TODO:  re-new the in memory data cache for this eventKey using the data stored on disk. Each envelope type will
                         //have a specific storage mechanism (file, SQL, NOSQL, etc..).
+                        //I may want to cache certain envelope types (for example: user profile information )
 
                         Type envelopeType = GetIEnvelopeType(eventKey);
                         long ID = GetStorageID(eventKey);
 
-                        if(envelopeType == typeof(IChatMessageEnvelope))
-                        {
-                           IChatMessageEnvelope envelope = _board.GetHandle_FileStorage()
-                                                                 .ReadEnvelope<IChatMessageEnvelope>(_FILE_DB_PATH, eventKey);
-
-                            _board.GetHandle_DataInMemoryCache().PUT(ID, envelope);
-                        }                       
+                                        
                     }
                 }
                 catch (Exception ex)

@@ -16,6 +16,12 @@ using DataPersistence.Services;
 using DataPersistence.Interfaces;
 using SharedUtilities.Interfaces.Marshall;
 using SharedUtilities.Implementation.Marshall;
+using DataPersistence.Interfaces.Files;
+using DataPersistence.Services.Files;
+using DataPersistence.Services.Configuration;
+using DataPersistence.Interfaces.Configuration;
+using DataPersistence.Interfaces.SQL;
+using DataPersistence.Services.SQL;
 
 namespace SharedServices.Services.IOC
 {
@@ -51,10 +57,13 @@ namespace SharedServices.Services.IOC
                 .Register<IMessageBusWriter<string>, MessageBusWriter<string>>()
 
                 .Register<ITack, Tack>()
-                .Register<IBoard, Board>()
+                .Register<IBoards, Boards>()
                 .Register<ISkyWatch, SkyWatch>()
                 .Register<IFileStorage, FileStorage>()
                 .Register<IDataInMemoryCache<IEnvelope>, DataInMemoryCache<IEnvelope>>()
+                .Register<ISQLDBConfigurationProvider, SQLDBConfigurationProvider>()
+                .Register<ISQLDBConfiguration, SQLDBConfiguration>()  
+
 
                 ;
     }

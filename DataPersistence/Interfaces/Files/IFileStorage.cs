@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataPersistence.Interfaces
+namespace DataPersistence.Interfaces.Files
 {
     public interface IFileStorage : IDisposable
     {

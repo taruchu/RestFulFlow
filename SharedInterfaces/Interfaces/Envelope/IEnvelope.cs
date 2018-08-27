@@ -15,6 +15,6 @@ namespace SharedInterfaces.Interfaces.Envelope
         string RequestMethod { get; set; }
         
         string GetMyJSONSchema();
-        Type GetMyEnvelopeType(); 
+        Type GetMyEnvelopeType();  
     }
 }

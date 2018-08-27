@@ -11,3 +11,4 @@ C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPe
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\obj\Debug\netstandard2.0\DataPersistence.AssemblyInfo.cs
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\obj\Debug\netstandard2.0\DataPersistence.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\obj\Debug\netstandard2.0\DataPersistence.pdb
+C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\bin\Debug\netstandard2.0\Interfaces\Configuration\SQLDBConfiguration.json

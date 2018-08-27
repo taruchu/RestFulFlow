@@ -32,5 +32,8 @@ namespace SharedInterfaces.Interfaces.Envelope
 
         [DataType(DataType.DateTime)]
         DateTime ModifiedDateTime { get; set; }
+
+        Func<IChatMessageQueryRepository, IChatMessageEnvelope, IChatMessageEnvelope> Query { get; set; }
+        Func<IChatMessageQueryRepository, IChatMessageEnvelope, List<IChatMessageEnvelope>> QueryForList { get; set; }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using DataPersistence.Interfaces;
+using DataPersistence.Interfaces.Files;
 using SharedUtilities.Interfaces.Marshall;
 using System;
 
-namespace DataPersistence.Services
+namespace DataPersistence.Services.Files
 {
     public class FileStorage : IFileStorage
     {

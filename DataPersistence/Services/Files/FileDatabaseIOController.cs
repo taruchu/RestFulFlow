@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace DataPersistence.Services
+namespace DataPersistence.Services.Files
 {
     public class FileDatabaseIOController<T>
     {

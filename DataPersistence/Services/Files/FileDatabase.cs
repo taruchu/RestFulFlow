@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace DataPersistence.Services
+namespace DataPersistence.Services.Files
 {
     [DataContract]
     public class FileDatabase
