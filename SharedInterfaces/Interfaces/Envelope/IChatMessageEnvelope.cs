@@ -27,6 +27,7 @@ namespace SharedInterfaces.Interfaces.Envelope
         [Required]
         string ChatMessageBody { get; set; } 
         
+        [Required]
         [DataType(DataType.DateTime)]
         DateTime CreatedDateTime { get; set; }
 

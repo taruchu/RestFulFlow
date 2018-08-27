@@ -1,19 +1,24 @@
-﻿using System;
-using ChatMessageInterfaces.Interfaces.ChatMessage;
-using SharedInterfaces.Interfaces.Envelope;
-using SharedUtilities.Interfaces.Marshall;
-using SharedInterfaces.Interfaces.Routing;
+﻿using ChatMessageInterfaces.Interfaces.ChatMessage;
 using DataPersistence.Interfaces;
+using SharedInterfaces.Interfaces.Envelope;
+using SharedInterfaces.Interfaces.Routing;
+using SharedUtilities.Interfaces.Marshall;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SharedServices.Services.ChatMessage
 {
-    public class ModifyChatMessageService : IModifyChatMessageService
+    public class GetNextChatMessageService : IGetNextChatMessageService
     {
         public string ServiceName { get; set; }
         public IMessageBusWriter<string> MessageBusWiter { get; set; }
         public IMessageBusReaderBank<string> MessageBusReaderBank { get; set; }
         public Action<string> HandleMessageFromRouter { get; set; }
         public IMessageBusBank<string> MessageBusBank { get; set; }
+        public ITack Tack { get; set; }
         private IMarshaller _marshaller { get; set; }
         public string ServiceGUID
         {
@@ -31,14 +36,14 @@ namespace SharedServices.Services.ChatMessage
         {
             get
             {
-                return "ModifyChatMessageService - MessageBusWriter cannot be null.";
+                return "GetNextChatMessageService - MessageBusWriter cannot be null.";
             }
         }
         public string ExceptionMessage_MessageBusReaderBankCannotBeNull
         {
             get
             {
-                return "ModifyChatMessageService - MessageBusReaderBank cannot be null.";
+                return "GetNextChatMessageService - MessageBusReaderBank cannot be null.";
             }
         }
 
@@ -46,7 +51,7 @@ namespace SharedServices.Services.ChatMessage
         {
             get
             {
-                return "ModifyChatMessageService - MessageBusBank cannot be null.";
+                return "GetNextChatMessageService - MessageBusBank cannot be null.";
             }
         }
 
@@ -54,7 +59,7 @@ namespace SharedServices.Services.ChatMessage
         {
             get
             {
-                return "ModifyChatMessageService - Marshaller cannot be null.";
+                return "GetNextChatMessageService - Marshaller cannot be null.";
             }
         }
 
@@ -66,15 +71,11 @@ namespace SharedServices.Services.ChatMessage
             }
         }
 
-        public ITack Tack { get; set; }
-       
-         
-        public ModifyChatMessageService(IMarshaller marshaller)
+        public GetNextChatMessageService(IMarshaller marshaller)
         {
             _isDisposed = false;
             HandleMessageFromRouter = ProcessMessage;
-            _marshaller = marshaller;
-            
+            _marshaller = marshaller; 
         }
 
 
@@ -85,16 +86,14 @@ namespace SharedServices.Services.ChatMessage
                 if (_marshaller == null)
                     throw new InvalidOperationException(ExceptionMessage_MarshallerCannotBeNull);
                 else
-                {
-                    //TODO: For now just echo it back to the sender. Later add hooks to the GET, POST, PUT, DELETE methods.
-                    //TODO: I want to move this chat message service into a WebSocket entry point instead of a RestFul entry point.
-
-                    IChatMessageEnvelope envelope = _marshaller.UnMarshall<IChatMessageEnvelope>(message);
-                    string ClientProxyGUID = envelope.ClientProxyGUID;
-                    SendResponse(ClientProxyGUID, message);
-                }                
+                { 
+                    IChatMessageEnvelope requestEnvelope = _marshaller.UnMarshall<IChatMessageEnvelope>(message);
+                    string responseEnvelope = Get(requestEnvelope);
+                    string ClientProxyGUID = requestEnvelope.ClientProxyGUID;
+                    SendResponse(ClientProxyGUID, responseEnvelope);
+                }
             }
-            catch(InvalidOperationException ex)
+            catch (InvalidOperationException ex)
             {
                 throw new InvalidOperationException(ex.Message, ex);
             }
@@ -122,49 +121,7 @@ namespace SharedServices.Services.ChatMessage
             }
         }
 
-        public bool SendResponse(string ClientProxyGUID, string responseBody)
-        {
-            try
-            {
-                if (MessageBusBank == null)
-                    throw new InvalidOperationException(ExceptionMessage_MessageBusBankCannotBeNull);
-
-               return MessageBusBank.ResolveMessageBus(ClientProxyGUID).SendMessage(responseBody);                
-            }
-            catch(InvalidOperationException ex)
-            {
-                throw new InvalidOperationException(ex.Message, ex);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException(ex.Message, ex);
-            }
-        }
-              
-        public string Put(IChatMessageEnvelope request)
-        {
-            try
-            {
-                if (Tack == null)
-                    throw new InvalidOperationException(ExceptionMessage_ITackCannotBeNull); 
-                else
-                {
-                    IChatMessageEnvelope responseEnvelope = (IChatMessageEnvelope)Tack.PUT(request);
-                    string responseString = _marshaller.MarshallPayloadJSON(responseEnvelope);
-                    return responseString;
-                }
-            }
-            catch(InvalidOperationException ex)
-            {
-                throw new InvalidOperationException(ex.Message, ex);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException(ex.Message, ex);
-            }
-        }
-
-        public string Post(IChatMessageEnvelope request)
+        public string Get(IChatMessageEnvelope request)
         {
             try
             {
@@ -172,7 +129,15 @@ namespace SharedServices.Services.ChatMessage
                     throw new InvalidOperationException(ExceptionMessage_ITackCannotBeNull);
                 else
                 {
-                    IChatMessageEnvelope responseEnvelope = (IChatMessageEnvelope)Tack.POST(request);
+                    //NOTE: Define the query
+                    request.Query =
+                        (chatMessageQueryRepo, chatMessageEnvelopeParam) =>
+                        {
+                            IChatMessageEnvelope nextChatMessage = chatMessageQueryRepo.GetNextChatMessage(chatMessageEnvelopeParam);
+                            return nextChatMessage;
+                        };
+                         
+                    IChatMessageEnvelope responseEnvelope = (IChatMessageEnvelope)Tack.GET(request);
                     string responseString = _marshaller.MarshallPayloadJSON(responseEnvelope);
                     return responseString;
                 }
@@ -187,18 +152,14 @@ namespace SharedServices.Services.ChatMessage
             }
         }
 
-        public string Delete(IChatMessageEnvelope request)
+        public bool SendResponse(string ClientProxyGUID, string responseBody)
         {
             try
             {
-                if (Tack == null)
-                    throw new InvalidOperationException(ExceptionMessage_ITackCannotBeNull);
-                else
-                {
-                    IChatMessageEnvelope responseEnvelope = (IChatMessageEnvelope)Tack.DELETE(request);
-                    string responseString = _marshaller.MarshallPayloadJSON(responseEnvelope);
-                    return responseString;
-                }
+                if (MessageBusBank == null)
+                    throw new InvalidOperationException(ExceptionMessage_MessageBusBankCannotBeNull);
+
+                return MessageBusBank.ResolveMessageBus(ClientProxyGUID).SendMessage(responseBody);
             }
             catch (InvalidOperationException ex)
             {
