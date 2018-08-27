@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using RestFulFlowService.Services;
+using SharedInterfaces.Interfaces.ServiceFarm;
+using SharedServices.Services.ServiceFarm;
+using SharedInterfaces.Interfaces.Proxy;
+using SharedServices.Services.Proxy;
 
 namespace RestFulFlowService
 {
@@ -18,6 +22,8 @@ namespace RestFulFlowService
         {
             //TODO: Register IServiceFarmLoadBalancer as a singleton
             //TODO: Register IClientProxy as a Transient
+            services.AddSingleton<IServiceFarmLoadBalancer, ServiceFarmLoadBalancer>();
+            services.AddTransient<IClientProxy, ClientProxy>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -10,6 +10,7 @@ using SharedServices.Services.IOC;
 using System;
 using System.Collections.Generic;
 using ChatMessageInterfaces.Interfaces.ChatMessage;
+using SharedInterfaces.Interfaces.Proxy;
 
 namespace SharedServices.Services.ServiceFarm
 {
@@ -166,13 +167,25 @@ namespace SharedServices.Services.ServiceFarm
             return 0;
         }
 
-        public bool RegisterClientProxyMessageBus(string clientProxyGUID, IMessageBus<string> messageBus)
+        public bool RegisterClientProxyMessageBus(IClientProxy clientProxy)
         {
             lock (_thisLock)
             { 
                 try
                 {
-                    return _messageBusBankServices.RegisterMessageBus(clientProxyGUID, messageBus);
+                    IMessageBus<string> messageBus = _erector.Container.Resolve<IMessageBus<string>>();
+                    messageBus.SkipValidation = true;
+
+                    IMessageBusReaderBank<string>  messageBusReaderBank = _erector.Container.Resolve<IMessageBusReaderBank<string>>();
+                    messageBusReaderBank.SpecifyTheMessageBus(messageBus);
+
+                    IMessageBusWriter<string> messageBusWriter = _erector.Container.Resolve<IMessageBusWriter<string>>();
+                    messageBusWriter.SpecifyTheMessageBus(messageBus);
+
+                    clientProxy.MessageBusReaderBank = messageBusReaderBank;
+                    clientProxy.MessageBusWiter = messageBusWriter;
+
+                    return _messageBusBankServices.RegisterMessageBus(clientProxy.ServiceGUID, messageBus);
                 }
                 catch (Exception ex)
                 {
@@ -181,13 +194,13 @@ namespace SharedServices.Services.ServiceFarm
             }
         }
 
-        public bool ReleaseClientProxyMessageBus(string clientProxyGUID)
+        public bool ReleaseClientProxyMessageBus(IClientProxy clientProxy)
         {
             lock (_thisLock)
             { 
                 try
                 {
-                    return _messageBusBankServices.ReleaseMessageBus(clientProxyGUID);
+                    return _messageBusBankServices.ReleaseMessageBus(clientProxy.ServiceGUID);
                 }
                 catch (Exception ex)
                 {

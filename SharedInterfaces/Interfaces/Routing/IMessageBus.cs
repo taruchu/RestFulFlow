@@ -12,6 +12,7 @@ namespace SharedInterfaces.Interfaces.Routing
         bool SendMessage(T message); //NOTE: Must be thread safe.
         T ReceiveMessage(); //NOTE: Must be thread safe.
         bool ValidateMessage(T message, string jsonSchema);
+        bool SkipValidation { get; set; }
         bool IsEmpty();
         string ExceptionMessage_JSONSchemaCannotBeNullOrEmpty { get; }
         string ExceptionMessage_MessageCannotBeNull { get; }

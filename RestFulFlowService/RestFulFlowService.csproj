@@ -13,4 +13,9 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SharedInterfaces\SharedInterfaces.csproj" />
+    <ProjectReference Include="..\SharedServices\SharedServices.csproj" />
+  </ItemGroup>
+
 </Project>

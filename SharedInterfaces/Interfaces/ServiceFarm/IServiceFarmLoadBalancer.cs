@@ -1,4 +1,5 @@
-﻿ 
+﻿
+using SharedInterfaces.Interfaces.Proxy;
 using SharedInterfaces.Interfaces.Routing;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace SharedInterfaces.Interfaces.ServiceFarm
         bool CompositionRoute(); //NOTE: Call this from the constructor to New up all service farm objects, associate them to a router, and establish their composition route.
         bool SendServiceRequest(string clientProxyOrigin, string requestEnvelope);
  
-        bool RegisterClientProxyMessageBus(string clientProxyGUID, IMessageBus<string> messageBus);
-        bool ReleaseClientProxyMessageBus(string clientProxyGUID);
+        bool RegisterClientProxyMessageBus(IClientProxy clientProxy);
+        bool ReleaseClientProxyMessageBus(IClientProxy clientProxy);
     }
 }

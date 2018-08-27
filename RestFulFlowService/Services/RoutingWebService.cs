@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using RestFulFlowService.Interfaces;
+using SharedInterfaces.Interfaces.Proxy;
+using SharedInterfaces.Interfaces.ServiceFarm;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RestFulFlowService.Services
@@ -61,18 +64,24 @@ namespace RestFulFlowService.Services
         }
 
         public string Delete(string json, HttpContext context)
-        {              
-            //TODO:
-            // (1) Get transient ClientProxy and singleton IServiceFarmLoadBalancer from the 
-            // IOC container using the HttpContext.
-            // (2) Register the client proxy message bus with the loadbalancer.
-            // (3) Pass request method, json requestBody, and ClientProxy responseCallback into IServiceFarmLoadBalancer request method
-            // (4) Poll the ClientProxy message bus using one of the ClientProxies method calls
-            // (5) When the ClientProxy message bus receives a response, the method will return it as a string
-            // (6) Save the response from the ClientProxy message bus
-            // (7) Unregister client proxy with the loadbalancer
-            // (8) Return the saved response from the ClientProxy message bus
-            return json;
+        { 
+            //NOTE: Can do other processing of the request before and or after this call.
+            return ProcessRequestInServiceFarm(json, context);
+        }
+
+        public string ProcessRequestInServiceFarm(string json, HttpContext context)
+        { 
+            IServiceFarmLoadBalancer serviceFarmLoadBalancer = (IServiceFarmLoadBalancer)context.RequestServices.GetService(typeof(IServiceFarmLoadBalancer));
+            IClientProxy clientProxy = (IClientProxy)context.RequestServices.GetService(typeof(IClientProxy));
+            serviceFarmLoadBalancer.RegisterClientProxyMessageBus(clientProxy);
+            string response = String.Empty;
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+            if (serviceFarmLoadBalancer.SendServiceRequest(clientProxy.ServiceGUID, json))
+                response = clientProxy.PollMessageBus(cancellationTokenSource);
+
+            serviceFarmLoadBalancer.ReleaseClientProxyMessageBus(clientProxy);
+            return response;
         }
 
         public void Dispose()
@@ -80,27 +89,27 @@ namespace RestFulFlowService.Services
         }
 
         public string Get(string json, HttpContext context)
-        { 
-             
-            return json;
+        {
+            //NOTE: Can do other processing of the request before and or after this call.
+            return ProcessRequestInServiceFarm(json, context);
         }
 
         public string Head(string json, HttpContext context)
         {
-           
-            return json;
+            //NOTE: Can do other processing of the request before and or after this call.
+            return ProcessRequestInServiceFarm(json, context);
         }
 
         public string Post(string json, HttpContext context)
         {
-             
-            return json;
+            //NOTE: Can do other processing of the request before and or after this call.
+            return ProcessRequestInServiceFarm(json, context);
         }
 
         public string Put(string json, HttpContext context)
         {
-            
-            return json;
+            //NOTE: Can do other processing of the request before and or after this call.
+            return ProcessRequestInServiceFarm(json, context);
         }
     }
 }

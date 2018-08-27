@@ -46,11 +46,14 @@ namespace SharedServices.Services.Routing
             }
         }
 
+        public bool SkipValidation { get; set; }
+
         public MessageBus()
         {
             _thisLock = new object();
             XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(ConfigurationConstants.FileName_log4NetConfiguration));
-            _bus = new ConcurrentQueue<T>(); 
+            _bus = new ConcurrentQueue<T>();
+            SkipValidation = false;
         }
         public void Dispose()
         {  
@@ -82,13 +85,22 @@ namespace SharedServices.Services.Routing
             {
                 try
                 {
-                    if(message == null)
+                    if (message == null)
                         throw new InvalidOperationException(ExceptionMessage_MessageCannotBeNull);
-                    if (JsonSchema == null)
+                    else if (SkipValidation)
+                    {
+                        _bus.Enqueue(message);
+                        return true;
+                    }
+                    else if (JsonSchema == null)
                         throw new InvalidOperationException(ExceptionMessage_JSONSchemaCannotBeNullOrEmpty);
-                    else if (ValidateMessage(message, JsonSchema(message))) 
-                        _bus.Enqueue(message);  
-                    return true;  
+                    else if (ValidateMessage(message, JsonSchema(message)))
+                    {
+                        _bus.Enqueue(message);
+                        return true;
+                    } 
+                    else
+                        return false; 
                 }
                 catch (Exception ex)
                 {
@@ -102,7 +114,7 @@ namespace SharedServices.Services.Routing
             try
             {
                 if (String.IsNullOrEmpty(jsonSchema))
-                    throw new InvalidOperationException(ExceptionMessage_JSONSchemaCannotBeNullOrEmpty);
+                    throw new InvalidOperationException(ExceptionMessage_JSONSchemaCannotBeNullOrEmpty); 
                 JSchema schema = JSchema.Parse(jsonSchema);
                 string messageToString = (string)Convert.ChangeType(message, typeof(string));
                 JObject parseMessage = JObject.Parse(messageToString);
