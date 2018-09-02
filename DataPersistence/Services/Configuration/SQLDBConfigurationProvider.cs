@@ -43,7 +43,7 @@ namespace DataPersistence.Services.Configuration
             {
                 if (_sQLDBConfiguration == null)
                 {
-                    _sQLDBConfiguration = JsonConvert.DeserializeObject<ISQLDBConfiguration>(json);
+                    _sQLDBConfiguration = (SQLDBConfiguration)JsonConvert.DeserializeObject<SQLDBConfiguration>(json);
                 }
                 return _sQLDBConfiguration;
             }

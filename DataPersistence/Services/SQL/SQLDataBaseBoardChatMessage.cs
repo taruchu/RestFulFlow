@@ -40,7 +40,7 @@ namespace DataPersistence.Services.SQL
             throw new NotImplementedException(); 
         }
 
-        IChatMessageEnvelope MaptoEnvelope(ChatMessage chatMessage)
+        public IChatMessageEnvelope MaptoEnvelope(ChatMessage chatMessage)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace DataPersistence.Services.SQL
             }
         }
 
-        ChatMessage MapToChatMessage(IChatMessageEnvelope chatMessageEnvelope)
+        public ChatMessage MapToChatMessage(IChatMessageEnvelope chatMessageEnvelope)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace DataPersistence.Services.SQL
             }
         }
 
-        Channel MapToChannel(IChatMessageEnvelope chatMessageEnvelope)
+        public Channel MapToChannel(IChatMessageEnvelope chatMessageEnvelope)
         {
             try
             {

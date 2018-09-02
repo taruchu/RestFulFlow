@@ -14,6 +14,23 @@ namespace DataPersistence.Services
         private string _iTackGUID { get; set; }
         private object _thisLock { get; set; }
         private bool _isDisposed { get; set; }
+
+        public string ExceptionMessage_SkyWatchCannotBeNull
+        {
+            get
+            {
+                return "Tack - SkyWatch cannot be null.";
+            }
+        }
+
+        public string ExceptionMessage_BoardsCannotBeNull
+        {
+            get
+            {
+                return "Tack - Boards cannot be null.";
+            }
+        }
+
         private const string _FILE_DB_PATH = "fileDB.xml"; //TODO: This path should be in a shared location external to this assembly.
 
         public Tack(IBoards boards)
@@ -33,12 +50,18 @@ namespace DataPersistence.Services
                 {
                     if (envelope == null)
                         return envelope;
-
-                    if(envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
+                    else if (_boards == null)
+                        throw new InvalidOperationException(ExceptionMessage_BoardsCannotBeNull);
+                    else if(envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
                     {
                         return _boards.GetHandle_SQLDataBaseBoardChatMessage().DELETE(envelope);
                     }
-                    return envelope;
+                    else 
+                        return envelope;
+                }
+                catch(InvalidOperationException ex)
+                {
+                    throw new InvalidOperationException(ex.Message, ex);
                 }
                 catch(Exception ex)
                 {
@@ -72,12 +95,18 @@ namespace DataPersistence.Services
                 {
                     if (envelope == null)
                         return envelope;
-
-                    if (envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
+                    else if (_boards == null)
+                        throw new InvalidOperationException(ExceptionMessage_BoardsCannotBeNull);
+                    else if (envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
                     {
                         return _boards.GetHandle_SQLDataBaseBoardChatMessage().GET(envelope);
                     }
-                    return envelope;
+                    else
+                        return envelope;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    throw new InvalidOperationException(ex.Message, ex);
                 }
                 catch (Exception ex)
                 {
@@ -94,12 +123,18 @@ namespace DataPersistence.Services
                 {
                     if (envelope == null)
                         return envelope;
-
-                    if (envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
+                    else if (_boards == null)
+                        throw new InvalidOperationException(ExceptionMessage_BoardsCannotBeNull);
+                    else if (envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
                     {
                         return _boards.GetHandle_SQLDataBaseBoardChatMessage().POST(envelope);
                     }
-                    return envelope;
+                    else
+                        return envelope;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    throw new InvalidOperationException(ex.Message, ex);
                 }
                 catch (Exception ex)
                 {
@@ -116,12 +151,18 @@ namespace DataPersistence.Services
                 {
                     if (envelope == null)
                         return envelope;
-
-                    if (envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
+                    else if (_boards == null)
+                        throw new InvalidOperationException(ExceptionMessage_BoardsCannotBeNull);
+                    else if (envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
                     {
                         return _boards.GetHandle_SQLDataBaseBoardChatMessage().PUT(envelope);
                     }
-                    return envelope;
+                    else
+                        return envelope;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    throw new InvalidOperationException(ex.Message, ex);
                 }
                 catch (Exception ex)
                 {
@@ -156,14 +197,14 @@ namespace DataPersistence.Services
             }
         }
 
-        private void DeclareEventToSkyWatch(ISkyWatchEventTypes skyWatchEventType, Type envelopeType, long storageID)
+        public bool DeclareEventToSkyWatch(ISkyWatchEventTypes skyWatchEventType, Type envelopeType, long storageID)
         {
             lock (_thisLock)
             {
                 try
                 {
-                    string eventKey = CreateEventKey(envelopeType, storageID); 
-                    SkyWatch.Declare(skyWatchEventType, eventKey);
+                    string eventKey = CreateEventKey(envelopeType, storageID);  
+                    return SkyWatch.Declare(skyWatchEventType, eventKey);
                 }
                 catch (Exception ex)
                 {
@@ -172,13 +213,13 @@ namespace DataPersistence.Services
             }
         }
 
-        string CreateEventKey(Type envelopeType, long storageID)
+        public string CreateEventKey(Type envelopeType, long storageID)
         {
             //NOTE: eventKey = {IEnvelope type}.{Storage ID}  for example:  IChatMessageEnvelope.323
             return String.Format("{0}.{1}", envelopeType.ToString(), storageID.ToString());
         }
 
-        long GetStorageID(string eventKey)
+        public long GetStorageID(string eventKey)
         {
             //NOTE: eventKey = {IEnvelope type}.{Storage ID}  for example:  IChatMessageEnvelope.323
             long storageID;
@@ -188,18 +229,18 @@ namespace DataPersistence.Services
             return storageID;
         }
 
-        Type GetIEnvelopeType(string eventKey)
+        public Type GetIEnvelopeType(string eventKey)
         {
             //NOTE: eventKey = {IEnvelope type}.{Storage ID}  for example:  IChatMessageEnvelope.323
             return Type.GetType(eventKey.Split('.')[0]); 
         }
 
-        private void SubscribeToSkyWatch(Type envelopeType, long storageID)
+        public bool SubscribeToSkyWatch(Type envelopeType, long storageID)
         { 
             try
             { 
-                string eventKey = CreateEventKey(envelopeType, storageID);
-                SkyWatch.Watch(eventKey, _iTackGUID, SkyWatchEventHandler);
+                string eventKey = CreateEventKey(envelopeType, storageID); 
+                return SkyWatch.Watch(eventKey, _iTackGUID, SkyWatchEventHandler);
             }
             catch (Exception ex)
             {
@@ -207,12 +248,12 @@ namespace DataPersistence.Services
             }  
         }
 
-        private void UnsubscribeToSkyWatch(Type envelopeType, long storageID)
+        public bool UnsubscribeToSkyWatch(Type envelopeType, long storageID)
         { 
             try
             {
-                string eventKey = CreateEventKey(envelopeType, storageID); 
-                SkyWatch.UnWatch(eventKey, _iTackGUID);
+                string eventKey = CreateEventKey(envelopeType, storageID);
+                return SkyWatch.UnWatch(eventKey, _iTackGUID);
             }
             catch (Exception ex)
             {

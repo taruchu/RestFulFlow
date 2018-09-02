@@ -26,5 +26,8 @@ namespace DataPersistence.Interfaces
         IEnvelope DELETE(IEnvelope envelope);
         ISkyWatch SkyWatch { get; set; } //NOTE: This is property injected so that it can be shared easily by other services when ITack is instantiated using a DI container.
         IBoards Boards { get; } 
+
+        string ExceptionMessage_SkyWatchCannotBeNull { get; }
+        string ExceptionMessage_BoardsCannotBeNull { get; }
     }
 }
