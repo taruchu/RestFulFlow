@@ -1,10 +1,10 @@
 ﻿using DataPersistence.Interfaces.Configuration;
 using DataPersistence.Interfaces.SQL;
 using DataPersistence.Models.ChatMessage;
+using Microsoft.EntityFrameworkCore;
 using SharedInterfaces.Interfaces.Envelope;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 
 namespace DataPersistence.Services.SQL
@@ -18,13 +18,21 @@ namespace DataPersistence.Services.SQL
 
 
         public SQLDataBaseBoardChatMessage(ISQLDBConfigurationProvider sQLDBConfigurationProvider, IChatMessageEnvelopeFactory chatMessageEnvelopeFactory)
-            : base(sQLDBConfigurationProvider.GetSQLDBConfigurationFromJSONFile().ConnectionString)
+            : base ()
         {
             _sQLDBConfigurationProvider = sQLDBConfigurationProvider;
-            _chatMessageEnvelopeFactory = chatMessageEnvelopeFactory;
+            _chatMessageEnvelopeFactory = chatMessageEnvelopeFactory; 
+        }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(_sQLDBConfigurationProvider.GetSQLDBConfigurationFromJSONFile().ConnectionString);
+        }
 
-            Database.SetInitializer<SQLDataBaseBoardChatMessage>(new DropCreateDatabaseIfModelChanges<SQLDataBaseBoardChatMessage>());
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //NOTE: Use this to override EF Core Conventions for defining relationships. 
+            //It's an alternative to using data annotations on the model classes. (see .net Fluent API configuration)
         }
 
         public bool Connect()
