@@ -17,4 +17,10 @@
     <ProjectReference Include="..\SharedServices\SharedServices.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="SQLDBConfiguration.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

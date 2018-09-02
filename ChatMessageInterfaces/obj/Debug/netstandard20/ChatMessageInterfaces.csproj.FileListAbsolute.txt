@@ -1,4 +1,3 @@
-C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\ChatMessageInterfaces\bin\Debug\netstandard20\Interfaces\Configuration\SQLDBConfiguration.json
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\ChatMessageInterfaces\bin\Debug\netstandard20\ChatMessageInterfaces.deps.json
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\ChatMessageInterfaces\bin\Debug\netstandard20\ChatMessageInterfaces.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\ChatMessageInterfaces\bin\Debug\netstandard20\ChatMessageInterfaces.pdb
@@ -14,3 +13,4 @@ C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\ChatMe
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\ChatMessageInterfaces\obj\Debug\netstandard20\ChatMessageInterfaces.AssemblyInfo.cs
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\ChatMessageInterfaces\obj\Debug\netstandard20\ChatMessageInterfaces.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\ChatMessageInterfaces\obj\Debug\netstandard20\ChatMessageInterfaces.pdb
+C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\ChatMessageInterfaces\bin\Debug\netstandard20\Services\Configuration\SQLDBConfiguration.json

@@ -1,6 +1,5 @@
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\RestFulFlowService\bin\Debug\netcoreapp2.0\log-file.txt
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\RestFulFlowService\bin\Debug\netcoreapp2.0\log4NetConfiguration.xml
-C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\RestFulFlowService\bin\Debug\netcoreapp2.0\Interfaces\Configuration\SQLDBConfiguration.json
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\RestFulFlowService\bin\Debug\netcoreapp2.0\RestFulFlowService.deps.json
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\RestFulFlowService\bin\Debug\netcoreapp2.0\RestFulFlowService.runtimeconfig.json
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\RestFulFlowService\bin\Debug\netcoreapp2.0\RestFulFlowService.runtimeconfig.dev.json
@@ -28,3 +27,5 @@ C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\RestFu
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\RestFulFlowService\obj\Debug\netcoreapp2.0\RestFulFlowService.AssemblyInfo.cs
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\RestFulFlowService\obj\Debug\netcoreapp2.0\RestFulFlowService.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\RestFulFlowService\obj\Debug\netcoreapp2.0\RestFulFlowService.pdb
+C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\RestFulFlowService\bin\Debug\netcoreapp2.0\Services\Configuration\SQLDBConfiguration.json
+C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\RestFulFlowService\bin\Debug\netcoreapp2.0\SQLDBConfiguration.json

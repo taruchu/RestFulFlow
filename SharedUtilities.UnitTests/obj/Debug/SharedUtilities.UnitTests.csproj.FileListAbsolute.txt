@@ -1,7 +1,6 @@
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
-C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\bin\Debug\Interfaces\Configuration\SQLDBConfiguration.json
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\bin\Debug\log-file.txt
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\bin\Debug\log4NetConfiguration.xml
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\bin\Debug\SharedUtilities.UnitTests.dll
@@ -131,3 +130,4 @@ C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\Shared
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\obj\Debug\SharedUtilities.UnitTests.csproj.CoreCompileInputs.cache
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\obj\Debug\SharedUtilities.UnitTests.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\obj\Debug\SharedUtilities.UnitTests.pdb
+C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilities.UnitTests\bin\Debug\Services\Configuration\SQLDBConfiguration.json

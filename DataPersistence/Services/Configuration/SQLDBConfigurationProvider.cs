@@ -1,14 +1,18 @@
 ﻿using DataPersistence.Interfaces;
 using DataPersistence.Interfaces.Configuration;
 using Newtonsoft.Json;
+using SharedUtilities.Implementation.Marshall;
+using SharedUtilities.Interfaces.Marshall;
 using System;
 using System.IO;
+using System.Reflection;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DataPersistence.Services.Configuration
 {
     public class SQLDBConfigurationProvider : ISQLDBConfigurationProvider
     {
-        private const string _CONFIGURATION_FILE_NAME = "SQLDBConfiguration.json"; 
+        private string _CONFIGURATION_FILE_NAME = "SQLDBConfiguration.json"; 
         private ISQLDBConfiguration _sQLDBConfiguration { get; set; }
         public SQLDBConfigurationProvider()
         {
@@ -21,8 +25,8 @@ namespace DataPersistence.Services.Configuration
                 {
                     using (StreamReader file = File.OpenText(_CONFIGURATION_FILE_NAME))
                     {
-                        JsonSerializer serializer = new JsonSerializer();
-                        _sQLDBConfiguration = (ISQLDBConfiguration)serializer.Deserialize(file, typeof(ISQLDBConfiguration));
+                        JsonSerializer serializer = new JsonSerializer(); 
+                        _sQLDBConfiguration = (SQLDBConfiguration)serializer.Deserialize(file, typeof(SQLDBConfiguration));
                     }
                 }
                 return _sQLDBConfiguration;
