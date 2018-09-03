@@ -103,6 +103,8 @@ namespace SharedServices.Services.ServiceFarm
                         _messageBusBankServices.RegisterMessageBus(modifyChatMessageServiceA.ServiceGUID, messageBusModifyChatMessageServiceA);
                         _serviceList.Add(modifyChatMessageServiceA);
 
+                        //TODO: Set up the GetNextChatMessageService A
+
                     return true;
                 }
                 catch (Exception ex)
