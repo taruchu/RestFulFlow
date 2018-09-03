@@ -49,7 +49,7 @@ namespace DataPersistence.UnitTests
         }
 
         [TestMethod]
-        public void TestCRUD()
+        public void TestSQLDataBaseBoardCRUD()
         {
             SQLDataBaseBoardChatMessage sQLDataBaseBoardChatMessage = new SQLDataBaseBoardChatMessage(new SQLDBConfigurationProvider(), new ChatMessageEnvelopeFactory());
             IChatMessageEnvelope chatMessageEnvelope = _erector.Container.Resolve<IChatMessageEnvelope>();
