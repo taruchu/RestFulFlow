@@ -22,6 +22,7 @@ namespace DataPersistence.Services.IOC
         }
 
         public void StandUp(IIOCContainer container) => container 
+                .Register<IImplementationTypeResolver, ImplementationTypeResolver>()
                 .Register<IEnvelope, EnvelopeModel>()
                 .Register<IEnvelopeFactory, EnvelopeFactory>()
                 .Register<IChatMessageEnvelope, ChatMessageEnvelope>()

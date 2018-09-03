@@ -172,6 +172,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLDataBaseBoardChatMessage.UnitTests.cs" />
     <Compile Include="Tack.UnitTests.cs" />
+    <Compile Include="Boards.UnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
