@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v2.0/",
-    "signature": "e8aa84bad4ab48490ebf413374dc88f8e6488f36"
+    "signature": "c62a5c3580632ad3637c85ba6a213de89db2075c"
   },
   "compilationOptions": {},
   "targets": {
@@ -18,7 +18,8 @@
           "Newtonsoft.Json": "11.0.2",
           "SharedInterfaces": "1.0.0",
           "SharedUtilities": "1.0.0",
-          "System.ComponentModel.Annotations": "4.5.0"
+          "System.ComponentModel.Annotations": "4.5.0",
+          "Unity": "5.7.3"
         },
         "runtime": {
           "DataPersistence.dll": {}
@@ -518,6 +519,14 @@
           "System.Runtime": "4.1.0"
         }
       },
+      "Unity/5.7.3": {
+        "runtime": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        }
+      },
       "SharedInterfaces/1.0.0": {
         "dependencies": {
           "Newtonsoft.Json": "11.0.2",
@@ -986,6 +995,13 @@
       "sha512": "sha512-4UXI/zl1ojrIdPQsrAHjo51Cl+akbuEs9gR8njiXBfzjOocDxkWgIFq+w3moLmjA+ZmiH3PEU5FTeGmkqmLC6A==",
       "path": "system.threading.tasks/4.0.11",
       "hashPath": "system.threading.tasks.4.0.11.nupkg.sha512"
+    },
+    "Unity/5.7.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zo0zeSyj53e/Lz2XQrbvoMMXe3hCHs9rp49D1VA+gCm3I6SMvCE7NbhVKUkalJ4o51Ps3Of2W/Rs+OkNSqlelg==",
+      "path": "unity/5.7.3",
+      "hashPath": "unity.5.7.3.nupkg.sha512"
     },
     "SharedInterfaces/1.0.0": {
       "type": "project",

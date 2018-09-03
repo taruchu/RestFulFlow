@@ -12,7 +12,7 @@ namespace DataPersistence.Services.Configuration
 {
     public class SQLDBConfigurationProvider : ISQLDBConfigurationProvider
     {
-        private string _CONFIGURATION_FILE_NAME = "SQLDBConfiguration.json"; 
+        private string _CONFIGURATION_FILE_NAME = @"Services\Configuration\SQLDBConfiguration.json"; 
         private ISQLDBConfiguration _sQLDBConfiguration { get; set; }
         public SQLDBConfigurationProvider()
         {

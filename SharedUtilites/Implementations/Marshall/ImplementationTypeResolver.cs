@@ -6,18 +6,15 @@ using SharedUtilities.Interfaces.Marshall;
 namespace SharedUtilities.Implementation.Marshall
 {
     public class ImplementationTypeResolver : IImplementationTypeResolver
-    { 
-        private ITransactionResultFactory _transactionResultFactory { get; set; }
+    {  
         private IEnvelopeFactory _envelopeFactory { get; set; }
         private IChatMessageEnvelopeFactory _chatMessageEnvelopeFactory { get; set; }
 
 
-        public ImplementationTypeResolver( 
-            ITransactionResultFactory transactionResultFactory,
+        public ImplementationTypeResolver(  
             IEnvelopeFactory envelopeFactory , IChatMessageEnvelopeFactory chatMessageEnvelopeFactory
             )
-        { 
-            _transactionResultFactory = transactionResultFactory;
+        {  
             _envelopeFactory = envelopeFactory;
             _chatMessageEnvelopeFactory = chatMessageEnvelopeFactory;
         }
@@ -29,9 +26,7 @@ namespace SharedUtilities.Implementation.Marshall
                 Type incomingType = typeof(T);
 
 
-                if (incomingType == typeof(ITransactionResult))
-                    return _transactionResultFactory.ResolveImplementationType();
-                else if (incomingType == typeof(IEnvelope))
+                if (incomingType == typeof(IEnvelope))
                     return _envelopeFactory.ResolveImplementationType();
                 else if (incomingType == typeof(IChatMessageEnvelope))
                     return _chatMessageEnvelopeFactory.ResolveImplementationType();
