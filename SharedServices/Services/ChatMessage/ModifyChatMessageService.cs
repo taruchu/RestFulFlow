@@ -26,6 +26,7 @@ namespace SharedServices.Services.ChatMessage
         }
         private string _serviceGUID { get; set; }
         private bool _isDisposed { get; set; }
+        private object _thisLock { get; set; }
 
         public string ExceptionMessage_MessageBusWriterCannotBeNull
         {
@@ -72,35 +73,75 @@ namespace SharedServices.Services.ChatMessage
         public ModifyChatMessageService(IMarshaller marshaller)
         {
             _isDisposed = false;
-            HandleMessageFromRouter = ProcessMessage;
+            HandleMessageFromRouter = AddMessageToBus;
             _marshaller = marshaller;
-            
+            _thisLock = new object();
         }
 
+        public void AddMessageToBus(string message)
+        {
+            lock(_thisLock)
+            {
+                try
+                {
+                    if (MessageBusWiter == null)
+                        throw new InvalidOperationException(ExceptionMessage_MessageBusWriterCannotBeNull);
+                    else
+                    {
+                        MessageBusWiter.Write(message);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    throw new ApplicationException(ex.Message, ex);
+                }
+            }
+        }
 
         public void ProcessMessage(string message)
         {
-            try
+            lock (_thisLock)
             {
-                if (_marshaller == null)
-                    throw new InvalidOperationException(ExceptionMessage_MarshallerCannotBeNull);
-                else
+                try
                 {
-                    //TODO: For now just echo it back to the sender. Later add hooks to the GET, POST, PUT, DELETE methods.
-                    //TODO: I want to move this chat message service into a WebSocket entry point instead of a RestFul entry point.
+                    if (_marshaller == null)
+                        throw new InvalidOperationException(ExceptionMessage_MarshallerCannotBeNull);
+                    else
+                    {
+                        IChatMessageEnvelope requestEnvelope = _marshaller.UnMarshall<IChatMessageEnvelope>(message);
+                        string responseEnvelope = String.Empty;
+                        string ClientProxyGUID = requestEnvelope.ClientProxyGUID;
 
-                    IChatMessageEnvelope envelope = _marshaller.UnMarshall<IChatMessageEnvelope>(message);
-                    string ClientProxyGUID = envelope.ClientProxyGUID;
-                    SendResponse(ClientProxyGUID, message);
-                }                
-            }
-            catch(InvalidOperationException ex)
-            {
-                throw new InvalidOperationException(ex.Message, ex);
-            }
-            catch (Exception ex)
-            {
-                new ApplicationException(ex.Message, ex);
+                        if (requestEnvelope.RequestMethod == "POST")
+                        {
+                            responseEnvelope = Post(requestEnvelope);
+                            SendResponse(ClientProxyGUID, responseEnvelope);
+                        }
+                        else if(requestEnvelope.RequestMethod == "PUT")
+                        {
+                            responseEnvelope = Put(requestEnvelope);
+                            SendResponse(ClientProxyGUID, responseEnvelope);
+                        }
+                        else if(requestEnvelope.RequestMethod == "DELETE")
+                        {
+                            responseEnvelope = Delete(requestEnvelope);
+                            SendResponse(ClientProxyGUID, responseEnvelope);
+                        }
+                        else
+                        {
+                            //NOTE: Echo it back.
+                            SendResponse(ClientProxyGUID, message);
+                        }       
+                    }
+                }
+                catch (InvalidOperationException ex)
+                {
+                    throw new InvalidOperationException(ex.Message, ex);
+                }
+                catch (Exception ex)
+                {
+                    new ApplicationException(ex.Message, ex);
+                } 
             }
         }
 

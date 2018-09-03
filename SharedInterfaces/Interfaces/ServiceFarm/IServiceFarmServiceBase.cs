@@ -12,6 +12,7 @@ namespace SharedInterfaces.Interfaces.ServiceFarm
         IMessageBusBank<string> MessageBusBank { get; set; } 
         Action<string> HandleMessageFromRouter { get; set; }
         bool SendResponse(string ClientProxyGUID, string responseBody);
+        void ProcessMessage(string message);
 
         string ExceptionMessage_MessageBusWriterCannotBeNull { get; }
         string ExceptionMessage_MessageBusReaderBankCannotBeNull { get; }

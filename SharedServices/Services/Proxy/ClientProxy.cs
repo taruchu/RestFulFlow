@@ -123,5 +123,10 @@ namespace SharedServices.Services.Proxy
         {
             throw new NotImplementedException();
         }
+
+        public void ProcessMessage(string message)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

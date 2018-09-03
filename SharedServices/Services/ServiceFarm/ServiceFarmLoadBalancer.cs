@@ -48,60 +48,65 @@ namespace SharedServices.Services.ServiceFarm
 
                     //**** Set up Network A ****/
                         //NOTE: Set up router A
-                        IMessageBus<string> messageBusRouterA = _erector.Container.Resolve<IMessageBus<string>>();
-                        messageBusRouterA.JsonSchema =
-                        (message) =>
-                        {
-                            string serviceName = _marshaller.UnMarshall<IEnvelope>(message).ServiceRoute.Split('.')[1];
-                            if (serviceName == ChatServiceNames.ChatMessageService)
-                                return _erector.Container.Resolve<IChatMessageEnvelope>().GetMyJSONSchema();
-                            else
-                                return String.Empty;
-                        };
+                            IMessageBus<string> messageBusRouterA = _erector.Container.Resolve<IMessageBus<string>>();
+                            messageBusRouterA.JsonSchema =
+                            (message) =>
+                            {
+                                string serviceName = _marshaller.UnMarshall<IEnvelope>(message).ServiceRoute.Split('.')[1];
+                                if (serviceName == ChatServiceNames.ChatMessageService)
+                                    return _erector.Container.Resolve<IChatMessageEnvelope>().GetMyJSONSchema();
+                                else
+                                    return String.Empty;
+                            };
 
-                        IMessageBusReaderBank<string> messageBusReaderBankRouterA = _erector.Container.Resolve<IMessageBusReaderBank<string>>();
-                        messageBusReaderBankRouterA.SpecifyTheMessageBus(messageBusRouterA);
+                            IMessageBusReaderBank<string> messageBusReaderBankRouterA = _erector.Container.Resolve<IMessageBusReaderBank<string>>();
+                            messageBusReaderBankRouterA.SpecifyTheMessageBus(messageBusRouterA);
 
-                        IRoutingTable<string> routingTableRouterA = _erector.Container.Resolve<IRoutingTable<string>>();
-                        routingTableRouterA.MessageBusBank = _messageBusBankRouters;
+                            IRoutingTable<string> routingTableRouterA = _erector.Container.Resolve<IRoutingTable<string>>();
+                            routingTableRouterA.MessageBusBank = _messageBusBankRouters;
 
-                        IRoutingService<string> routingServiceRouterA = _erector.Container.Resolve<IRoutingService<string>>(); 
-                        routingServiceRouterA.RoutingTable = routingTableRouterA;
-                        routingServiceRouterA.MessageBusReaderBank = messageBusReaderBankRouterA;
+                            IRoutingService<string> routingServiceRouterA = _erector.Container.Resolve<IRoutingService<string>>(); 
+                            routingServiceRouterA.RoutingTable = routingTableRouterA;
+                            routingServiceRouterA.MessageBusReaderBank = messageBusReaderBankRouterA;
 
-                        _messageBusBankRouters.RegisterMessageBus(routingServiceRouterA.RoutingServiceGUID, messageBusRouterA);
-                        _serviceList.Add(routingServiceRouterA);
+                            _messageBusBankRouters.RegisterMessageBus(routingServiceRouterA.RoutingServiceGUID, messageBusRouterA);
+                            _serviceList.Add(routingServiceRouterA);
 
-                        //NOTE: Set up the ModifyChatMessageService A
-                        ISkyWatch skyWatchA = _erector.Container.Resolve<ISkyWatch>();
-                        IMessageBus<string> messageBusModifyChatMessageServiceA = _erector.Container.Resolve<IMessageBus<string>>();
-                        messageBusModifyChatMessageServiceA.JsonSchema =
-                        (message) =>
-                        {
-                            return _erector.Container.Resolve<IChatMessageEnvelope>().GetMyJSONSchema();
-                        };
+                            ISkyWatch skyWatchA = _erector.Container.Resolve<ISkyWatch>();
 
-                        IMessageBusReaderBank<string> messageBusReaderBankModifyChangeMessageServiceA = _erector.Container.Resolve<IMessageBusReaderBank<string>>();
-                        messageBusReaderBankModifyChangeMessageServiceA.SpecifyTheMessageBus(messageBusModifyChatMessageServiceA);
+                        //NOTE: Set up the ModifyChatMessageService A 
+                            IMessageBus<string> messageBusModifyChatMessageServiceA = _erector.Container.Resolve<IMessageBus<string>>();
+                            messageBusModifyChatMessageServiceA.JsonSchema =
+                            (message) =>
+                            {
+                                return _erector.Container.Resolve<IChatMessageEnvelope>().GetMyJSONSchema(); //NOTE: Require this schema
+                            };
 
-                        IMessageBusWriter<string> messageBusWriterModifyChatMessageServiceA = _erector.Container.Resolve<IMessageBusWriter<string>>();
-                        messageBusWriterModifyChatMessageServiceA.SpecifyTheMessageBus(messageBusModifyChatMessageServiceA);
+                            IMessageBusReaderBank<string> messageBusReaderBankModifyChangeMessageServiceA = _erector.Container.Resolve<IMessageBusReaderBank<string>>();
+                            messageBusReaderBankModifyChangeMessageServiceA.SpecifyTheMessageBus(messageBusModifyChatMessageServiceA);
 
-                        IModifyChatMessageService modifyChatMessageServiceA = _erector.Container.Resolve<IModifyChatMessageService>();
-                        modifyChatMessageServiceA.MessageBusReaderBank = messageBusReaderBankModifyChangeMessageServiceA;
-                        modifyChatMessageServiceA.MessageBusWiter = messageBusWriterModifyChatMessageServiceA;
-                        modifyChatMessageServiceA.MessageBusBank = _messageBusBankServices;
-                        ITack tackModifyChatMessageServiceA = _erector.Container.Resolve<ITack>();
-                        tackModifyChatMessageServiceA.SkyWatch = skyWatchA; 
-                        modifyChatMessageServiceA.Tack = tackModifyChatMessageServiceA;
+                            IMessageBusWriter<string> messageBusWriterModifyChatMessageServiceA = _erector.Container.Resolve<IMessageBusWriter<string>>();
+                            messageBusWriterModifyChatMessageServiceA.SpecifyTheMessageBus(messageBusModifyChatMessageServiceA);
 
-                        IRoute<string> routeChatMessageServiceA = _erector.Container.Resolve<IRoute<string>>();
-                        routeChatMessageServiceA.Route = String.Format("{0}.{1}", routingServiceRouterA.RoutingServiceGUID, ChatServiceNames.ChatMessageService);
-                        routeChatMessageServiceA.RegisterRouteHandler = modifyChatMessageServiceA.HandleMessageFromRouter;
-                        routingServiceRouterA.RegisterRoute(routeChatMessageServiceA);
+                            IModifyChatMessageService modifyChatMessageServiceA = _erector.Container.Resolve<IModifyChatMessageService>();
+                            modifyChatMessageServiceA.MessageBusReaderBank = messageBusReaderBankModifyChangeMessageServiceA;
+                            //NOTE: Set up two readers 
+                            messageBusReaderBankModifyChangeMessageServiceA.AddAnotherReader(modifyChatMessageServiceA.ProcessMessage);
+                            messageBusReaderBankModifyChangeMessageServiceA.AddAnotherReader(modifyChatMessageServiceA.ProcessMessage);
 
-                        _messageBusBankServices.RegisterMessageBus(modifyChatMessageServiceA.ServiceGUID, messageBusModifyChatMessageServiceA);
-                        _serviceList.Add(modifyChatMessageServiceA);
+                            modifyChatMessageServiceA.MessageBusWiter = messageBusWriterModifyChatMessageServiceA;
+                            modifyChatMessageServiceA.MessageBusBank = _messageBusBankServices;
+                            ITack tackModifyChatMessageServiceA = _erector.Container.Resolve<ITack>();
+                            tackModifyChatMessageServiceA.SkyWatch = skyWatchA; 
+                            modifyChatMessageServiceA.Tack = tackModifyChatMessageServiceA;
+
+                            IRoute<string> routeChatMessageServiceA = _erector.Container.Resolve<IRoute<string>>();
+                            routeChatMessageServiceA.Route = String.Format("{0}.{1}", routingServiceRouterA.RoutingServiceGUID, ChatServiceNames.ChatMessageService);
+                            routeChatMessageServiceA.RegisterRouteHandler = modifyChatMessageServiceA.HandleMessageFromRouter;
+                            routingServiceRouterA.RegisterRoute(routeChatMessageServiceA);
+
+                            _messageBusBankServices.RegisterMessageBus(modifyChatMessageServiceA.ServiceGUID, messageBusModifyChatMessageServiceA);
+                            _serviceList.Add(modifyChatMessageServiceA);
 
                         //TODO: Set up the GetNextChatMessageService A
 

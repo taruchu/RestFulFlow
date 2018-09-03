@@ -1,9 +1,9 @@
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedInterfaces\bin\Debug\netstandard2.0\SharedInterfaces.deps.json
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedInterfaces\bin\Debug\netstandard2.0\SharedInterfaces.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedInterfaces\bin\Debug\netstandard2.0\SharedInterfaces.pdb
-C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedInterfaces\obj\Debug\netstandard2.0\SharedInterfaces.csprojResolveAssemblyReference.cache
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedInterfaces\obj\Debug\netstandard2.0\SharedInterfaces.csproj.CoreCompileInputs.cache
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedInterfaces\obj\Debug\netstandard2.0\SharedInterfaces.AssemblyInfoInputs.cache
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedInterfaces\obj\Debug\netstandard2.0\SharedInterfaces.AssemblyInfo.cs
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedInterfaces\obj\Debug\netstandard2.0\SharedInterfaces.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedInterfaces\obj\Debug\netstandard2.0\SharedInterfaces.pdb
+C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedInterfaces\obj\Debug\netstandard2.0\SharedInterfaces.csprojResolveAssemblyReference.cache

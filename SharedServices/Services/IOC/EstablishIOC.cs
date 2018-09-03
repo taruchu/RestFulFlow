@@ -62,6 +62,7 @@ namespace SharedServices.Services.IOC
                 .Register<ISQLDBConfigurationProvider, SQLDBConfigurationProvider>()
                 .Register<ISQLDBConfiguration, SQLDBConfiguration>()  
 
+                 
 
                 ;
     }

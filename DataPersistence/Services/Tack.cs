@@ -8,7 +8,6 @@ namespace DataPersistence.Services
 {
     public class Tack : ITack
     {
-        public IBoards Boards { get { return _boards; } }
         private IBoards _boards { get; set; }
         public ISkyWatch SkyWatch { get; set; }
         private string _iTackGUID { get; set; }

@@ -73,6 +73,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ChatMessage\ModifyChatMessageService.UnitTests.cs" />
     <Compile Include="Routing\MessageBusUnitTests.cs" />
     <Compile Include="Routing\MessageBusBankUnitTests.cs" />
     <Compile Include="Routing\RoutingTableUnitTest.cs" />
@@ -87,8 +88,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Proxy\" />
+    <Folder Include="ServiceFarm\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChatMessageInterfaces\ChatMessageInterfaces.csproj">
+      <Project>{A68F883A-D0F6-48F3-978F-2D9D3823D388}</Project>
+      <Name>ChatMessageInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataPersistence\DataPersistence.csproj">
+      <Project>{DCC807BD-BFDF-468E-9A58-A37AA6E4A3B2}</Project>
+      <Name>DataPersistence</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedInterfaces\SharedInterfaces.csproj">
       <Project>{76AE1C26-7E66-4D12-B2B5-2DE41687050C}</Project>
       <Name>SharedInterfaces</Name>
