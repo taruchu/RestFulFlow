@@ -33,6 +33,7 @@ namespace DataPersistence.Services.SQL
         {
             //NOTE: Use this to override EF Core Conventions for defining relationships. 
             //It's an alternative to using data annotations on the model classes. (see .net Fluent API configuration)
+           
         }
 
         public bool Connect()
@@ -83,8 +84,13 @@ namespace DataPersistence.Services.SQL
             try
             {
                 Channel channel = new Channel();
-                channel.ChannelID = chatMessageEnvelope.ChatChannelID;
-                channel.ChannelName = chatMessageEnvelope.ChatChannelName;
+                if (chatMessageEnvelope.ChatChannelID > 0)
+                    channel = this.Channels.Find(chatMessageEnvelope.ChatChannelID);
+                else
+                {
+                    channel.ChannelID = chatMessageEnvelope.ChatChannelID;
+                    channel.ChannelName = chatMessageEnvelope.ChatChannelName;
+                } 
                 return channel;
             }
             catch (Exception ex)
@@ -207,38 +213,49 @@ namespace DataPersistence.Services.SQL
 
         public IChatMessageEnvelope GetNextChatMessage(IChatMessageEnvelope chatMessageEnvelope)
         {
-            using (var dbContextTransaction = this.Database.BeginTransaction())
+            try
             {
-                try
-                {
-                    ChatMessage chatMessageInput = MapToChatMessage(chatMessageEnvelope);
-                    ChatMessage nextChatMessage = this.ChatMessages
-                                                        .Where(
-                                                            chat =>
-                                                                chat.ChannelID == chatMessageInput.ChannelID
-                                                                &&
-                                                                chat.CreatedDateTime > chatMessageInput.CreatedDateTime
-                                                        )
-                                                        .OrderBy(chat => chat.CreatedDateTime)
-                                                        .FirstOrDefault(); 
-                    dbContextTransaction.Commit();
+                ChatMessage chatMessageInput = MapToChatMessage(chatMessageEnvelope);
+                ChatMessage nextChatMessage = this.ChatMessages
+                                                    .Where(
+                                                        chat =>
+                                                            chat.ChannelID == chatMessageInput.ChannelID
+                                                            &&
+                                                            chat.CreatedDateTime > chatMessageInput.CreatedDateTime
+                                                    )
+                                                    .OrderBy(chat => chat.CreatedDateTime)
+                                                    .FirstOrDefault();  
 
-                    if(nextChatMessage == null)
-                    {
-                        return chatMessageEnvelope;//NOTE: They already have the most recent chat message.
-                    }
-                    else
-                    {
-                        IChatMessageEnvelope nextChatMessageEnvelope = MaptoEnvelope(nextChatMessage);
-                        return nextChatMessageEnvelope;
-                    }                    
-                }
-                catch (Exception ex)
+                if(nextChatMessage == null)
                 {
-                    dbContextTransaction.Rollback();
-                    throw new ApplicationException(ex.Message, ex);
+                    return chatMessageEnvelope;//NOTE: They already have the most recent chat message.
                 }
+                else
+                {
+                    this.Entry(nextChatMessage).Reference(nxt => nxt.Channel).Load();
+                    IChatMessageEnvelope nextChatMessageEnvelope = MaptoEnvelope(nextChatMessage);
+                    return nextChatMessageEnvelope;
+                }                    
             }
-        } 
+            catch (Exception ex)
+            { 
+                throw new ApplicationException(ex.Message, ex);
+            } 
+        }
+
+        public IChatMessageEnvelope GetChatMessageByID(IChatMessageEnvelope chatMessageEnvelope)
+        { 
+            try
+            {
+                ChatMessage chatMessage = this.ChatMessages.First(msg => msg.ChatMessageID == chatMessageEnvelope.ChatMessageID);
+                this.Entry(chatMessage).Reference(chnl => chnl.Channel).Load();
+                return MaptoEnvelope(chatMessage);
+            }
+            catch (Exception ex)
+            { 
+                throw new ApplicationException(ex.Message, ex);
+            }  
+        }
+
     }
 }

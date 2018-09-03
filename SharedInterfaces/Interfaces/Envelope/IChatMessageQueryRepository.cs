@@ -7,5 +7,6 @@ namespace SharedInterfaces.Interfaces.Envelope
     public interface IChatMessageQueryRepository
     {
         IChatMessageEnvelope GetNextChatMessage(IChatMessageEnvelope chatMessageEnvelope); 
+        IChatMessageEnvelope GetChatMessageByID(IChatMessageEnvelope chatMessageEnvelope); 
     }
 }
