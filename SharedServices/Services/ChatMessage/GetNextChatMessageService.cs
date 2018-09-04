@@ -31,6 +31,7 @@ namespace SharedServices.Services.ChatMessage
         }
         private string _serviceGUID { get; set; }
         private bool _isDisposed { get; set; }
+        private object _thisLock { get; set; }
 
         public string ExceptionMessage_MessageBusWriterCannotBeNull
         {
@@ -74,32 +75,55 @@ namespace SharedServices.Services.ChatMessage
         public GetNextChatMessageService(IMarshaller marshaller)
         {
             _isDisposed = false;
-            HandleMessageFromRouter = ProcessMessage;
-            _marshaller = marshaller; 
+            HandleMessageFromRouter = AddMessageToBus;
+            _marshaller = marshaller;
+            _thisLock = new object();
         }
 
+        public void AddMessageToBus(string message)
+        {
+            lock (_thisLock)
+            {
+                try
+                {
+                    if (MessageBusWiter == null)
+                        throw new InvalidOperationException(ExceptionMessage_MessageBusWriterCannotBeNull);
+                    else
+                    {
+                        MessageBusWiter.Write(message);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException(ex.Message, ex);
+                }
+            }
+        }
 
         public void ProcessMessage(string message)
         {
-            try
+            lock (_thisLock)
             {
-                if (_marshaller == null)
-                    throw new InvalidOperationException(ExceptionMessage_MarshallerCannotBeNull);
-                else
-                { 
-                    IChatMessageEnvelope requestEnvelope = _marshaller.UnMarshall<IChatMessageEnvelope>(message);
-                    string responseEnvelope = Get(requestEnvelope);
-                    string ClientProxyGUID = requestEnvelope.ClientProxyGUID;
-                    SendResponse(ClientProxyGUID, responseEnvelope);
+                try
+                {
+                    if (_marshaller == null)
+                        throw new InvalidOperationException(ExceptionMessage_MarshallerCannotBeNull);
+                    else
+                    {
+                        IChatMessageEnvelope requestEnvelope = _marshaller.UnMarshall<IChatMessageEnvelope>(message);
+                        string responseEnvelope = Get(requestEnvelope);
+                        string ClientProxyGUID = requestEnvelope.ClientProxyGUID;
+                        SendResponse(ClientProxyGUID, responseEnvelope);
+                    }
                 }
-            }
-            catch (InvalidOperationException ex)
-            {
-                throw new InvalidOperationException(ex.Message, ex);
-            }
-            catch (Exception ex)
-            {
-                new ApplicationException(ex.Message, ex);
+                catch (InvalidOperationException ex)
+                {
+                    throw new InvalidOperationException(ex.Message, ex);
+                }
+                catch (Exception ex)
+                {
+                    new ApplicationException(ex.Message, ex);
+                } 
             }
         }
 

@@ -73,7 +73,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ChatMessage\IGetNextChatMessageServiceUnitTests.cs" />
     <Compile Include="ChatMessage\ModifyChatMessageService.UnitTests.cs" />
+    <Compile Include="ChatMessage\GetNextChatMessageService.UnitTests.cs" />
     <Compile Include="Routing\MessageBusUnitTests.cs" />
     <Compile Include="Routing\MessageBusBankUnitTests.cs" />
     <Compile Include="Routing\RoutingTableUnitTest.cs" />

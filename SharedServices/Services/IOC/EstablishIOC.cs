@@ -34,6 +34,7 @@ namespace SharedServices.Services.IOC
 
         public void StandUp(IIOCContainer container) => container
                 .Register<IModifyChatMessageService, ModifyChatMessageService>()
+                .Register<IGetNextChatMessageService, GetNextChatMessageService>()
                 .Register<IImplementationTypeResolver, ImplementationTypeResolver>()
                 .Register<ITCPAvailablePortsService, TCPAvailablePortsService>()
                 .Register<IEnvelope, EnvelopeModel>()
