@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SharedInterfaces.Interfaces.Routing;
@@ -41,7 +43,7 @@ namespace SharedServices.UnitTests.Routing
         }
 
         [TestMethod]
-        public void TestSpecifyTheMessageBus()
+        public void TestMessageBusReaderBankSpecifyTheMessageBus()
         {
             IMessageBusReaderBank<string> messageBusReaderBank = _erector.Container.Resolve<IMessageBusReaderBank<string>>();
             IMessageBus<string> messageBus = GetMockedMessageBus<string>();
@@ -59,7 +61,7 @@ namespace SharedServices.UnitTests.Routing
         }
 
         [TestMethod]
-        public void TestAddAnotherReader()
+        public void TestMessageBusReaderBankAddAnotherReader()
         {
             IMessageBusReaderBank<string> messageBusReaderBank = _erector.Container.Resolve<IMessageBusReaderBank<string>>();
             IMessageBus<string> messageBus = GetMockedMessageBus<string>(); 
@@ -88,7 +90,7 @@ namespace SharedServices.UnitTests.Routing
         }
 
         [TestMethod]
-        public void TestDecreaseReaderBank()
+        public void TestMessageBusReaderBankDecreaseReaderBank()
         {
             IMessageBusReaderBank<string> messageBusReaderBank = _erector.Container.Resolve<IMessageBusReaderBank<string>>();
             IMessageBus<string> messageBus = GetMockedMessageBus<string>();
@@ -108,7 +110,7 @@ namespace SharedServices.UnitTests.Routing
         }
 
         [TestMethod]
-        public void TestStopReading()
+        public void TestMessageBusReaderBankStopReading()
         {
             IMessageBusReaderBank<string> messageBusReaderBank = _erector.Container.Resolve<IMessageBusReaderBank<string>>();
             IMessageBus<string> messageBus = GetMockedMessageBus<string>();
@@ -126,6 +128,31 @@ namespace SharedServices.UnitTests.Routing
             readerCount = messageBusReaderBank.AddAnotherReader((message) => { Debug.WriteLine(9); });
             bool stopSuccessful = messageBusReaderBank.StopReading();
             Assert.IsTrue(stopSuccessful);
-        } 
+        }
+
+        [TestMethod]
+        public void TestMessageBusReaderBankPollMessageBusForSingleMessage()
+        {
+            IMessageBusReaderBank<string> messageBusReaderBank = _erector.Container.Resolve<IMessageBusReaderBank<string>>();
+            IMessageBus<string> messageBus = GetMockedMessageBus<string>();
+            string messageBusGUID = messageBusReaderBank.SpecifyTheMessageBus(messageBus);
+            Assert.IsFalse(String.IsNullOrEmpty(messageBusGUID));
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            string messageResult = String.Empty;
+            Task<string> messageTask = messageBusReaderBank.PollMessageBusForSingleMessage(cancellationTokenSource);
+            messageTask.Wait();
+            switch (messageTask.Status)
+            {
+                case TaskStatus.RanToCompletion:
+                    messageResult = messageTask.Result;
+                    break;
+                case TaskStatus.Faulted:
+                    throw new ApplicationException(messageTask.Exception.Flatten().InnerException.Message, messageTask.Exception.Flatten().InnerException);
+                default:
+                    break;
+            }
+            Assert.IsFalse(String.IsNullOrEmpty(messageResult));
+        }
     }
 }

@@ -20,6 +20,8 @@ using DataPersistence.Interfaces.Files;
 using DataPersistence.Services.Files;
 using DataPersistence.Services.Configuration;
 using DataPersistence.Interfaces.Configuration;
+using SharedInterfaces.Interfaces.Proxy;
+using SharedServices.Services.Proxy;
 
 namespace SharedServices.Services.IOC
 {
@@ -35,6 +37,7 @@ namespace SharedServices.Services.IOC
         public void StandUp(IIOCContainer container) => container
                 .Register<IModifyChatMessageService, ModifyChatMessageService>()
                 .Register<IGetNextChatMessageService, GetNextChatMessageService>()
+                .Register<IClientProxy, ClientProxy>()
                 .Register<IImplementationTypeResolver, ImplementationTypeResolver>()
                 .Register<ITCPAvailablePortsService, TCPAvailablePortsService>()
                 .Register<IEnvelope, EnvelopeModel>()

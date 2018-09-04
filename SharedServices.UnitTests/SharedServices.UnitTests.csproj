@@ -76,6 +76,7 @@
     <Compile Include="ChatMessage\IGetNextChatMessageServiceUnitTests.cs" />
     <Compile Include="ChatMessage\ModifyChatMessageService.UnitTests.cs" />
     <Compile Include="ChatMessage\GetNextChatMessageService.UnitTests.cs" />
+    <Compile Include="Proxy\ClientProxy.UnitTests.cs" />
     <Compile Include="Routing\MessageBusUnitTests.cs" />
     <Compile Include="Routing\MessageBusBankUnitTests.cs" />
     <Compile Include="Routing\RoutingTableUnitTest.cs" />
@@ -89,7 +90,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Proxy\" />
     <Folder Include="ServiceFarm\" />
   </ItemGroup>
   <ItemGroup>
