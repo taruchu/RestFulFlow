@@ -10,7 +10,16 @@ namespace SharedServices.Services.Proxy
     public class ClientProxy : IClientProxy
     {
         public string ServiceName { get; set; }
-        public string ServiceGUID { get; set; }
+        public string ServiceGUID
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_serviceGUID))
+                    _serviceGUID = Guid.NewGuid().ToString();
+                return _serviceGUID;
+            }
+        }
+        private string _serviceGUID { get; set; }
         public IMessageBusWriter<string> MessageBusWiter { get; set; }
         public IMessageBusReaderBank<string> MessageBusReaderBank { get; set; }
         public IMessageBusBank<string> MessageBusBank { get; set; }

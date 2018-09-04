@@ -86,8 +86,12 @@ namespace DataPersistence.Services.SQL
                 Channel channel = new Channel();
                 if (chatMessageEnvelope.ChatChannelID > 0)
                     channel = this.Channels.Find(chatMessageEnvelope.ChatChannelID);
+                else if (String.IsNullOrEmpty(chatMessageEnvelope.ChatChannelName) == false)
+                    channel = this.Channels.FirstOrDefault(chnl => chnl.ChannelName == chatMessageEnvelope.ChatChannelName);
                 else
                 {
+                    //TODO: Need to create a channel somewhere else. Refactor this later.
+                    // probably should return null so that message is dropped ???
                     channel.ChannelID = chatMessageEnvelope.ChatChannelID;
                     channel.ChannelName = chatMessageEnvelope.ChatChannelName;
                 } 

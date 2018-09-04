@@ -84,14 +84,13 @@
     <Compile Include="Routing\MessageBusReaderBankUnitTests.cs" />
     <Compile Include="Routing\MessageBusWriterUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceFarm\ServiceFarmLoadBalancer.UnitTests.cs" />
     <Compile Include="TCP\TCPAvailablePortsServiceUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ServiceFarm\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ChatMessageInterfaces\ChatMessageInterfaces.csproj">
       <Project>{A68F883A-D0F6-48F3-978F-2D9D3823D388}</Project>

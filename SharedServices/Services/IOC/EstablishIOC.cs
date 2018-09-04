@@ -22,6 +22,8 @@ using DataPersistence.Services.Configuration;
 using DataPersistence.Interfaces.Configuration;
 using SharedInterfaces.Interfaces.Proxy;
 using SharedServices.Services.Proxy;
+using SharedInterfaces.Interfaces.ServiceFarm;
+using SharedServices.Services.ServiceFarm;
 
 namespace SharedServices.Services.IOC
 {
@@ -38,6 +40,7 @@ namespace SharedServices.Services.IOC
                 .Register<IModifyChatMessageService, ModifyChatMessageService>()
                 .Register<IGetNextChatMessageService, GetNextChatMessageService>()
                 .Register<IClientProxy, ClientProxy>()
+                .Register<IServiceFarmLoadBalancer, ServiceFarmLoadBalancer>()
                 .Register<IImplementationTypeResolver, ImplementationTypeResolver>()
                 .Register<ITCPAvailablePortsService, TCPAvailablePortsService>()
                 .Register<IEnvelope, EnvelopeModel>()

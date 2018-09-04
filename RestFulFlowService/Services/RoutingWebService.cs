@@ -70,18 +70,22 @@ namespace RestFulFlowService.Services
         }
 
         public string ProcessRequestInServiceFarm(string json, HttpContext context)
-        { 
-            IServiceFarmLoadBalancer serviceFarmLoadBalancer = (IServiceFarmLoadBalancer)context.RequestServices.GetService(typeof(IServiceFarmLoadBalancer));
-            IClientProxy clientProxy = (IClientProxy)context.RequestServices.GetService(typeof(IClientProxy));
-            serviceFarmLoadBalancer.RegisterClientProxyMessageBus(clientProxy);
-            string response = String.Empty;
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        {
+            using (IServiceFarmLoadBalancer serviceFarmLoadBalancer = (IServiceFarmLoadBalancer)context.RequestServices.GetService(typeof(IServiceFarmLoadBalancer)))
+            {
+                using (IClientProxy clientProxy = (IClientProxy)context.RequestServices.GetService(typeof(IClientProxy)))
+                {
+                    serviceFarmLoadBalancer.RegisterClientProxyMessageBus(clientProxy);
+                    string response = String.Empty;
+                    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-            if (serviceFarmLoadBalancer.SendServiceRequest(clientProxy.ServiceGUID, json))
-                response = clientProxy.PollMessageBus(cancellationTokenSource);
+                    if (serviceFarmLoadBalancer.SendServiceRequest(clientProxy.ServiceGUID, json))
+                        response = clientProxy.PollMessageBus(cancellationTokenSource);
 
-            serviceFarmLoadBalancer.ReleaseClientProxyMessageBus(clientProxy);
-            return response;
+                    serviceFarmLoadBalancer.ReleaseClientProxyMessageBus(clientProxy);
+                    return response;
+                } 
+            } 
         }
 
         public void Dispose()

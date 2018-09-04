@@ -40,6 +40,7 @@ namespace DataPersistence.UnitTests
             SQLDataBaseBoardChatMessage sQLDataBaseBoardChatMessage = new SQLDataBaseBoardChatMessage(new SQLDBConfigurationProvider(), new ChatMessageEnvelopeFactory());
             IChatMessageEnvelope chatMessageEnvelope = _erector.Container.Resolve<IChatMessageEnvelope>();
             chatMessageEnvelope.ChatMessageID = 236;
+            chatMessageEnvelope.ChatChannelID = 1;
             chatMessageEnvelope.ChatChannelName = "love";
 
             ChatMessage chatMessage = sQLDataBaseBoardChatMessage.MapToChatMessage(chatMessageEnvelope);
@@ -54,6 +55,7 @@ namespace DataPersistence.UnitTests
             SQLDataBaseBoardChatMessage sQLDataBaseBoardChatMessage = new SQLDataBaseBoardChatMessage(new SQLDBConfigurationProvider(), new ChatMessageEnvelopeFactory());
             IChatMessageEnvelope chatMessageEnvelope = _erector.Container.Resolve<IChatMessageEnvelope>();
             chatMessageEnvelope.ChatChannelName = "love";
+            chatMessageEnvelope.ChatChannelID = 1;
             chatMessageEnvelope.ChatMessageBody = "Jesus Loves You.";
             
 

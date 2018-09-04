@@ -36,7 +36,7 @@ namespace SharedServices.UnitTests.Routing
 
             //NOTE: Set up a valid envelope
             envelope.ClientProxyGUID = Guid.NewGuid().ToString();
-            envelope.ServiceRoute = ChatServiceNames.ChatMessageService;
+            envelope.ServiceRoute = ChatServiceNames.ModifyChatMessageService;
             envelope.RequestMethod = "GET";
             string message = marshaller.MarshallPayloadJSON(envelope);
             bool isValid = messageBus.ValidateMessage(message, envelope.GetMyJSONSchema());
@@ -56,7 +56,7 @@ namespace SharedServices.UnitTests.Routing
             //NOTE: Set up a valid envelope
             envelope.RequestMethod = "GET";
             envelope.ClientProxyGUID = Guid.NewGuid().ToString();
-            envelope.ServiceRoute = ChatServiceNames.ChatMessageService;
+            envelope.ServiceRoute = ChatServiceNames.ModifyChatMessageService;
             string message = marshaller.MarshallPayloadJSON(envelope);
 
             Assert.IsTrue(messageBus.IsEmpty());
