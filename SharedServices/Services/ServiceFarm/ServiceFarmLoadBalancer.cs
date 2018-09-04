@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using ChatMessageInterfaces.Interfaces.ChatMessage;
 using SharedInterfaces.Interfaces.Proxy;
+using System.Reflection;
 
 namespace SharedServices.Services.ServiceFarm
 {
@@ -27,7 +28,8 @@ namespace SharedServices.Services.ServiceFarm
 
         public ServiceFarmLoadBalancer()
         {
-            XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(ConfigurationConstants.FileName_log4NetConfiguration));
+            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            XmlConfigurator.ConfigureAndWatch(logRepository, new System.IO.FileInfo(ConfigurationConstants.FileName_log4NetConfiguration));
             _thisLock = new object();
             _isDisposed = false;
             _serviceList = new List<IDisposable>();            
@@ -52,7 +54,8 @@ namespace SharedServices.Services.ServiceFarm
                             messageBusRouterA.JsonSchema =
                             (message) =>
                             {
-                                string serviceName = _marshaller.UnMarshall<IEnvelope>(message).ServiceRoute.Split('.')[1];
+                                IEnvelope envelope = _marshaller.UnMarshall<IEnvelope>(message);
+                                string serviceName = envelope.ServiceRoute.Split('.')[1];
                                 if (serviceName == ChatServiceNames.ModifyChatMessageService || serviceName == ChatServiceNames.GetNextChatMessageService)
                                     return _erector.Container.Resolve<IChatMessageEnvelope>().GetMyJSONSchema();
                                 else
@@ -66,8 +69,10 @@ namespace SharedServices.Services.ServiceFarm
                             routingTableRouterA.MessageBusBank = _messageBusBankRouters;
 
                             IRoutingService<string> routingServiceRouterA = _erector.Container.Resolve<IRoutingService<string>>(); 
-                            routingServiceRouterA.RoutingTable = routingTableRouterA;
+                            routingServiceRouterA.RoutingTable = routingTableRouterA; 
                             routingServiceRouterA.MessageBusReaderBank = messageBusReaderBankRouterA;
+                            //NOTE: Set up two readers
+                            routingServiceRouterA.InitializeReaders(2);
 
                             _messageBusBankRouters.RegisterMessageBus(routingServiceRouterA.RoutingServiceGUID, messageBusRouterA);
                             _serviceList.Add(routingServiceRouterA);
@@ -86,14 +91,14 @@ namespace SharedServices.Services.ServiceFarm
                             messageBusReaderBankModifyChangeMessageServiceA.SpecifyTheMessageBus(messageBusModifyChatMessageServiceA);
 
                             IMessageBusWriter<string> messageBusWriterModifyChatMessageServiceA = _erector.Container.Resolve<IMessageBusWriter<string>>();
-                            messageBusWriterModifyChatMessageServiceA.SpecifyTheMessageBus(messageBusModifyChatMessageServiceA);
+                            messageBusWriterModifyChatMessageServiceA.SpecifyTheMessageBus(messageBusModifyChatMessageServiceA); 
 
                             IModifyChatMessageService modifyChatMessageServiceA = _erector.Container.Resolve<IModifyChatMessageService>();
+                            //TODO Refactor reader setup so that this behaves like the router and uses an Initializer method
+                            messageBusReaderBankModifyChangeMessageServiceA.AddAnotherReader(modifyChatMessageServiceA.ProcessMessage);
+                            messageBusReaderBankModifyChangeMessageServiceA.AddAnotherReader(modifyChatMessageServiceA.ProcessMessage);
                             modifyChatMessageServiceA.MessageBusReaderBank = messageBusReaderBankModifyChangeMessageServiceA;
-                            //NOTE: Set up two readers 
-                            messageBusReaderBankModifyChangeMessageServiceA.AddAnotherReader(modifyChatMessageServiceA.ProcessMessage);
-                            messageBusReaderBankModifyChangeMessageServiceA.AddAnotherReader(modifyChatMessageServiceA.ProcessMessage);
-
+                            
                             modifyChatMessageServiceA.MessageBusWiter = messageBusWriterModifyChatMessageServiceA;
                             modifyChatMessageServiceA.MessageBusBank = _messageBusBankServices;
                             ITack tackModifyChatMessageServiceA = _erector.Container.Resolve<ITack>();
@@ -122,11 +127,11 @@ namespace SharedServices.Services.ServiceFarm
                             IMessageBusWriter<string> messageBusWriterGetNextChatMessageServiceA = _erector.Container.Resolve<IMessageBusWriter<string>>();
                             messageBusWriterGetNextChatMessageServiceA.SpecifyTheMessageBus(messageBusGetNextChatMessageServiceA);
 
-                            IModifyChatMessageService getNextChatMessageServiceA = _erector.Container.Resolve<IModifyChatMessageService>();
-                            getNextChatMessageServiceA.MessageBusReaderBank = messageBusReaderBankGetNextChangeMessageServiceA;
+                            IGetNextChatMessageService getNextChatMessageServiceA = _erector.Container.Resolve<IGetNextChatMessageService>();
                             //NOTE: Set up two readers 
                             messageBusReaderBankGetNextChangeMessageServiceA.AddAnotherReader(getNextChatMessageServiceA.ProcessMessage);
                             messageBusReaderBankGetNextChangeMessageServiceA.AddAnotherReader(getNextChatMessageServiceA.ProcessMessage);
+                            getNextChatMessageServiceA.MessageBusReaderBank = messageBusReaderBankGetNextChangeMessageServiceA;
 
                             getNextChatMessageServiceA.MessageBusWiter = messageBusWriterGetNextChatMessageServiceA;
                             getNextChatMessageServiceA.MessageBusBank = _messageBusBankServices;
@@ -187,11 +192,18 @@ namespace SharedServices.Services.ServiceFarm
                     int routerIndex = LoadBalanceAlgorithm(_messageBusBankRouters.GetBusKeyCodes().Count);
                     string routerBusKeyCode = _messageBusBankRouters.GetBusKeyCodes()[routerIndex];
                     string serviceName = envelope.ServiceRoute;
-                    envelope.ServiceRoute = String.Format("{0}.{1}", routerBusKeyCode, serviceName); //NOTE: Salt the route by adding the router.                        
-                     
-                    string saltedRequest = _marshaller.MarshallPayloadJSON(envelope);
-                    _messageBusBankRouters.ResolveMessageBus(routerBusKeyCode).SendMessage(saltedRequest);
-                    return true;
+                    if(serviceName == ChatServiceNames.GetNextChatMessageService || serviceName == ChatServiceNames.ModifyChatMessageService)
+                    {
+                        IChatMessageEnvelope chatMessageEnvelope = _marshaller.UnMarshall<IChatMessageEnvelope>(requestEnvelope);
+
+                        chatMessageEnvelope.ServiceRoute = String.Format("{0}.{1}", routerBusKeyCode, serviceName); //NOTE: Salt the route by adding the router.                        
+                        chatMessageEnvelope.ClientProxyGUID = ClientProxyGUID;
+
+                        string saltedRequest = _marshaller.MarshallPayloadJSON(chatMessageEnvelope);
+                        _messageBusBankRouters.ResolveMessageBus(routerBusKeyCode).SendMessage(saltedRequest);
+                        return true;
+                    }
+                    return false;
                 }
                 catch (Exception ex)
                 {

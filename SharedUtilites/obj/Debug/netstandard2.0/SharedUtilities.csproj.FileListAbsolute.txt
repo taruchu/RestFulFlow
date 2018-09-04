@@ -3,9 +3,10 @@ C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\Shared
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilites\bin\Debug\netstandard2.0\SharedUtilities.pdb
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilites\bin\Debug\netstandard2.0\SharedInterfaces.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilites\bin\Debug\netstandard2.0\SharedInterfaces.pdb
-C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilites\obj\Debug\netstandard2.0\SharedUtilities.csprojResolveAssemblyReference.cache
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilites\obj\Debug\netstandard2.0\SharedUtilities.csproj.CoreCompileInputs.cache
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilites\obj\Debug\netstandard2.0\SharedUtilities.AssemblyInfoInputs.cache
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilites\obj\Debug\netstandard2.0\SharedUtilities.AssemblyInfo.cs
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilites\obj\Debug\netstandard2.0\SharedUtilities.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilites\obj\Debug\netstandard2.0\SharedUtilities.pdb
+C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilites\obj\Debug\netstandard2.0\SharedUtilities.csprojAssemblyReference.cache
+C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedUtilites\obj\Debug\netstandard2.0\SharedUtilities.csproj.CopyComplete

@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "RestFulFlowService.UnitTests": {
+      "commandName": "Executable"
+    }
+  }
+}

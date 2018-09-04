@@ -40,7 +40,7 @@ namespace SharedServices.Services.IOC
                 .Register<IModifyChatMessageService, ModifyChatMessageService>()
                 .Register<IGetNextChatMessageService, GetNextChatMessageService>()
                 .Register<IClientProxy, ClientProxy>()
-                .Register<IServiceFarmLoadBalancer, ServiceFarmLoadBalancer>()
+                .Register<IServiceFarmLoadBalancer, ServiceFarmLoadBalancer>() 
                 .Register<IImplementationTypeResolver, ImplementationTypeResolver>()
                 .Register<ITCPAvailablePortsService, TCPAvailablePortsService>()
                 .Register<IEnvelope, EnvelopeModel>()

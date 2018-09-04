@@ -21,7 +21,8 @@ namespace SharedServices.Services.Routing
                 {
                     while(_messageBus.IsEmpty()) { }
                     T message = _messageBus.ReceiveMessage();
-                    _performedOnEachMessageRead(message);
+                    if(message != null)
+                        _performedOnEachMessageRead(message);
                 } 
             }
             public ReaderTask(Action<T> performedOnEachMessageRead, IMessageBus<T> messageBus)

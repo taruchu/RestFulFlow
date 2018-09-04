@@ -20,9 +20,7 @@ namespace DataPersistence.UnitTests
         [TestMethod]
         public void TestInteractionWithSQLDataBaseBoardChatMessage()
         {
-            IBoards boards = _erector.Container.Resolve<IBoards>();
-            bool success = boards.InitializeBoard_SQLDataBaseBoardChatMessage();
-            Assert.IsTrue(success);
+            IBoards boards = _erector.Container.Resolve<IBoards>(); 
 
             ISQLDataBaseBoardChatMessage sQLDataBaseBoardChatMessage = boards.GetHandle_SQLDataBaseBoardChatMessage();
             Assert.IsNotNull(sQLDataBaseBoardChatMessage);

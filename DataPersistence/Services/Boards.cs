@@ -35,6 +35,7 @@ namespace DataPersistence.Services
 
         public ISQLDataBaseBoardChatMessage GetHandle_SQLDataBaseBoardChatMessage()
         {
+            InitializeBoard_SQLDataBaseBoardChatMessage();
             return _sQLDataBaseBoardChatMessage;
         }
 

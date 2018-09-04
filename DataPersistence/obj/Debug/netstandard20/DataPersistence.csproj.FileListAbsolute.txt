@@ -1,3 +1,4 @@
+C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\bin\Debug\netstandard20\Services\Configuration\SQLDBConfiguration.json
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\bin\Debug\netstandard20\DataPersistence.deps.json
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\bin\Debug\netstandard20\DataPersistence.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\bin\Debug\netstandard20\DataPersistence.pdb
@@ -5,10 +6,10 @@ C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPe
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\bin\Debug\netstandard20\SharedUtilities.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\bin\Debug\netstandard20\SharedInterfaces.pdb
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\bin\Debug\netstandard20\SharedUtilities.pdb
-C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\obj\Debug\netstandard20\DataPersistence.csprojResolveAssemblyReference.cache
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\obj\Debug\netstandard20\DataPersistence.csproj.CoreCompileInputs.cache
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\obj\Debug\netstandard20\DataPersistence.AssemblyInfoInputs.cache
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\obj\Debug\netstandard20\DataPersistence.AssemblyInfo.cs
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\obj\Debug\netstandard20\DataPersistence.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\obj\Debug\netstandard20\DataPersistence.pdb
-C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\bin\Debug\netstandard20\Services\Configuration\SQLDBConfiguration.json
+C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\obj\Debug\netstandard20\DataPersistence.csprojAssemblyReference.cache
+C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\DataPersistence\obj\Debug\netstandard20\DataPersistence.csproj.CopyComplete

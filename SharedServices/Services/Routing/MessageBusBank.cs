@@ -6,6 +6,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace SharedServices.Services.Routing
 {
@@ -34,7 +35,8 @@ namespace SharedServices.Services.Routing
             _isDisposed = false;
             _thisLock = new object();
             _bank = new ConcurrentDictionary<string, IMessageBus<T>>();
-            XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(ConfigurationConstants.FileName_log4NetConfiguration));
+            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            XmlConfigurator.ConfigureAndWatch(logRepository, new System.IO.FileInfo(ConfigurationConstants.FileName_log4NetConfiguration));
         }
         public string ExceptionMessage_BusKeyCodeCannotBeNullOrEmpty
         {

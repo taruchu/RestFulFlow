@@ -6,8 +6,7 @@ using SharedInterfaces.Interfaces.Routing;
 using SharedServices.Models.Constants;
 using System;
 using System.Collections.Concurrent;
-
-
+using System.Reflection;
 
 namespace SharedServices.Services.Routing
 {
@@ -51,7 +50,8 @@ namespace SharedServices.Services.Routing
         public MessageBus()
         {
             _thisLock = new object();
-            XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(ConfigurationConstants.FileName_log4NetConfiguration));
+            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            XmlConfigurator.ConfigureAndWatch(logRepository, new System.IO.FileInfo(ConfigurationConstants.FileName_log4NetConfiguration));
             _bus = new ConcurrentQueue<T>();
             SkipValidation = false;
         }

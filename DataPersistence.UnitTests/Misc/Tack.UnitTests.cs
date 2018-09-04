@@ -39,10 +39,7 @@ namespace DataPersistence.UnitTests
 
         private IBoards GetMockedIBoards()
         {
-            var mockedIBoards = new Mock<IBoards>();
-            mockedIBoards
-                .Setup(boards => boards.InitializeBoard_SQLDataBaseBoardChatMessage())
-                .Returns(true);
+            var mockedIBoards = new Mock<IBoards>(); 
             mockedIBoards
                 .Setup(boards => boards.GetHandle_SQLDataBaseBoardChatMessage())
                 .Returns(GetMockedISQLDataBaseBoardChatMessage());

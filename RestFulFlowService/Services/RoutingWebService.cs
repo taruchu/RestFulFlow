@@ -35,85 +35,85 @@ namespace RestFulFlowService.Services
             {
                 requestPayload = reader.ReadToEnd();
             }
-            
-            switch (context.Request.Method)
-            { 
-                case "GET":
-                    responsePayload = Get(requestPayload, context);
-                    break;
-                case "PUT":
-                    responsePayload = Put(requestPayload, context);
-                    break;
-                case "POST":
-                    responsePayload = Post(requestPayload, context);
-                    break;
-                case "DELETE":
-                    responsePayload = Delete(requestPayload, context);
-                    break;
-                case "HEAD":
-                    responsePayload = Head(requestPayload, context);
-                    context.Response.ContentType = _contentTypeJSON;
-                    context.Response.ContentLength = System.Text.Encoding.UTF8.GetBytes(responsePayload).LongLength;
-                    return;
-                default:
-                    break;
+
+            using (IServiceFarmLoadBalancer serviceFarmLoadBalancer = (IServiceFarmLoadBalancer)context.RequestServices.GetService(typeof(IServiceFarmLoadBalancer)))
+            {
+                using (IClientProxy clientProxy = (IClientProxy)context.RequestServices.GetService(typeof(IClientProxy)))
+                {
+                    switch (context.Request.Method)
+                    {
+                        case "GET":
+                            responsePayload = Get(requestPayload, serviceFarmLoadBalancer, clientProxy);
+                            break;
+                        case "PUT":
+                            responsePayload = Put(requestPayload, serviceFarmLoadBalancer, clientProxy);
+                            break;
+                        case "POST":
+                            responsePayload = Post(requestPayload, serviceFarmLoadBalancer, clientProxy);
+                            break;
+                        case "DELETE":
+                            responsePayload = Delete(requestPayload, serviceFarmLoadBalancer, clientProxy);
+                            break;
+                        case "HEAD":
+                            responsePayload = Head(requestPayload, serviceFarmLoadBalancer, clientProxy);
+                            context.Response.ContentType = _contentTypeJSON;
+                            context.Response.ContentLength = System.Text.Encoding.UTF8.GetBytes(responsePayload).LongLength;
+                            return;
+                        default:
+                            break;
+                    }
+                }
             }
 
             context.Response.ContentType = _contentTypeJSON;
             await context.Response.WriteAsync(responsePayload);
         }
 
-        public string Delete(string json, HttpContext context)
+        public string Delete(string json, IServiceFarmLoadBalancer serviceFarmLoadBalancer, IClientProxy clientProxy)
         { 
             //NOTE: Can do other processing of the request before and or after this call.
-            return ProcessRequestInServiceFarm(json, context);
+            return ProcessRequestInServiceFarm(json, serviceFarmLoadBalancer, clientProxy);
         }
 
-        public string ProcessRequestInServiceFarm(string json, HttpContext context)
-        {
-            using (IServiceFarmLoadBalancer serviceFarmLoadBalancer = (IServiceFarmLoadBalancer)context.RequestServices.GetService(typeof(IServiceFarmLoadBalancer)))
-            {
-                using (IClientProxy clientProxy = (IClientProxy)context.RequestServices.GetService(typeof(IClientProxy)))
-                {
-                    serviceFarmLoadBalancer.RegisterClientProxyMessageBus(clientProxy);
-                    string response = String.Empty;
-                    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        public string ProcessRequestInServiceFarm(string json, IServiceFarmLoadBalancer serviceFarmLoadBalancer, IClientProxy clientProxy)
+        { 
+            serviceFarmLoadBalancer.RegisterClientProxyMessageBus(clientProxy);
+            string response = String.Empty;
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-                    if (serviceFarmLoadBalancer.SendServiceRequest(clientProxy.ServiceGUID, json))
-                        response = clientProxy.PollMessageBus(cancellationTokenSource);
+            if (serviceFarmLoadBalancer.SendServiceRequest(clientProxy.ServiceGUID, json))
+                response = clientProxy.PollMessageBus(cancellationTokenSource);
 
-                    serviceFarmLoadBalancer.ReleaseClientProxyMessageBus(clientProxy);
-                    return response;
-                } 
-            } 
+            serviceFarmLoadBalancer.ReleaseClientProxyMessageBus(clientProxy);
+            return response;
         }
 
         public void Dispose()
         { 
         }
 
-        public string Get(string json, HttpContext context)
+        public string Get(string json, IServiceFarmLoadBalancer serviceFarmLoadBalancer, IClientProxy clientProxy)
         {
             //NOTE: Can do other processing of the request before and or after this call.
-            return ProcessRequestInServiceFarm(json, context);
+            return ProcessRequestInServiceFarm(json, serviceFarmLoadBalancer, clientProxy);
         }
 
-        public string Head(string json, HttpContext context)
+        public string Head(string json, IServiceFarmLoadBalancer serviceFarmLoadBalancer, IClientProxy clientProxy)
         {
             //NOTE: Can do other processing of the request before and or after this call.
-            return ProcessRequestInServiceFarm(json, context);
+            return ProcessRequestInServiceFarm(json, serviceFarmLoadBalancer, clientProxy); 
         }
 
-        public string Post(string json, HttpContext context)
+        public string Post(string json, IServiceFarmLoadBalancer serviceFarmLoadBalancer, IClientProxy clientProxy)
         {
             //NOTE: Can do other processing of the request before and or after this call.
-            return ProcessRequestInServiceFarm(json, context);
+            return ProcessRequestInServiceFarm(json, serviceFarmLoadBalancer, clientProxy); 
         }
 
-        public string Put(string json, HttpContext context)
+        public string Put(string json, IServiceFarmLoadBalancer serviceFarmLoadBalancer, IClientProxy clientProxy)
         {
             //NOTE: Can do other processing of the request before and or after this call.
-            return ProcessRequestInServiceFarm(json, context);
+            return ProcessRequestInServiceFarm(json, serviceFarmLoadBalancer, clientProxy); 
         }
     }
 }

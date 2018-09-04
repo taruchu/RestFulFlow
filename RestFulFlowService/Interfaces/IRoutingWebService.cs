@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
+using SharedInterfaces.Interfaces.Proxy;
+using SharedInterfaces.Interfaces.ServiceFarm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +23,7 @@ namespace RestFulFlowService.Interfaces
         /// <param name="json">json request envelope</param>
         /// <param name="context">HttpContext</param>
         /// <returns>json response envelope</returns>
-        string Get(string json, HttpContext context);
+        string Get(string json, IServiceFarmLoadBalancer serviceFarmLoadBalancer, IClientProxy clientProxy);
 
         /// <summary>
         /// PUT - Routing Service Message Bus recieves a request for a service to update something 
@@ -29,7 +31,7 @@ namespace RestFulFlowService.Interfaces
         /// <param name="json">json request envelope</param>
         /// <param name="context">HttpContext</param>
         /// <returns>json response envelope</returns>
-        string Put(string json, HttpContext context);
+        string Put(string json, IServiceFarmLoadBalancer serviceFarmLoadBalancer, IClientProxy clientProxy);
 
         /// <summary>
         /// POST - Routing Service Message Bus receives a request for another service to create something or it's simply a response for another service to pickup.
@@ -37,7 +39,7 @@ namespace RestFulFlowService.Interfaces
         /// <param name="json">json request envelope</param>
         /// <param name="context">HttpContext</param>
         /// <returns>json response envelope</returns>
-        string Post(string json, HttpContext context);
+        string Post(string json, IServiceFarmLoadBalancer serviceFarmLoadBalancer, IClientProxy clientProxy);
 
         /// <summary>
         /// DELETE - Routing Service Message Bus receives a request for another service to delete something.
@@ -45,7 +47,7 @@ namespace RestFulFlowService.Interfaces
         /// <param name="json">json request envelope</param>
         /// <param name="context">HttpContext</param>
         /// <returns>json response envelope</returns>
-        string Delete(string json, HttpContext context);
+        string Delete(string json, IServiceFarmLoadBalancer serviceFarmLoadBalancer, IClientProxy clientProxy);
 
         /// <summary>
         ///  HEAD - Get request without payload
@@ -53,7 +55,16 @@ namespace RestFulFlowService.Interfaces
         /// <param name="json">json request envelope</param>
         /// <param name="context">HttpContext</param>
         /// <returns>json response envelope</returns>
-        string Head(string json, HttpContext context);
+        string Head(string json, IServiceFarmLoadBalancer serviceFarmLoadBalancer, IClientProxy clientProxy);
+
+        /// <summary>
+        /// Process the json string inside of the service farm and return a json response.
+        /// </summary>
+        /// <param name="json"></param>
+        /// <param name="serviceFarmLoadBalancer"></param>
+        /// <param name="clientProxy"></param>
+        /// <returns></returns>
+        string ProcessRequestInServiceFarm(string json, IServiceFarmLoadBalancer serviceFarmLoadBalancer, IClientProxy clientProxy);
 
     }
 }
