@@ -4,12 +4,17 @@
 
 
 Research NoSQL vs SQL vs blob stores (scales better for files) MONGO ??
-Research Entity Framework vs NHibernate vs Mongo vs Node/Express vs libuv (roll my own)
+Research libuv (roll my own event handler ?)
 Research File storage options (blobs with SQL, or just Blobs, off-loading files after a number of days to blob from SQL)
 Research service request paging techniques for huge data transfers (chat message searches, chat messages for a dataTime range)
-
+Research Batch Processing techniques
 
 
 Have a one-to-one relationship between a service and a database table.  
 Organize a database so that it's tables represent a family of related services that have dependencies on common data. Don't mix multiple unrelated services into the 
 same database.
+
+
+Important:  Need a way to create the chat message channel before the client makes a request on it.
+Important:  Need a way to manage the CreatedDateTime and the ModifiedDateTime so that the client is not 
+			manipulating them directly. :=) Maybe use a database trigger ? How does EF Core handle this?
