@@ -48,6 +48,18 @@ namespace SharedServices.UnitTests.Proxy
             IMessageBusReaderBank<string> messageBusReaderBank = _erector.Container.Resolve<IMessageBusReaderBank<string>>();
             messageBusReaderBank.SpecifyTheMessageBus(messageBus_Client);
 
+            //Message bus reader bank cannot be null
+            try
+            {
+                string readerIsNull = clientProxy.PollMessageBus(new System.Threading.CancellationTokenSource());
+                Assert.Fail();
+            }
+            catch(InvalidOperationException ex)
+            {
+                string error = ex.Message;
+                Assert.AreEqual(error, clientProxy.ExceptionMessage_MessageBusReaderBankCannotBeNull);
+            }
+
             clientProxy.MessageBusReaderBank = messageBusReaderBank;
 
             IChatMessageEnvelope requestEnvelope = GetValidChatMessageEnvelope();
