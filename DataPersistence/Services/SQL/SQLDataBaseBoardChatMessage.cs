@@ -65,12 +65,10 @@ namespace DataPersistence.Services.SQL
             try
             {
                 ChatMessage chatMessage = new ChatMessage();
-                chatMessage.Channel = MapToChannel(chatMessageEnvelope);
+                chatMessage.Channel = MapToChannel(chatMessageEnvelope); 
                 chatMessage.ChannelID = chatMessage.Channel.ChannelID;
                 chatMessage.ChatMessageID = chatMessageEnvelope.ChatMessageID;
                 chatMessage.ChatMessageBody = chatMessageEnvelope.ChatMessageBody;
-                chatMessage.CreatedDateTime = chatMessageEnvelope.CreatedDateTime;
-                chatMessage.ModifiedDateTime = chatMessageEnvelope.ModifiedDateTime;
                 return chatMessage;
             }
             catch (Exception ex)
@@ -89,12 +87,7 @@ namespace DataPersistence.Services.SQL
                 else if (String.IsNullOrEmpty(chatMessageEnvelope.ChatChannelName) == false)
                     channel = this.Channels.FirstOrDefault(chnl => chnl.ChannelName == chatMessageEnvelope.ChatChannelName);
                 else
-                {
-                    //TODO: Need to create a channel somewhere else. Refactor this later.
-                    // probably should return null so that message is dropped ???
-                    channel.ChannelID = chatMessageEnvelope.ChatChannelID;
-                    channel.ChannelName = chatMessageEnvelope.ChatChannelName;
-                } 
+                    channel = null;
                 return channel;
             }
             catch (Exception ex)
@@ -103,6 +96,12 @@ namespace DataPersistence.Services.SQL
             }
         }
 
+        public IChatMessageEnvelope SetErrorMessageForInvalidChatChannel(IChatMessageEnvelope invalidEnvelope)
+        {
+            invalidEnvelope.ErrorMessage += String.Format("The chat channel name {0} that you provided does not exists. ", invalidEnvelope.ChatChannelName);
+            invalidEnvelope.ErrorMessage += String.Format("The chat channel ID {0} that you provided does not exists. ", invalidEnvelope.ChatChannelID);
+            return invalidEnvelope;
+        }
         public IEnvelope DELETE(IEnvelope envelope)
         { 
             using (var dbContextTransaction = this.Database.BeginTransaction())
@@ -110,6 +109,11 @@ namespace DataPersistence.Services.SQL
                 try
                 {
                     ChatMessage chatMessageInput = MapToChatMessage((IChatMessageEnvelope)envelope); 
+                    if(chatMessageInput.Channel == null)
+                    {
+                        return SetErrorMessageForInvalidChatChannel((IChatMessageEnvelope)envelope);  
+                    }
+
                     ChatMessage deletedChatMessage = this.ChatMessages.Find(chatMessageInput.ChatMessageID);
                     deletedChatMessage.ModifiedDateTime = DateTime.Now;
                     this.ChatMessages.Remove(deletedChatMessage);
@@ -177,6 +181,11 @@ namespace DataPersistence.Services.SQL
                 try
                 {
                     ChatMessage chatMessageInput = MapToChatMessage((IChatMessageEnvelope)envelope);
+                    if (chatMessageInput.Channel == null)
+                    {
+                        return SetErrorMessageForInvalidChatChannel((IChatMessageEnvelope)envelope);
+                    }
+
                     chatMessageInput.CreatedDateTime = DateTime.Now;
                     this.ChatMessages.Add(chatMessageInput);
                     this.SaveChanges();
@@ -199,8 +208,15 @@ namespace DataPersistence.Services.SQL
                 try
                 {
                     ChatMessage chatMessageInput = MapToChatMessage((IChatMessageEnvelope)envelope);
+                    if (chatMessageInput.Channel == null)
+                    {
+                        return SetErrorMessageForInvalidChatChannel((IChatMessageEnvelope)envelope);
+                    }
+
                     chatMessageInput.ModifiedDateTime = DateTime.Now;
                     ChatMessage updatedChatMessage = this.ChatMessages.Find(chatMessageInput.ChatMessageID);
+                    //NOTE: Ensure the CreatedDateTime isn't modified by the client.
+                    chatMessageInput.CreatedDateTime = updatedChatMessage.CreatedDateTime;
                     this.Entry(updatedChatMessage).CurrentValues.SetValues(chatMessageInput);
                     this.SaveChanges();
                     dbContextTransaction.Commit();
@@ -219,7 +235,7 @@ namespace DataPersistence.Services.SQL
         {
             try
             {
-                ChatMessage chatMessageInput = MapToChatMessage(chatMessageEnvelope);
+                ChatMessage chatMessageInput = this.ChatMessages.FirstOrDefault(msg => msg.ChatMessageID == chatMessageEnvelope.ChatMessageID);
                 ChatMessage nextChatMessage = this.ChatMessages
                                                     .Where(
                                                         chat =>
@@ -251,7 +267,7 @@ namespace DataPersistence.Services.SQL
         { 
             try
             {
-                ChatMessage chatMessage = this.ChatMessages.First(msg => msg.ChatMessageID == chatMessageEnvelope.ChatMessageID);
+                ChatMessage chatMessage = this.ChatMessages.FirstOrDefault(msg => msg.ChatMessageID == chatMessageEnvelope.ChatMessageID);
                 this.Entry(chatMessage).Reference(chnl => chnl.Channel).Load();
                 return MaptoEnvelope(chatMessage);
             }

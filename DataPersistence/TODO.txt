@@ -15,6 +15,4 @@ Organize a database so that it's tables represent a family of related services t
 same database.
 
 
-Important:  Need a way to create the chat message channel before the client makes a request on it.
-Important:  Need a way to manage the CreatedDateTime and the ModifiedDateTime so that the client is not 
-			manipulating them directly. :=) Maybe use a database trigger ? How does EF Core handle this?
+Important:  Need a way to create the chat message channel before the client makes a request on it. I'll create a service for this.
