@@ -7,11 +7,9 @@ using System.Text;
 
 namespace ChatMessageInterfaces.Interfaces.ChatMessage
 {
-    public interface IGetNextChatMessageService : IServiceFarmServiceBase
+    public interface IGetNextChatMessageService : IChatMessageService
     {
-        string Get(IChatMessageEnvelope request);
-        ITack Tack { get; set; }
-
+        string Get(IChatMessageEnvelope request);  
         string ExceptionMessage_ITackCannotBeNull { get; }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ChatMessageInterfaces.Interfaces.ChatMessage
 {
-    public interface IRequestChatMessagesInDateRangeBatchJob : IServiceFarmServiceBase
+    public interface IRequestChatMessagesInDateRangeBatchJob : IChatMessageService
     {
         /*
          * NOTE: Supports

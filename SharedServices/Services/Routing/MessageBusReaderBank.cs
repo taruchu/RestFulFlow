@@ -22,7 +22,7 @@ namespace SharedServices.Services.Routing
                     while(_messageBus.IsEmpty()) { }
                     T message = _messageBus.ReceiveMessage();
                     if(message != null)
-                        _performedOnEachMessageRead(message);
+                        _performedOnEachMessageRead(message);                    
                 } 
             }
             public ReaderTask(Action<T> performedOnEachMessageRead, IMessageBus<T> messageBus)

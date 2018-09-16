@@ -14,6 +14,9 @@ namespace RestFulFlowService.Interfaces
          * Client calling this web service only needs to provide the valid json envelope in the request body
          * for the service they need, and use the proper web method.
          * 
+         *  Use Signalr hub to implement this interface. 
+         *   
+         * 
          */
 
 

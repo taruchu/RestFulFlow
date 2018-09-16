@@ -4,7 +4,7 @@ using SharedInterfaces.Interfaces.ServiceFarm;
 
 namespace ChatMessageInterfaces.Interfaces.ChatMessage
 {
-    public interface IModifyChatMessageService  : IServiceFarmServiceBase  
+    public interface IModifyChatMessageService  : IChatMessageService  
     {
         /* NOTE: Supports 
          * 
@@ -15,8 +15,7 @@ namespace ChatMessageInterfaces.Interfaces.ChatMessage
          */
         string Put(IChatMessageEnvelope request);
         string Post(IChatMessageEnvelope request);
-        string Delete(IChatMessageEnvelope request);    
-        ITack Tack { get; set; }
+        string Delete(IChatMessageEnvelope request); 
 
         string ExceptionMessage_ITackCannotBeNull { get; }
     }
