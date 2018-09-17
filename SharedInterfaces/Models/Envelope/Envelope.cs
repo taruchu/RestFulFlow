@@ -14,6 +14,7 @@ namespace SharedInterfaces.Models.EnvelopeModel
         public string ServiceRoute { get; set; }
         public string ClientProxyGUID { get; set; }
         public string RequestMethod { get; set; }
+        public string ErrorMessage { get; set; }
 
         public Type GetMyEnvelopeType()
         {

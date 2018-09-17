@@ -6,4 +6,3 @@ C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\Shared
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedInterfaces\obj\Debug\netstandard2.0\SharedInterfaces.AssemblyInfo.cs
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedInterfaces\obj\Debug\netstandard2.0\SharedInterfaces.dll
 C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedInterfaces\obj\Debug\netstandard2.0\SharedInterfaces.pdb
-C:\Users\Dionn\OneDrive\Documents\Visual Studio 2015\Projects\RestFulFlow\SharedInterfaces\obj\Debug\netstandard2.0\SharedInterfaces.csprojAssemblyReference.cache

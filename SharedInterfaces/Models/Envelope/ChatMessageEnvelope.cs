@@ -22,6 +22,7 @@ namespace SharedInterfaces.Models.Envelope
         public DateTime ModifiedDateTime { get; set; }
         public Func<IChatMessageQueryRepository, IChatMessageEnvelope, IChatMessageEnvelope> Query { get; set; }
         public Func<IChatMessageQueryRepository, IChatMessageEnvelope, List<IChatMessageEnvelope>> QueryForList { get; set; }
+        public string ErrorMessage { get; set; }
 
         public Type GetMyEnvelopeType()
         {
