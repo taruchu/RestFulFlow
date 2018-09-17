@@ -8,5 +8,6 @@ namespace SharedInterfaces.Interfaces.Envelope
     {
         IChatMessageEnvelope GetNextChatMessage(IChatMessageEnvelope chatMessageEnvelope); 
         IChatMessageEnvelope GetChatMessageByID(IChatMessageEnvelope chatMessageEnvelope); 
+        IChatMessageEnvelope GetLatestChatMessage(IChatMessageEnvelope chatMessageEnvelope);
     }
 }

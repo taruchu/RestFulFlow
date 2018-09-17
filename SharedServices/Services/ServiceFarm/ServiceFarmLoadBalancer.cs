@@ -134,7 +134,13 @@ namespace SharedServices.Services.ServiceFarm
                         //NOTE: Set up the GetNextChatMessageService A 
                         IGetNextChatMessageService getNextChatMessageServiceA = _erector.Container.Resolve<IGetNextChatMessageService>();
                         ServiceFarmServiceCompositionRoute(getNextChatMessageServiceA, routingServiceA, ChatServiceNames.GetNextChatMessageService);
-                        ChatMessageServiceCompositionRoute(getNextChatMessageServiceA, routingServiceA, skyWatchA); 
+                        ChatMessageServiceCompositionRoute(getNextChatMessageServiceA, routingServiceA, skyWatchA);
+
+                        //NOTE: Set up the GetLatestChatMessageService A
+                        IGetLatestChatMessageService getLatestChatMessageServiceA = _erector.Container.Resolve<IGetLatestChatMessageService>();
+                        ServiceFarmServiceCompositionRoute(getLatestChatMessageServiceA, routingServiceA, ChatServiceNames.GetLatestChatMessageService);
+                        ChatMessageServiceCompositionRoute(getLatestChatMessageServiceA, routingServiceA, skyWatchA);
+                        
 
                     return true;
                 }

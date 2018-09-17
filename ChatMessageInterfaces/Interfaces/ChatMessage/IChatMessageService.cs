@@ -9,5 +9,6 @@ namespace ChatMessageInterfaces.Interfaces.ChatMessage
     public interface IChatMessageService : IServiceFarmServiceBase
     {
         ITack Tack { get; set; }
+        string ExceptionMessage_ITackCannotBeNull { get; }
     }
 }

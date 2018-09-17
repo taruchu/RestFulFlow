@@ -15,7 +15,7 @@ namespace DataPersistence.Interfaces
          */
 
         bool Declare(ISkyWatchEventTypes skyWatchEventType, string eventKey);//NOTE: Trigger an event.
-        bool Watch(string eventKey, string watcherGUID, Action<ISkyWatchEventTypes, string> eventHandler);
-        bool UnWatch(string eventKey, string watcherGUID);
+        bool Watch(string envelopeTypeString, string watcherGUID, Action<ISkyWatchEventTypes, string> eventHandler);
+        bool UnWatch(string envelopeTypeString, string watcherGUID);
     }
 }

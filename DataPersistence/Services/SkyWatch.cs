@@ -24,8 +24,9 @@ namespace DataPersistence.Services
             {
                 try
                 {
+                    string envelopeTypeString = eventKey.Split('.')[0]; 
                     Dictionary<string, Action<ISkyWatchEventTypes, string>> watchers;
-                    if(_watcherTable.TryGetValue(eventKey, out watchers))
+                    if(_watcherTable.TryGetValue(envelopeTypeString, out watchers))
                     {
                         foreach(var eventHandler in watchers.Values)
                         {
@@ -60,14 +61,14 @@ namespace DataPersistence.Services
             }
         }
 
-        public bool UnWatch(string eventKey, string watcherGUID)
+        public bool UnWatch(string envelopeTypeString, string watcherGUID)
         {
             lock (_thisLock)
             {
                 try
-                {
+                { 
                     Dictionary<string, Action<ISkyWatchEventTypes, string>> watchers;
-                    if(_watcherTable.TryGetValue(eventKey, out watchers))
+                    if(_watcherTable.TryGetValue(envelopeTypeString, out watchers))
                     {
                         watchers.Remove(watcherGUID);
                     }                    
@@ -80,16 +81,16 @@ namespace DataPersistence.Services
             }
         }
 
-        public bool Watch(string eventKey, string watcherGUID, Action<ISkyWatchEventTypes, string> eventHandler)
+        public bool Watch(string envelopeTypeString, string watcherGUID, Action<ISkyWatchEventTypes, string> eventHandler)
         {
             lock (_thisLock)
             {
                 try
-                {
+                { 
                     Dictionary<string, Action<ISkyWatchEventTypes, string>> watchers;
-                    if (_watcherTable.ContainsKey(eventKey) == false)
-                        _watcherTable.TryAdd(eventKey, new Dictionary<string, Action<ISkyWatchEventTypes, string>>());
-                    if(_watcherTable.TryGetValue(eventKey, out watchers))
+                    if (_watcherTable.ContainsKey(envelopeTypeString) == false)
+                        _watcherTable.TryAdd(envelopeTypeString, new Dictionary<string, Action<ISkyWatchEventTypes, string>>());
+                    if(_watcherTable.TryGetValue(envelopeTypeString, out watchers))
                     {
                         watchers.Add(watcherGUID, eventHandler);
                     }

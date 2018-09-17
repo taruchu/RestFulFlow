@@ -9,7 +9,6 @@ namespace ChatMessageInterfaces.Interfaces.ChatMessage
 {
     public interface IGetNextChatMessageService : IChatMessageService
     {
-        string Get(IChatMessageEnvelope request);  
-        string ExceptionMessage_ITackCannotBeNull { get; }
+        string Get(IChatMessageEnvelope request);   
     }
 }

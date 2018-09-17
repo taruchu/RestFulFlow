@@ -125,8 +125,11 @@ namespace DataPersistence.Services
                     else if (_boards == null)
                         throw new InvalidOperationException(ExceptionMessage_BoardsCannotBeNull);
                     else if (envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
-                    {
-                        return _boards.GetHandle_SQLDataBaseBoardChatMessage().POST(envelope);
+                    { 
+                        IEnvelope recipt = _boards.GetHandle_SQLDataBaseBoardChatMessage().POST(envelope);
+                        string eventKey = CreateEventKey(typeof(IChatMessageEnvelope), ((IChatMessageEnvelope)envelope).ChatMessageID);
+                        SkyWatch.Declare(ISkyWatchEventTypes.WriteOccured, eventKey);
+                        return recipt;
                     }
                     else
                         return envelope;
@@ -154,7 +157,10 @@ namespace DataPersistence.Services
                         throw new InvalidOperationException(ExceptionMessage_BoardsCannotBeNull);
                     else if (envelope.GetMyEnvelopeType() == typeof(IChatMessageEnvelope))
                     {
-                        return _boards.GetHandle_SQLDataBaseBoardChatMessage().PUT(envelope);
+                        IEnvelope recipt = _boards.GetHandle_SQLDataBaseBoardChatMessage().PUT(envelope);
+                        string eventKey = CreateEventKey(typeof(IChatMessageEnvelope), ((IChatMessageEnvelope)envelope).ChatMessageID);
+                        SkyWatch.Declare(ISkyWatchEventTypes.WriteOccured, eventKey);
+                        return recipt;
                     }
                     else
                         return envelope;
@@ -237,9 +243,8 @@ namespace DataPersistence.Services
         public bool SubscribeToSkyWatch(Type envelopeType, long storageID)
         { 
             try
-            { 
-                string eventKey = CreateEventKey(envelopeType, storageID); 
-                return SkyWatch.Watch(eventKey, _iTackGUID, SkyWatchEventHandler);
+            {  
+                return SkyWatch.Watch(envelopeType.ToString(), _iTackGUID, SkyWatchEventHandler);
             }
             catch (Exception ex)
             {
@@ -250,9 +255,8 @@ namespace DataPersistence.Services
         public bool UnsubscribeToSkyWatch(Type envelopeType, long storageID)
         { 
             try
-            {
-                string eventKey = CreateEventKey(envelopeType, storageID);
-                return SkyWatch.UnWatch(eventKey, _iTackGUID);
+            {  
+                return SkyWatch.UnWatch(envelopeType.ToString(), _iTackGUID);
             }
             catch (Exception ex)
             {

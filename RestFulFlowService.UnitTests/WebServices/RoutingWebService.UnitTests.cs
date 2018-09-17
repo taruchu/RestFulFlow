@@ -1,7 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using RestFulFlowService.Interfaces;
 using RestFulFlowService.Services;
 using SharedInterfaces.Interfaces.Envelope;
@@ -11,10 +10,9 @@ using SharedServices.Models.Constants;
 using SharedServices.Services.IOC;
 using SharedUtilities.Interfaces.Marshall;
 using System;
-using System.Threading.Tasks;
 
-namespace  RestFulFlowService.UnitTests.WebServices
-{    
+namespace RestFulFlowService.UnitTests.WebServices
+{
     [TestClass]
     public class RoutingWebServiceUnitTests
     {

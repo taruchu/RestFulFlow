@@ -11,6 +11,8 @@ using SharedInterfaces.Interfaces.ServiceFarm;
 using SharedServices.Services.ServiceFarm;
 using SharedInterfaces.Interfaces.Proxy;
 using SharedServices.Services.Proxy;
+using SharedUtilities.Interfaces.Marshall;
+using SharedUtilities.Implementation.Marshall;
 
 namespace RestFulFlowService
 {
@@ -23,7 +25,9 @@ namespace RestFulFlowService
             //TODO: Register IServiceFarmLoadBalancer as a singleton
             //TODO: Register IClientProxy as a Transient
             services.AddSingleton<IServiceFarmLoadBalancer, ServiceFarmLoadBalancer>();
+            services.AddTransient<IMarshaller, Marshaller>();
             services.AddTransient<IClientProxy, ClientProxy>();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,8 +38,11 @@ namespace RestFulFlowService
                 app.UseDeveloperExceptionPage();
                 
             }
-            
-            
+
+            app.UseSignalR(route =>
+            {
+                route.MapHub<ServiceFarmHub>("/GetLatestChatMessageService");
+            });
 
             app.MapWhen(
                     //TODO: Use logical OR to Add multiple service routes that all get served up by the same middleware.

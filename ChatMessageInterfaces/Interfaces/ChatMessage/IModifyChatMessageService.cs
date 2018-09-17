@@ -15,9 +15,7 @@ namespace ChatMessageInterfaces.Interfaces.ChatMessage
          */
         string Put(IChatMessageEnvelope request);
         string Post(IChatMessageEnvelope request);
-        string Delete(IChatMessageEnvelope request); 
-
-        string ExceptionMessage_ITackCannotBeNull { get; }
+        string Delete(IChatMessageEnvelope request);  
     }
 }
 

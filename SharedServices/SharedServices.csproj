@@ -83,6 +83,7 @@
     <Compile Include="Models\Constants\ConfigurationConstants.cs" />
     <Compile Include="Models\Constants\ChatServiceNames.cs" />
     <Compile Include="Models\Routing\Route.cs" />
+    <Compile Include="Services\ChatMessage\GetLatestChatMessageService.cs" />
     <Compile Include="Services\ChatMessage\GetNextChatMessageService.cs" />
     <Compile Include="Services\IOC\ErectDIContainer.cs" />
     <Compile Include="Services\IOC\EstablishIOC.cs" />
